@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:tools="http://schemas.android.com/tools"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        tools:context=".CalculateDateByNumber"
+        android:id="@+id/rl">
+    <TextView android:layout_width="match_parent" android:layout_height="wrap_content"
+              android:text="Learn what date it is before or after a certain day"
+              android:textAlignment="center"
+              android:padding="10dp"
+              android:layout_margin="10dp"
+              android:id="@+id/query"
+              android:textSize="14sp"/>
+    <androidx.cardview.widget.CardView android:layout_width="match_parent"
+                                       android:layout_height="wrap_content"
+                                       android:layout_below="@+id/query"
+                                       android:id="@+id/cv_from"
+    >
+        <LinearLayout android:layout_width="match_parent" android:layout_height="match_parent"
+                      android:orientation="horizontal"
+                      android:weightSum="2">
+            <TextView android:layout_width="wrap_content" android:layout_height="match_parent"
+                      android:text="From"
+                      android:padding="10dp"
+                      android:layout_margin="10dp"
+                      android:layout_weight="1"
+                      android:textAlignment="viewStart"
+                      android:textSize="14sp"/>
+            <TextView android:layout_width="wrap_content" android:layout_height="match_parent"
+                      android:text="Wednesday, 19 June, 2019"
+                      android:padding="10dp"
+                      android:layout_margin="10dp"
+                      android:textAlignment="viewEnd"
+                      android:layout_weight="1"
+                      android:textSize="14sp"
+                      android:id="@+id/start_date"
+                      android:drawableRight="@drawable/arrow_right"/>
+        </LinearLayout>
+    </androidx.cardview.widget.CardView>
+    <androidx.cardview.widget.CardView android:layout_width="match_parent"
+                                       android:layout_height="wrap_content"
+                                       android:layout_below="@+id/cv_from"
+                                       android:id="@+id/cv_to"
+
+    >
+        <LinearLayout android:layout_width="match_parent" android:layout_height="match_parent"
+                      android:orientation="horizontal"
+                      android:weightSum="2">
+            <TextView android:layout_width="wrap_content" android:layout_height="match_parent"
+                      android:text="Forward"
+                      android:padding="10dp"
+                      android:layout_margin="10dp"
+                      android:layout_weight="1"
+                      android:textAlignment="viewStart"
+                      android:textSize="14sp"
+                      android:id="@+id/forward_or_backward"
+                      android:drawableRight="@drawable/arrow_down"/>
+            <EditText android:layout_width="wrap_content" android:layout_height="match_parent"
+
+                      android:padding="10dp"
+                      android:layout_marginRight="60dp"
+                      android:layout_margin="10dp"
+                      android:textAlignment="center"
+                      android:layout_weight="1"
+                      android:textSize="14sp"
+                      android:inputType="number"
+                      android:hint="Enter the number of days"
+                      android:id="@+id/number_of_days"
+                      android:background="@android:color/transparent"
+            />
+        </LinearLayout>
+    </androidx.cardview.widget.CardView>
+
+</RelativeLayout>

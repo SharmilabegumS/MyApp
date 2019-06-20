@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="colorPrimary">#006cff</color>
+    <color name="colorPrimaryDark">#005717</color>
+    <color name="colorAccent">#A62796</color>
+    <color name="textColor">#424344</color>
+    <color name="nav_drawer">#d8e8ff</color>
+    <color name="deselect_item">#424344</color>
+    <color name="contact_default_image">#80b5ff</color>
+    <color name="event_add">#6699ff</color>
+    <color name="white">#FFF</color>
+
+</resources>

@@ -1,0 +1,355 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              xmlns:tools="http://schemas.android.com/tools"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              android:orientation="vertical" >
+
+
+    <GridLayout
+            android:id="@+id/container"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:columnCount="7"
+            android:rowCount="7"
+            android:orientation="horizontal"
+            android:layout_margin="2dp"
+            android:background="@drawable/textview_border"
+    >
+        <TextView
+                android:id="@+id/sun"
+                android:layout_columnSpan="1"
+                android:layout_rowSpan="1"
+                android:text="Sun"
+                android:textAlignment="center"
+                android:background="@drawable/textview_border"
+
+                android:gravity="center"/>
+        <TextView
+                android:id="@+id/mon"
+                android:layout_columnSpan="1"
+                android:layout_rowSpan="1"
+                android:text="Mon"
+                android:textAlignment="center"
+                android:background="@drawable/textview_border"
+
+                android:gravity="center"/>
+        <TextView
+                android:id="@+id/tue"
+                android:layout_columnSpan="1"
+                android:layout_rowSpan="1"
+                android:text="Tue"
+                android:textAlignment="center"
+                android:background="@drawable/textview_border"
+
+                android:gravity="center"/>
+        <TextView
+                android:id="@+id/wed"
+                android:layout_columnSpan="1"
+                android:layout_rowSpan="1"
+                android:text="Wed"
+                android:textAlignment="center"
+                android:background="@drawable/textview_border"
+
+                android:gravity="center"/>
+        <TextView
+                android:id="@+id/thu"
+                android:layout_columnSpan="1"
+                android:layout_rowSpan="1"
+                android:text="Thu"
+                android:textAlignment="center"
+                android:background="@drawable/textview_border"
+
+                android:gravity="center"/>
+        <TextView
+                android:id="@+id/fri"
+                android:layout_columnSpan="1"
+                android:layout_rowSpan="1"
+                android:text="Fri"
+                android:textAlignment="center"
+                android:background="@drawable/textview_border"
+
+                android:gravity="center"/>
+        <TextView
+                android:id="@+id/sat"
+                android:layout_columnSpan="1"
+                android:layout_rowSpan="1"
+
+                android:text="Sat"
+                android:textAlignment="center"
+                android:background="@drawable/textview_border"
+
+                android:gravity="center"/>
+
+        <TextView
+                android:id="@+id/id1"
+                android:layout_columnSpan="1"
+                android:layout_rowSpan="1"
+                android:textAlignment="center"
+                android:background="@drawable/textview_border"
+
+        />
+
+
+        <TextView
+                android:id="@+id/id2"
+                android:layout_columnSpan="1"
+                android:layout_rowSpan="1"
+                android:textAlignment="center"
+                android:background="@drawable/textview_border"
+        />
+
+        <TextView
+                android:id="@+id/id3"
+                android:layout_columnSpan="1"
+                android:layout_rowSpan="1"
+                android:textAlignment="center"
+                android:background="@drawable/textview_border"
+
+        />
+
+        <TextView
+                android:id="@+id/id4"
+                android:layout_columnSpan="1"
+                android:layout_rowSpan="1"
+                android:textAlignment="center"
+                android:background="@drawable/textview_border"
+        />
+        <TextView
+                android:id="@+id/id5"
+                android:layout_columnSpan="1"
+                android:layout_rowSpan="1"
+                android:textAlignment="center"
+                android:background="@drawable/textview_border"
+        />
+        <TextView
+                android:id="@+id/id6"
+                android:layout_columnSpan="1"
+                android:layout_rowSpan="1"
+                android:textAlignment="center"
+                android:background="@drawable/textview_border"
+        />
+        <TextView
+                android:id="@+id/id7"
+                android:layout_columnSpan="1"
+                android:layout_rowSpan="1"
+                android:textAlignment="center"
+                android:background="@drawable/textview_border"
+        />
+        <TextView
+                android:id="@+id/id8"
+                android:layout_columnSpan="1"
+                android:layout_rowSpan="1"
+                android:textAlignment="center"
+                android:background="@drawable/textview_border"
+        />
+        <TextView
+                android:id="@+id/id9"
+                android:layout_columnSpan="1"
+                android:layout_rowSpan="1"
+                android:textAlignment="center"
+                android:background="@drawable/textview_border"
+        />
+        <TextView
+                android:id="@+id/id10"
+                android:layout_columnSpan="1"
+                android:layout_rowSpan="1"
+                android:textAlignment="center"
+                android:background="@drawable/textview_border"
+        />
+        <TextView
+                android:id="@+id/id11"
+                android:layout_columnSpan="1"
+                android:layout_rowSpan="1"
+                android:textAlignment="center"
+                android:background="@drawable/textview_border"
+        />
+        <TextView
+                android:id="@+id/id12"
+                android:layout_columnSpan="1"
+                android:layout_rowSpan="1"
+                android:textAlignment="center"
+                android:background="@drawable/textview_border"
+        />
+
+        <TextView
+                android:id="@+id/id13"
+                android:layout_columnSpan="1"
+                android:layout_rowSpan="1"
+                android:textAlignment="center"
+                android:background="@drawable/textview_border"
+
+
+        />
+
+        <TextView
+                android:id="@+id/id14"
+                android:layout_columnSpan="1"
+                android:background="@drawable/textview_border"
+                android:layout_rowSpan="1"
+                android:textAlignment="center"
+        />
+        <TextView
+                android:id="@+id/id15"
+                android:layout_columnSpan="1"
+                android:layout_rowSpan="1"
+                android:textAlignment="center"
+                android:background="@drawable/textview_border"
+        />
+        <TextView
+                android:id="@+id/id16"
+                android:layout_columnSpan="1"
+                android:layout_rowSpan="1"
+                android:textAlignment="center"
+                android:background="@drawable/textview_border"
+        />
+        <TextView
+                android:id="@+id/id17"
+                android:layout_columnSpan="1"
+                android:layout_rowSpan="1"
+                android:textAlignment="center"
+                android:background="@drawable/textview_border"
+        />
+        <TextView
+                android:id="@+id/id18"
+                android:layout_columnSpan="1"
+                android:layout_rowSpan="1"
+                android:textAlignment="center"
+                android:background="@drawable/textview_border"
+        />
+        <TextView
+                android:id="@+id/id19"
+                android:layout_columnSpan="1"
+                android:layout_rowSpan="1"
+                android:textAlignment="center"
+                android:background="@drawable/textview_border"
+        />
+        <TextView
+                android:id="@+id/id20"
+                android:layout_columnSpan="1"
+                android:layout_rowSpan="1"
+                android:textAlignment="center"
+                android:background="@drawable/textview_border"
+        />
+        <TextView
+                android:id="@+id/id21"
+                android:layout_columnSpan="1"
+                android:layout_rowSpan="1"
+                android:textAlignment="center"
+                android:background="@drawable/textview_border"
+        />
+
+        <TextView
+                android:id="@+id/id22"
+                android:layout_columnSpan="1"
+                android:layout_rowSpan="1"
+                android:textAlignment="center"
+                android:background="@drawable/textview_border"
+        />
+
+        <TextView
+                android:id="@+id/id23"
+                android:layout_columnSpan="1"
+                android:layout_rowSpan="1"
+                android:textAlignment="center"
+                android:background="@drawable/textview_border"
+
+        />
+
+        <TextView
+                android:id="@+id/id24"
+                android:layout_columnSpan="1"
+                android:layout_rowSpan="1"
+                android:textAlignment="center"
+                android:background="@drawable/textview_border"
+        />
+        <TextView
+                android:id="@+id/id25"
+                android:layout_columnSpan="1"
+                android:layout_rowSpan="1"
+                android:textAlignment="center"
+                android:background="@drawable/textview_border"
+        />
+        <TextView
+                android:id="@+id/id26"
+                android:layout_columnSpan="1"
+                android:layout_rowSpan="1"
+                android:textAlignment="center"
+                android:background="@drawable/textview_border"
+        />
+        <TextView
+                android:id="@+id/id27"
+                android:layout_columnSpan="1"
+                android:layout_rowSpan="1"
+                android:textAlignment="center"
+                android:background="@drawable/textview_border"
+        />
+        <TextView
+                android:id="@+id/id28"
+                android:layout_columnSpan="1"
+                android:layout_rowSpan="1"
+                android:textAlignment="center"
+                android:background="@drawable/textview_border"
+        />
+        <TextView
+                android:id="@+id/id29"
+                android:layout_columnSpan="1"
+                android:layout_rowSpan="1"
+                android:textAlignment="center"
+                android:background="@drawable/textview_border"
+        />
+        <TextView
+                android:id="@+id/id30"
+                android:layout_columnSpan="1"
+                android:layout_rowSpan="1"
+
+                android:textAlignment="center"
+                android:background="@drawable/textview_border"
+        />
+        <TextView
+                android:id="@+id/id31"
+                android:layout_columnSpan="1"
+                android:layout_rowSpan="1"
+                android:textAlignment="center"
+                android:background="@drawable/textview_border"
+        />
+
+        <TextView
+                android:id="@+id/id32"
+                android:layout_columnSpan="1"
+                android:layout_rowSpan="1"
+
+                android:textAlignment="center"
+                android:background="@drawable/textview_border"
+        />
+
+        <TextView
+                android:id="@+id/id33"
+                android:layout_columnSpan="1"
+                android:layout_rowSpan="1"
+
+                android:textAlignment="center"
+                android:background="@drawable/textview_border"
+
+        />
+        <TextView
+                android:id="@+id/id34"
+                android:layout_columnSpan="1"
+                android:layout_rowSpan="1"
+                android:textAlignment="center"
+                android:background="@drawable/textview_border"
+        />
+        <TextView
+                android:id="@+id/id35"
+                android:layout_columnSpan="1"
+                android:layout_rowSpan="1"
+                android:textAlignment="center"
+                android:background="@drawable/textview_border"
+
+
+        />
+
+    </GridLayout>
+</LinearLayout>
+
+

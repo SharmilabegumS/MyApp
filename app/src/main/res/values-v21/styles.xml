@@ -1,0 +1,20 @@
+<resources>
+    <style name="AppTheme.NoActionBar">
+        <item name="windowActionBar">true</item>
+        <item name="windowNoTitle">true</item>
+        <item name="android:statusBarColor">#006cff</item>
+        <item name="android:windowTranslucentStatus">true</item>
+        <item name="android:activatedBackgroundIndicator">@drawable/activatedbackground</item>
+        <item name="android:fitsSystemWindows">true</item>
+
+    </style>
+    <style name="MyDarkToolbarStyle" parent="ThemeOverlay.AppCompat.Light">
+        <item name="android:colorBackground">@android:color/white</item>
+        <item name="android:textColor">@color/textColor</item>
+    </style>
+    <style name="MyToolbarTheme"
+           parent="@style/ThemeOverlay.AppCompat.Dark">
+        <item name="colorControlNormal">@android:color/white</item>
+        <item name="titleTextColor">@android:color/white</item>
+    </style>
+</resources>

@@ -1,0 +1,33 @@
+<resources>
+    <string name="app_name">NavigationCheck</string>
+
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
+    <string name="nav_header_title">Sharmila Begum</string>
+    <string name="nav_header_subtitle">sharmilabegum97@gmail.com</string>
+    <string name="nav_header_desc">Navigation header</string>
+    <string name="action_settings">Settings</string>
+    <string name="action_edit">Edit</string>
+    <string name="action_delete">Delete</string>
+    <string-array name="UserList">
+        <item>sharmilabegum97@gmail.com</item>
+        <item>shubhamkumar2b1@live.com</item>
+        <item>sharmilashona143@gmail.com</item>
+    </string-array>
+    <string name="bottom_sheet_option_heading">Choose user</string>
+    <string-array name="names">
+        <item>sharmila</item>
+        <item>shubham</item>
+        <item>durai</item>
+        <item>vel</item>
+    </string-array>
+
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="title_activity_view_event">ViewEvent</string>
+    <string name="uploadImages">Set your image</string>
+    <string name="action_pic">Pictures</string>
+    <string name="datePicker_cancelButton">Cancel</string>
+
+</resources>

@@ -1,0 +1,120 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout  xmlns:android="http://schemas.android.com/apk/res/android"
+                 xmlns:tools="http://schemas.android.com/tools"
+                 xmlns:app="http://schemas.android.com/apk/res-auto"
+                 android:layout_width="match_parent"
+                 android:layout_height="match_parent"
+                 tools:context=".CalculateDateResult"
+                 android:fitsSystemWindows="true">
+
+<androidx.appcompat.widget.Toolbar
+        android:id="@+id/toolbar1"
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
+        android:background="@color/colorPrimary"
+        android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
+/>
+
+<LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content"
+              android:layout_below="@id/toolbar1"
+              android:orientation="horizontal"
+              android:id="@+id/tv11"
+              android:weightSum="2">
+    <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
+              android:text="19 June 2019(today)"
+              android:id="@+id/tv1"
+
+              android:layout_margin="10dp"
+              android:padding="10dp"
+              android:textSize="16sp"
+              android:layout_weight="1"
+              android:textAlignment="center"/>
+    <TextView
+            android:text="59 day after"
+            android:layout_width="107dp"
+            android:layout_height="wrap_content"
+            android:id="@+id/days_number"
+            android:layout_weight="1"
+
+            android:layout_below="@+id/toolbar1"
+            android:layout_margin="10dp"
+            android:padding="10dp"
+            android:textSize="16sp"
+            android:textAlignment="center"/>
+</LinearLayout>
+    <View
+            android:layout_width="fill_parent"
+            android:layout_height="1dp"
+            android:background="#d6d7d8"
+            android:id="@+id/view1"
+    android:layout_below="@+id/tv11"/>
+<LinearLayout android:layout_width="match_parent"
+              android:layout_height="wrap_content"
+              android:orientation="vertical"
+              android:layout_below="@id/view1"
+
+              android:id="@+id/cv">
+
+    <TextView android:layout_width="match_parent" android:layout_height="wrap_content"
+              android:text="17 August 2019"
+              android:layout_margin="10dp"
+              android:paddingTop="10dp"
+              android:paddingRight="10dp"
+              android:paddingLeft="10dp"
+              android:textSize="24sp"
+              android:textColor="@color/colorPrimary"
+              android:textAlignment="center"
+              android:id="@+id/date"/>
+    <TextView android:layout_width="match_parent" android:layout_height="wrap_content"
+              android:text="Saturday"
+              android:id="@+id/day"
+              android:textSize="16sp"
+              android:layout_marginBottom="10dp"
+              android:layout_marginRight="10dp"
+              android:layout_marginLeft="10dp"
+              android:padding="10dp"
+              android:layout_below="@id/date"
+              android:textAlignment="center"
+    />
+
+</LinearLayout>
+<LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content"
+              android:layout_below="@id/cv"
+              android:orientation="horizontal"
+              android:id="@+id/tv111"
+              android:weightSum="2"
+              android:background="@drawable/textview_border"
+>
+    <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
+              android:text="View month"
+              android:id="@+id/view_month"
+              android:layout_below="@id/cv"
+              android:layout_margin="10dp"
+              android:padding="10dp"
+              android:textSize="16sp"
+              android:layout_weight="1"
+              android:textAlignment="center"
+    />
+    <View
+            android:layout_width="1dp"
+            android:layout_height="fill_parent"
+            android:background="#d6d7d8"
+            android:id="@+id/view2"
+            android:layout_below="@+id/tv11"/>
+    <TextView
+            android:text="Add event"
+            android:layout_width="107dp"
+            android:layout_height="wrap_content" android:id="@+id/add_event" android:layout_alignParentEnd="true"
+            android:layout_marginEnd="91dp"
+            android:layout_toEndOf="@+id/view_month" android:layout_marginStart="53dp"
+            android:layout_marginTop="14dp"
+            android:layout_below="@+id/cv"
+            android:layout_margin="10dp"
+            android:padding="10dp"
+            android:textSize="16sp"
+            android:layout_weight="1"
+            android:textAlignment="center"/>
+</LinearLayout>
+
+
+</RelativeLayout>

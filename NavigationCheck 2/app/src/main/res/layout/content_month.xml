@@ -1,0 +1,487 @@
+<com.example.navigationcheck.Utility.GameRootLayout
+  android:id="@+id/gameRootLayout"
+  android:layout_width="match_parent"
+  android:layout_height="match_parent" xmlns:android="http://schemas.android.com/apk/res/android">
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              xmlns:tools="http://schemas.android.com/tools"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              android:orientation="vertical"
+              android:paddingLeft="10dp"
+              android:paddingRight="10dp"
+              android:id="@+id/view"
+
+>
+
+
+    <GridLayout
+            android:id="@+id/gridlayout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:columnCount="7"
+            android:rowCount="7"
+            android:orientation="horizontal"
+            android:layout_margin="4dp"
+            android:background="@drawable/textview_border"
+    >
+        <TextView
+                android:id="@+id/sun"
+                android:layout_columnSpan="1"
+                android:layout_rowSpan="1"
+                android:text="Sun"
+                android:textAlignment="center"
+                android:textColor="#000"
+
+                android:gravity="center"/>
+        <TextView
+                android:id="@+id/mon"
+                android:layout_columnSpan="1"
+                android:layout_rowSpan="1"
+                android:text="Mon"
+                android:textAlignment="center"
+                android:textColor="#000"
+                android:gravity="center"/>
+        <TextView
+                android:id="@+id/tue"
+                android:layout_columnSpan="1"
+                android:layout_rowSpan="1"
+                android:text="Tue"
+                android:textAlignment="center"
+                android:textColor="#000"
+                android:gravity="center"/>
+        <TextView
+                android:id="@+id/wed"
+                android:layout_columnSpan="1"
+                android:layout_rowSpan="1"
+                android:text="Wed"
+                android:textAlignment="center"
+                android:textColor="#000"
+                android:gravity="center"/>
+        <TextView
+                android:id="@+id/thu"
+                android:layout_columnSpan="1"
+                android:layout_rowSpan="1"
+                android:text="Thu"
+                android:textAlignment="center"
+
+                android:textColor="#000"
+                android:gravity="center"/>
+        <TextView
+                android:id="@+id/fri"
+                android:layout_columnSpan="1"
+                android:layout_rowSpan="1"
+                android:text="Fri"
+                android:textAlignment="center"
+
+                android:textColor="#000"
+                android:gravity="center"/>
+        <TextView
+                android:id="@+id/sat"
+                android:layout_columnSpan="1"
+                android:layout_rowSpan="1"
+
+                android:text="Sat"
+                android:textAlignment="center"
+
+                android:textColor="#000"
+                android:gravity="center"/>
+
+        <TextView
+                android:id="@+id/id1"
+                android:layout_columnSpan="1"
+                android:layout_rowSpan="1"
+
+                android:textAlignment="center"
+                android:textColor="#000"
+
+                android:padding="15dp"
+
+        />
+
+
+        <TextView
+                android:id="@+id/id2"
+                android:layout_columnSpan="1"
+                android:layout_rowSpan="1"
+                android:textAlignment="center"
+
+                android:padding="15dp"
+                android:textColor="#000"
+
+
+        />
+
+        <TextView
+                android:id="@+id/id3"
+                android:layout_columnSpan="1"
+                android:layout_rowSpan="1"
+                android:textAlignment="center"
+
+                android:padding="15dp"
+                android:textColor="#000"
+
+
+        />
+
+        <TextView
+                android:id="@+id/id4"
+                android:layout_columnSpan="1"
+                android:layout_rowSpan="1"
+                android:textAlignment="center"
+
+                android:padding="15dp"
+                android:textColor="#000"
+
+        />
+        <TextView
+                android:id="@+id/id5"
+                android:layout_columnSpan="1"
+                android:layout_rowSpan="1"
+                android:textAlignment="center"
+
+                android:padding="15dp"
+                android:textColor="#000"
+
+        />
+        <TextView
+                android:id="@+id/id6"
+                android:layout_columnSpan="1"
+                android:layout_rowSpan="1"
+                android:textAlignment="center"
+
+                android:padding="15dp"
+                android:textColor="#000"
+        />
+        <TextView
+                android:id="@+id/id7"
+                android:layout_columnSpan="1"
+                android:layout_rowSpan="1"
+                android:textAlignment="center"
+
+                android:padding="15dp"
+                android:textColor="#000"
+
+        />
+        <TextView
+                android:id="@+id/id8"
+                android:layout_columnSpan="1"
+                android:layout_rowSpan="1"
+                android:textAlignment="center"
+
+                android:padding="15dp"
+                android:textColor="#000"
+
+        />
+        <TextView
+                android:id="@+id/id9"
+                android:layout_columnSpan="1"
+                android:layout_rowSpan="1"
+                android:textAlignment="center"
+
+                android:padding="15dp"
+                android:textColor="#000"
+
+        />
+        <TextView
+                android:id="@+id/id10"
+                android:layout_columnSpan="1"
+                android:layout_rowSpan="1"
+                android:textAlignment="center"
+                android:padding="15dp"
+                android:textColor="#000"
+
+        />
+        <TextView
+                android:id="@+id/id11"
+                android:layout_columnSpan="1"
+                android:layout_rowSpan="1"
+                android:textAlignment="center"
+                android:padding="15dp"
+                android:textColor="#000"
+
+        />
+        <TextView
+                android:id="@+id/id12"
+                android:layout_columnSpan="1"
+                android:layout_rowSpan="1"
+                android:textAlignment="center"
+                android:padding="15dp"
+                android:textColor="#000"
+
+        />
+
+        <TextView
+                android:id="@+id/id13"
+                android:layout_columnSpan="1"
+                android:layout_rowSpan="1"
+                android:textAlignment="center"
+
+                android:padding="15dp"
+                android:textColor="#000"
+
+
+
+        />
+
+        <TextView
+                android:id="@+id/id14"
+                android:layout_columnSpan="1"
+
+                android:padding="15dp"
+                android:layout_rowSpan="1"
+                android:textAlignment="center"
+                android:textColor="#000"
+
+        />
+        <TextView
+                android:id="@+id/id15"
+                android:layout_columnSpan="1"
+                android:layout_rowSpan="1"
+                android:textAlignment="center"
+                android:textColor="#000"
+
+                android:padding="15dp"
+
+        />
+        <TextView
+                android:id="@+id/id16"
+                android:layout_columnSpan="1"
+                android:layout_rowSpan="1"
+                android:textAlignment="center"
+                android:textColor="#000"
+
+                android:padding="15dp"
+
+        />
+        <TextView
+                android:id="@+id/id17"
+                android:layout_columnSpan="1"
+                android:layout_rowSpan="1"
+                android:textAlignment="center"
+                android:textColor="#000"
+                android:padding="15dp"
+
+        />
+        <TextView
+                android:id="@+id/id18"
+                android:layout_columnSpan="1"
+                android:layout_rowSpan="1"
+                android:textAlignment="center"
+                android:textColor="#000"
+                android:padding="15dp"
+
+        />
+        <TextView
+                android:id="@+id/id19"
+                android:layout_columnSpan="1"
+                android:layout_rowSpan="1"
+                android:textAlignment="center"
+
+                android:padding="15dp"
+                android:textColor="#000"
+
+        />
+        <TextView
+                android:id="@+id/id20"
+                android:layout_columnSpan="1"
+                android:layout_rowSpan="1"
+                android:textAlignment="center"
+                android:padding="15dp"
+                android:textColor="#000"
+
+        />
+        <TextView
+                android:id="@+id/id21"
+                android:layout_columnSpan="1"
+                android:layout_rowSpan="1"
+                android:textAlignment="center"
+
+                android:padding="15dp"
+                android:textColor="#000"
+
+        />
+
+        <TextView
+                android:id="@+id/id22"
+                android:layout_columnSpan="1"
+                android:layout_rowSpan="1"
+                android:textAlignment="center"
+                android:textColor="#000"
+                android:padding="15dp"
+
+        />
+
+        <TextView
+                android:id="@+id/id23"
+                android:layout_columnSpan="1"
+                android:layout_rowSpan="1"
+                android:textAlignment="center"
+                android:textColor="#000"
+                android:padding="15dp"
+
+
+        />
+
+        <TextView
+                android:id="@+id/id24"
+                android:layout_columnSpan="1"
+                android:layout_rowSpan="1"
+                android:textAlignment="center"
+                android:textColor="#000"
+                android:padding="15dp"
+
+        />
+        <TextView
+                android:id="@+id/id25"
+                android:layout_columnSpan="1"
+                android:layout_rowSpan="1"
+                android:textAlignment="center"
+                android:textColor="#000"
+                android:padding="15dp"
+        />
+        <TextView
+                android:id="@+id/id26"
+                android:layout_columnSpan="1"
+                android:layout_rowSpan="1"
+                android:textAlignment="center"
+                android:textColor="#000"
+                android:padding="15dp"
+
+        />
+        <TextView
+                android:id="@+id/id27"
+                android:layout_columnSpan="1"
+                android:layout_rowSpan="1"
+                android:textAlignment="center"
+                android:textColor="#000"
+
+                android:padding="15dp"
+
+        />
+        <TextView
+                android:id="@+id/id28"
+                android:layout_columnSpan="1"
+                android:layout_rowSpan="1"
+                android:textAlignment="center"
+                android:textColor="#000"
+                android:padding="15dp"
+
+        />
+        <TextView
+                android:id="@+id/id29"
+                android:layout_columnSpan="1"
+                android:layout_rowSpan="1"
+                android:textAlignment="center"
+                android:textColor="#000"
+
+                android:padding="15dp"
+
+        />
+        <TextView
+                android:id="@+id/id30"
+                android:layout_columnSpan="1"
+                android:layout_rowSpan="1"
+                android:textColor="#000"
+                android:textAlignment="center"
+
+                android:padding="15dp"
+
+        />
+        <TextView
+                android:id="@+id/id31"
+                android:layout_columnSpan="1"
+                android:layout_rowSpan="1"
+                android:textAlignment="center"
+                android:textColor="#000"
+
+                android:padding="15dp"
+
+        />
+
+        <TextView
+                android:id="@+id/id32"
+                android:layout_columnSpan="1"
+                android:layout_rowSpan="1"
+
+                android:padding="15dp"
+                android:textAlignment="center"
+                android:textColor="#000"
+
+        />
+
+        <TextView
+                android:id="@+id/id33"
+                android:layout_columnSpan="1"
+                android:layout_rowSpan="1"
+
+                android:padding="15dp"
+                android:textAlignment="center"
+                android:textColor="#000"
+
+
+        />
+        <TextView
+                android:id="@+id/id34"
+                android:layout_columnSpan="1"
+                android:layout_rowSpan="1"
+                android:textAlignment="center"
+
+                android:padding="15dp"
+                android:textColor="#000"
+
+        />
+        <TextView
+                android:id="@+id/id35"
+                android:layout_columnSpan="1"
+                android:layout_rowSpan="1"
+                android:textAlignment="center"
+                android:textColor="#000"
+
+                android:padding="15dp"
+
+
+
+        />
+
+    </GridLayout>
+    <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
+    android:text="Events"
+              android:textColor="#000"
+              android:id="@+id/events_title"
+              android:layout_marginLeft="4dp"
+              android:layout_below="@+id/gridlayout"
+    android:visibility="invisible"/>
+
+        <ListView android:layout_width="match_parent"
+                  android:layout_height="wrap_content"
+                  android:id="@+id/event_list"
+
+                  android:scrollbars="vertical"
+                  android:layout_marginTop="10dp"
+                  android:layout_below="@+id/events_title"
+                  android:listSelector="#F99AF0D4">
+
+        </ListView>
+
+
+    <TextView
+            android:text="1"
+            android:layout_width="55dp"
+            android:layout_height="55dp" android:id="@+id/bottom_date_holder"
+
+            android:layout_marginRight="66dp"
+            android:layout_marginEnd="66dp"
+            android:layout_marginBottom="13dp"
+            android:textAlignment="center"
+            android:textColor="#000"
+            android:padding="15dp"
+            android:layout_gravity="bottom|right"
+            android:background="@drawable/current_date_circle" android:layout_alignParentEnd="true"
+            android:layout_alignParentRight="true" android:layout_alignParentBottom="true"
+    />
+
+</RelativeLayout>
+    </com.example.navigationcheck.Utility.GameRootLayout>
+
+
