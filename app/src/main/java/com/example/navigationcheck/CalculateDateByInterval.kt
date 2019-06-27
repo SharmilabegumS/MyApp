@@ -58,7 +58,7 @@ class CalculateDateByInterval : Fragment() {
                 mMonth = monthOfYear
                 mYear = year
                 updateDateInView(startDate)
-                var result = checkDates(startDate,endDate1)
+                /* var result = checkDates(startDate,endDate1)
                 if (result == false) {
 
                    startDate.setTextColor(Color.RED)
@@ -72,7 +72,7 @@ class CalculateDateByInterval : Fragment() {
                     startDate.setTextColor(Color.GRAY)
 
 
-                }
+                }*/
                 /*if(e1.text!=null&&e2.text!=null && d1.text!=null &&d2.text!=null)
                     checkDateAndTime(d1,d2,e1,e2)
                 else if(d1.text!=null &&d2.text!=null){
@@ -94,7 +94,7 @@ class CalculateDateByInterval : Fragment() {
                 //if(e1.text!=null&&e2.text!=null && d1.text!=null &&d2.text!=null)
                 //  checkDateAndTime(d1,d2,e1,e2)
                 //else if(d1.text!=null &&d2.text!=null){
-                var result = checkDates(startDate,endDate1)
+              /*  var result = checkDates(startDate,endDate1)
                 if (result == false) {
                     startDate.setTextColor(Color.RED)
 
@@ -106,7 +106,7 @@ class CalculateDateByInterval : Fragment() {
                 } else if (result == true) {
                     startDate.setTextColor(Color.GRAY)
 
-                }
+                }*/
 
                 //}
 
@@ -145,7 +145,7 @@ class CalculateDateByInterval : Fragment() {
         tv!!.setText(sdf.format(calendar.getTime()))
 
     }
-    private fun checkDates(d1: TextView, d2: TextView): Boolean {
+   /* private fun checkDates(d1: TextView, d2: TextView): Boolean {
         var status = false
         try {
 
@@ -166,7 +166,7 @@ class CalculateDateByInterval : Fragment() {
         }
 
 
-    }
+    }*/
     fun getEndDate1(){
         val sdf = SimpleDateFormat("EEEE, dd MMMM, yyyy")
         date = sdf.parse(endDate1.text.toString())
@@ -184,5 +184,10 @@ class CalculateDateByInterval : Fragment() {
         val daysBetween = (difference / (1000 * 60 * 60 * 24))
         println("Days inbetween: "+daysBetween)
         activity1!!.numberOfDays=daysBetween.toInt()
+        if(daysBetween.toInt()<0){
+            activity1!!.numberOfDays=daysBetween.toInt()-(2*daysBetween.toInt())
+            activity1!!.forwardOrBackward= "before"
+        }
     }
+
 }

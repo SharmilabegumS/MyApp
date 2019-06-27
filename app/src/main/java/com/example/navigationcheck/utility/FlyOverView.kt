@@ -24,7 +24,7 @@ import androidx.annotation.Px
  */
 
 @SuppressWarnings("unused")
-public class FlyOverView {
+class FlyOverView {
 
     val DEFAULT_DURATION: Int = 1000;
     val TAG: String = "FlyOverView";

@@ -19,6 +19,13 @@ class ContactParcel() : Parcelable {
     fun getContacts(): ArrayList<Contacts>? {
         return contacts
     }
+    fun getContactIds():ArrayList<Long>{
+        var list1=ArrayList<Long>()
+        for(i in 0.. contacts!!.size-1){
+            list1.add(contacts!!.get(i).id)
+        }
+return list1
+    }
 
     //getters, other fields, Builder class
     override fun writeToParcel(parcel: Parcel, flags: Int) {

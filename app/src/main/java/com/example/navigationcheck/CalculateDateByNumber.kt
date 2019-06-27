@@ -1,7 +1,10 @@
 package com.example.navigationcheck
 
 
+import android.annotation.SuppressLint
+import android.app.Activity
 import android.app.DatePickerDialog
+import android.content.Intent
 import android.graphics.Color
 import android.os.Bundle
 import android.view.Gravity
@@ -9,14 +12,16 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.DatePicker
-import android.widget.TextView
-import android.widget.Toast
+import android.widget.*
 import androidx.annotation.IntegerRes
 import kotlinx.android.synthetic.main.fragment_calculate_date_by_number.*
 import java.text.ParseException
 import java.text.SimpleDateFormat
 import java.util.*
+import kotlin.collections.ArrayList
+import android.graphics.drawable.Drawable
+
+
 
 
 // TODO: Rename parameter arguments, choose names that match
@@ -42,6 +47,8 @@ class CalculateDateByNumber : Fragment() {
     lateinit var startDate: TextView
     lateinit var numberOfDays: TextView
     lateinit var forwardOrBackward: TextView
+    lateinit var lv:ListView
+    @SuppressLint("NewApi")
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -51,10 +58,15 @@ class CalculateDateByNumber : Fragment() {
         numberOfDays = view.findViewById<TextView>(R.id.number_of_days)
         forwardOrBackward = view.findViewById<TextView>(R.id.forward_or_backward)
         //activity!!.date=Date()
+        lv=view.findViewById(R.id.lv)
         activity1 = activity as CalculateDateActivity
         date = activity1!!.date!!
         // Inflate the layout for this fragment
+        numberOfDays!!.setShowSoftInputOnFocus(false)
 
+        numberOfDays.setOnClickListener{
+activity1!!.showKeyBoard()
+        }
         val myFormat = "EEEE, dd MMMM, yyyy" // mention the format you need
         val sdf = SimpleDateFormat(myFormat, Locale.US)
         calendar.time = date
@@ -79,12 +91,42 @@ class CalculateDateByNumber : Fragment() {
             ).show()
         }
         forwardOrBackward.setOnClickListener {
-            if (forwardOrBackward.text.equals("Forward")) {
+
+            lv.visibility=View.VISIBLE
+            val img = context!!.resources.getDrawable(R.drawable.ic_arrow_up,null)
+println("Image:"+img)
+            img.setBounds( 0, 0, 80, 80 );
+            forwardOrBackward.setCompoundDrawables(null,null,img,null)
+            /*if (forwardOrBackward.text.equals("Forward")) {
                 forwardOrBackward.setText("Backward")
             } else if (forwardOrBackward.text.equals("Backward")) {
                 forwardOrBackward.setText("Forward")
-            }
+            }*/
         }
+var values=ArrayList<String>()
+        values.add("Forward")
+        values.add("Backward")
+        val adapter = ArrayAdapter<String>(context, R.layout.list_time_interval,R.id.tv, values)
+        adapter.notifyDataSetChanged()
+        lv.adapter = adapter
+
+
+        lv.setOnItemClickListener(object : AdapterView.OnItemClickListener {
+            override fun onItemClick(
+                parent: AdapterView<*>,
+                view: View,
+                position: Int,
+                id: Long
+            ) {
+                forwardOrBackward.setText(values.get(position))
+                val img = context!!.resources.getDrawable(R.drawable.arrow_down,null)
+                img.setBounds( 0, 0, 80, 80 );
+                forwardOrBackward.setCompoundDrawables(null,null,img,null)
+                lv.visibility=View.INVISIBLE
+
+
+            }
+        })
         return view
     }
 
@@ -94,7 +136,9 @@ class CalculateDateByNumber : Fragment() {
             toast.setGravity(Gravity.CENTER, 0, 0);
             toast.show()
             activity1!!.endDate = null
-        } else {
+        }
+        else
+         {
             println("numberOfDays:" + numberOfDays.text + "Hi")
             var cal = Calendar.getInstance()
             cal.time = date
@@ -140,5 +184,6 @@ class CalculateDateByNumber : Fragment() {
             activity1!!.numberOfDays = null
         }
     }
+
 
 }

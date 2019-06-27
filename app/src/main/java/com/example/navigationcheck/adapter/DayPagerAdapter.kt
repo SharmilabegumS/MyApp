@@ -1,25 +1,18 @@
 package com.example.navigationcheck.adapter
 
 import android.content.Context
-import android.view.View
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentStatePagerAdapter
-import com.example.navigationcheck.MonthFragment
 import java.util.*
-import kotlin.collections.ArrayList
-import android.view.ViewGroup
 import androidx.viewpager.widget.PagerAdapter
-import android.util.SparseArray
-import com.amitshekhar.utils.Utils
 import android.os.Bundle
 import com.example.navigationcheck.DayFragment
-import com.example.navigationcheck.FragmentObserver
 
 
 class DayPagerAdapter internal constructor(fm: FragmentManager, context: Context, monthList: LinkedList<String>) :
     FragmentStatePagerAdapter(fm) {
-
+    var date:Date?=null
     var monthList = monthList
     var calendar: Calendar = Calendar.getInstance()
 
@@ -33,6 +26,15 @@ class DayPagerAdapter internal constructor(fm: FragmentManager, context: Context
         val bundle = Bundle()
         bundle.putString("monthYear", monthList.get(position))
 
+        var day = Integer.parseInt(monthList.get(position).substring(0, 2))
+        var month = Integer.parseInt(monthList.get(position).substring(2, 4))
+        var year = Integer.parseInt(monthList.get(position).substring(4, 8))
+        var cal=Calendar.getInstance()
+        cal.set(Calendar.DAY_OF_MONTH,day)
+
+        cal.set(Calendar.MONTH,month )
+        cal.set(Calendar.YEAR,year)
+        date=cal.time
         val fragment = DayFragment()
         fragment.setArguments(bundle)
 
@@ -83,7 +85,9 @@ class DayPagerAdapter internal constructor(fm: FragmentManager, context: Context
         return PagerAdapter.POSITION_NONE
 
     }
-
+    fun getDateDayAdapter():Date?{
+        return  date
+    }
     /*
     override fun instantiateItem(container: ViewGroup, position: Int): Any {
            val fragment = super.instantiateItem(container, position) as Fragment

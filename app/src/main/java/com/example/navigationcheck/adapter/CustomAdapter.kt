@@ -55,6 +55,7 @@ class CustomAdapter(context: Context, contacts: MutableList<Contacts>) : BaseAda
             contacts[position].picId.size,
             options
         )
+
         holder.mImageView!!.setImageBitmap(bitmap);
         println("contacts[position].name: "+contacts[position].name)
         holder.mHeader!!.setText(contacts[position].name)

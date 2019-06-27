@@ -7,7 +7,7 @@
             android:id="@+id/listTitle"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:textColor="@android:color/black"
+            android:textColor="@color/textColor"
             android:paddingLeft="10dp"
             android:paddingBottom="10dp"/>
 

@@ -3,20 +3,6 @@
             android:layout_height="wrap_content"
             android:background="@android:color/white"
 >
-    <TextView
-            android:text="1"
-            android:id="@+id/bottom_date_holder"
-            android:layout_width="55dp"
-            android:layout_height="55dp"
-            android:elevation="6dp"
-            android:layout_marginTop="450dp"
-            android:layout_marginLeft="270dp"
-            android:layout_gravity="bottom|end|right"
-            android:background="@drawable/botton_date_holder"
-            android:textColor="@android:color/white"
-            android:textAlignment="center"
-            android:padding="15dp"
-    />
 <ScrollView
         android:layout_width="match_parent" android:layout_height="match_parent"
             >

@@ -1,6 +1,7 @@
 package com.example.navigationcheck
 
 import android.app.Activity
+import android.app.AlertDialog
 import android.content.Intent
 import android.graphics.Color
 import androidx.appcompat.app.AppCompatActivity
@@ -11,6 +12,12 @@ import java.text.SimpleDateFormat
 import java.util.*
 
 class CalculateDateResult : AppCompatActivity() {
+
+
+    override fun onSupportNavigateUp(): Boolean {
+        onBackPressed()
+        return true
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -80,6 +87,12 @@ class CalculateDateResult : AppCompatActivity() {
             intent.putExtra("endDate", eventEndTime[0])
             intent.putExtra("endTime", eventEndTime[1])
             startActivity(intent);
+            val resultIntent = Intent()
+            var bundle = Bundle()
+            bundle.putString("endDate",endDate)
+            resultIntent.putExtra("bundle", bundle)
+            setResult(111, resultIntent)
+
             finish()
         }
         view_month.setOnClickListener {

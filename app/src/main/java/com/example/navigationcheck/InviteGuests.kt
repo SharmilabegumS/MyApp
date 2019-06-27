@@ -69,10 +69,10 @@ class InviteGuests() : AppCompatActivity(), View.OnClickListener, Parcelable {
         dbm = DataBaseManager(this)
         var bundle = intent.extras
         var value = bundle!!.getStringArrayList("nameList")
-        println("Received nameList: "+value)
+        println("Received nameList: " + value)
         customAdapter = CustomAdapter(this, getContacts())
         listView = findViewById(R.id.listView)
-     listView.setDivider(null);
+        listView.setDivider(null);
         no_search = findViewById(R.id.search_not_found)
         no_search_text = findViewById(R.id.search_not_found_msg)
         ok = findViewById(R.id.ok)
@@ -90,10 +90,10 @@ class InviteGuests() : AppCompatActivity(), View.OnClickListener, Parcelable {
         } else {
 
         }
-        for(i in 0..value.size-1) {
+        for (i in 0..value.size - 1) {
 
-            var id=dbm.getContactId(value.get(i))
-            println("Its id: "+id)
+            var id = dbm.getContactId(value.get(i))
+            println("Its id: " + id)
             customAdapter.toggle(id)
         }
 
@@ -112,10 +112,10 @@ class InviteGuests() : AppCompatActivity(), View.OnClickListener, Parcelable {
 
             }
             //Provide the data on Click position in our listview
-           /* var contactSelected: Contacts = customAdapter.getItem(position) as Contacts
-            var name: String = contactSelected.name
-            var image: ByteArray = contactSelected.picId
-            var id: Long = contactSelected.id*/
+            /* var contactSelected: Contacts = customAdapter.getItem(position) as Contacts
+             var name: String = contactSelected.name
+             var image: ByteArray = contactSelected.picId
+             var id: Long = contactSelected.id*/
 
         }
 
@@ -129,6 +129,10 @@ class InviteGuests() : AppCompatActivity(), View.OnClickListener, Parcelable {
         //var dbm = DataBaseManager(this)
     }
 
+   /* override fun processFinish(output: String) {
+        //Here you will receive the result fired from async class
+        //of onPostExecute(result) method.
+    }*/
 
     fun getContacts(): MutableList<Contacts> {
 
@@ -151,19 +155,19 @@ class InviteGuests() : AppCompatActivity(), View.OnClickListener, Parcelable {
                 contactPos.add(list.keyAt(i).toInt())
             }
         }
-        println("Contact pos: "+contactPos)
+        println("Contact pos: " + contactPos)
 
         for (j in 0..contactList.size - 1) {
-            for(i in 0..contactPos.size-1){
+            for (i in 0..contactPos.size - 1) {
 
-                if(contactList.get(j).id==contactPos.get(i).toLong()){
-                    selectedContacts.add(contactList.get(j) )
+                if (contactList.get(j).id == contactPos.get(i).toLong()) {
+                    selectedContacts.add(contactList.get(j))
                 }
             }
 
 
         }
-        println("Selected contacts: "+selectedContacts)
+        println("Selected contacts: " + selectedContacts)
     }
 
     override fun describeContents(): Int {
@@ -220,7 +224,7 @@ class InviteGuests() : AppCompatActivity(), View.OnClickListener, Parcelable {
                     no_search.visibility = View.INVISIBLE
                     no_search_text.visibility = View.INVISIBLE
                 } else {
-                    no_search_text.text="Search $text not found!"
+                    no_search_text.text = "Search $text not found!"
                     no_search.visibility = View.VISIBLE
                     no_search_text.visibility = View.VISIBLE
                 }
@@ -255,9 +259,10 @@ class InviteGuests() : AppCompatActivity(), View.OnClickListener, Parcelable {
 
                 var conp: ContactParcel =
                     ContactParcel(contactList)
+
                 val resultIntent = Intent()
                 var bundle = Bundle()
-                bundle.putParcelableArrayList("arrayList", conp.getContacts())
+                bundle.putLongArray("arrayList", conp.getContactIds().toLongArray())
                 resultIntent.putExtra("bundle", bundle)
                 setResult(1, resultIntent)
                 finish()

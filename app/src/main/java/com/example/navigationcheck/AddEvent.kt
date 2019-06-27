@@ -1,6 +1,7 @@
 package com.example.navigationcheck
 
 import android.annotation.SuppressLint
+import android.app.Activity
 import android.app.AlertDialog
 import android.app.DatePickerDialog
 import android.app.TimePickerDialog
@@ -12,7 +13,9 @@ import android.graphics.Bitmap
 import android.graphics.BitmapFactory
 import android.graphics.Color
 import android.graphics.drawable.BitmapDrawable
+import android.graphics.drawable.ColorDrawable
 import android.graphics.drawable.Drawable
+import android.os.Build
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import com.google.android.material.bottomsheet.BottomSheetDialog
@@ -31,11 +34,14 @@ import com.google.android.material.chip.Chip
 import com.google.android.material.chip.ChipGroup
 import android.widget.Toast
 import android.widget.ArrayAdapter
+import androidx.core.content.ContextCompat
+import androidx.core.content.ContextCompat.startActivity
 import androidx.core.graphics.drawable.RoundedBitmapDrawable
 import androidx.core.graphics.drawable.RoundedBitmapDrawableFactory
 import androidx.core.view.GestureDetectorCompat
 import com.example.navigationcheck.entity.Contacts
 import com.example.navigationcheck.utility.DateStringConvertor
+import com.google.android.material.snackbar.Snackbar
 import com.google.android.material.textfield.TextInputEditText
 import com.google.android.material.textfield.TextInputLayout
 import kotlinx.android.synthetic.main.activity_add_event.end_date
@@ -45,8 +51,10 @@ import kotlinx.android.synthetic.main.activity_add_event.start_date
 import kotlinx.android.synthetic.main.activity_add_event.start_time
 import kotlinx.android.synthetic.main.activity_add_event.toolbar1
 import kotlinx.android.synthetic.main.activity_main.*
+import kotlinx.android.synthetic.main.add_event_modified.*
 import java.text.ParseException
 import kotlin.collections.ArrayList
+import kotlin.collections.HashMap
 
 
 var screenWidth = 0
@@ -65,10 +73,6 @@ class AddEvent : AppCompatActivity(), View.OnClickListener {
     private var gestureDetectorCompat: GestureDetectorCompat? = null
 
     var calendar = Calendar.getInstance()
-    var textview_start_date: TextInputEditText? = null
-    var textview_end_date: TextInputEditText? = null
-    var textview_start_time: TextInputEditText? = null
-    var textview_end_time: TextInputEditText? = null
     var bottomSheetDialog: BottomSheetDialog? = null
     lateinit var e11: TextInputEditText
     lateinit var e12: TextInputEditText
@@ -82,10 +86,12 @@ class AddEvent : AppCompatActivity(), View.OnClickListener {
     lateinit var title_input: EditText
     lateinit var description: EditText
     lateinit var guest_names: ChipGroup
+   lateinit var reminderType:TextView
 
     lateinit var guestLayout: LinearLayout
     lateinit var guestsFieldLayout:RelativeLayout
     var guestList = ArrayList<String>()
+    var reminderTypeAndKey=HashMap<Int,String>()
 
     var time: String = ""
     @SuppressLint("LocalSuppress")
@@ -97,14 +103,28 @@ class AddEvent : AppCompatActivity(), View.OnClickListener {
         screenHeight = getScreenHeightInDPs(context)
         setSupportActionBar(toolbar1)
 
-        // Now get the support action bar
         val actionBar = supportActionBar
-        // Set toolbar title/app title
+
+        reminderTypeAndKey.put(-1,"Don't remind")
+        reminderTypeAndKey.put(0,"Before the event")
+        reminderTypeAndKey.put(1,"5 min before")
+        reminderTypeAndKey.put(2,"10 min before")
+        reminderTypeAndKey.put(3,"15 min before")
+        reminderTypeAndKey.put(4,"30 min before")
+        reminderTypeAndKey.put(5,"1 hour before")
+        reminderTypeAndKey.put(6,"1 day before")
+
+
+//actionBar!!.setBackgroundDrawable(ColorDrawable(Color.RED));
 
         actionBar!!.title = "Event"
 
-        // Set action bar/toolbar sub title
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
 
+            this.getWindow().setStatusBarColor(
+                darkenColor(
+                    ContextCompat.getColor(this, R.color.colorPrimary)));
+        }
 
         // Set action bar elevation
         actionBar.elevation = 4.0F
@@ -120,7 +140,11 @@ class AddEvent : AppCompatActivity(), View.OnClickListener {
 
         paramsGuestLayout.setMargins(0, 2, 0, 0);
         guestLayout.setLayoutParams(paramsGuestLayout);
-
+       reminderType=findViewById<TextView>(R.id.choose_reminder_type)
+        reminderType.setOnClickListener{
+            var intent = Intent(this,EventNotification::class.java)
+            startActivityForResult(intent, 999);
+        }
       var status=false
         var status1=false
 title_input.setOnClickListener{
@@ -129,42 +153,22 @@ title_input.setOnClickListener{
         status=false
     }
     else {
-        hideKeyBoard()
+      hideSoftKeyboard(this)
         status=true
     }
 }
         description.setOnClickListener{
-            if(status==true){
+            if(status1==true){
                 showKeyBoard()
-                status=false
+                status1=false
             }
             else {
 
-                hideKeyBoard()
+                hideSoftKeyboard(this)
                 status=true
             }
         }
         if (getResources().getConfiguration().orientation == Configuration.ORIENTATION_LANDSCAPE) {
-            /* var title_input: EditText = findViewById(R.id.title_input)
-             var paramsTitleInput:ViewGroup.LayoutParams = title_input.getLayoutParams()
-             paramsTitleInput.width=ViewGroup.LayoutParams.MATCH_PARENT;
-             paramsTitleInput.height = ViewGroup.LayoutParams.WRAP_CONTENT;
-             title_input.setLayoutParams(paramsTitleInput);
-             var user_name: EditText = findViewById(R.id.user_name)
-             var paramsUserName:ViewGroup.LayoutParams =user_name.getLayoutParams()
-             paramsUserName.width=ViewGroup.LayoutParams.MATCH_PARENT;
-             paramsUserName.height = ViewGroup.LayoutParams.WRAP_CONTENT;
-             user_name.setLayoutParams(paramsUserName);
-             var all_day: TextView = findViewById(R.id.all_day)
-             var paramsAllDay:ViewGroup.LayoutParams =all_day.getLayoutParams()
-             paramsAllDay.width=(screenWidth / 1.64).toInt()
-             paramsAllDay.height = ViewGroup.LayoutParams.WRAP_CONTENT;
-             all_day.setLayoutParams(paramsAllDay);
-             var switch: Switch = findViewById(R.id.switch1)
-             var paramsSwitch:ViewGroup.LayoutParams =switch.getLayoutParams()
-             paramsSwitch.width=(screenWidth / 4)
-             paramsSwitch.height = paramsAllDay.height
-             switch.setLayoutParams(paramsSwitch)*/
             var start_date: TextView = findViewById(R.id.start_date)
             var paramsStartDate: ViewGroup.LayoutParams = start_date.getLayoutParams()
             paramsStartDate.height = ViewGroup.LayoutParams.WRAP_CONTENT;
@@ -189,22 +193,10 @@ title_input.setOnClickListener{
             paramsEndTime.height = ViewGroup.LayoutParams.WRAP_CONTENT;
             paramsEndTime.width = (screenWidth / 2.5).toInt()
             end_time.setLayoutParams(paramsEndTime);
-
-
-            /*  var guestLayout = findViewById<LinearLayout>(R.id.guestslayout)
-              var params: ViewGroup.LayoutParams = guest_names.getLayoutParams();
-              params.height = ViewGroup.LayoutParams.WRAP_CONTENT;
-              guest_names.setLayoutParams(params);
-              var params1: ViewGroup.LayoutParams = guestLayout.getLayoutParams();
-              params.height = ViewGroup.LayoutParams.WRAP_CONTENT;
-              guestLayout.setLayoutParams(params1);
-              var description_event: EditText = findViewById(R.id.description)
-              setDimensions(description_event, screenWidth, (screenHeight / 9))
-  */
         }
         guest_names = findViewById(R.id.guest_names)
 
-        createBottomSheetDialog()
+       // createBottomSheetDialog()
         var e1: TextInputEditText = findViewById(R.id.start_time)
         var e2: TextInputEditText = findViewById(R.id.end_time)
         var d1: TextInputEditText = findViewById(R.id.start_date)
@@ -224,21 +216,11 @@ title_input.setOnClickListener{
         e1!!.setOnClickListener {
             clickTimePicker(e1)
 
-            /* if(e1.text!=null && e2.text!=null && d1.text!=null && d2.text!=null)
-                 checkDateAndTime(d1,d2,e1,e2)
-             else if(d1.text!=null &&d2.text!=null){
-                 checkDates(d1,d2)
-             }*/
         }
         e2!!.setOnClickListener {
 
             clickTimePicker(e2)
 
-            /*if(e1.text!=null&&e2.text!=null && d1.text!=null &&d2.text!=null)
-                checkDateAndTime(d1,d2,e1,e2)
-            else if(d1.text!=null &&d2.text!=null){
-                checkDates(d1,d2)
-            }*/
         }
 
         val dateSetListener = object : DatePickerDialog.OnDateSetListener {
@@ -255,21 +237,10 @@ title_input.setOnClickListener{
 
                     e11Layout.setError(" ")
                    d11Layout.setError(" ")
-                   //d1.setTextAppearance(getApplicationContext(), R.style.MyTextInputLayout);
-                    //var colorStateList:      ColorStateList = ColorStateList.valueOf(Color.RED)
-                   // d1.supportBackgroundTintList=colorStateList
-                    // e1.setError("Start time is after event end time!")
-                   // e1.supportBackgroundTintList=colorStateList
-                } else if (result == true) {
+                     } else if (result == true) {
                     d11Layout.error = null
                     e11Layout.error = null
                 }
-                /*if(e1.text!=null&&e2.text!=null && d1.text!=null &&d2.text!=null)
-                    checkDateAndTime(d1,d2,e1,e2)
-                else if(d1.text!=null &&d2.text!=null){
-                    checkDates(d1,d2)
-                }*/
-
             }
         }
 
@@ -282,25 +253,17 @@ title_input.setOnClickListener{
                 mMonth = monthOfYear
                 mYear = year
                 updateDateInView(d2)
-                //if(e1.text!=null&&e2.text!=null && d1.text!=null &&d2.text!=null)
-                //  checkDateAndTime(d1,d2,e1,e2)
-                //else if(d1.text!=null &&d2.text!=null){
                 var result = checkDateAndTime(d1, d2, e1, e2)
                 if (result == false) {
                     e11Layout.setError(" ")
                     d11Layout.setError(" ")
 
-                   // d1.setError("Start date is after event end date!")
-             // var colorStateList:      ColorStateList = ColorStateList.valueOf(Color.RED)
-                   // d1.supportBackgroundTintList=colorStateList
-                  //e1.setError("Start time is after event end time!")
-                   // e1.supportBackgroundTintList=colorStateList
-                } else if (result == true) {
+                     } else if (result == true) {
                     d11Layout.error = null
                     e11Layout.error = null
                 }
 
-                //}
+
 
             }
         }
@@ -349,16 +312,9 @@ title_input.setOnClickListener{
             var status = sw.isChecked()
             sw.isChecked = !status
         }
-       /* guests.setOnClickListener {
-            showDialog1()
-        }
-        guest_names.setOnClickListener {
-            showDialog1()
-        }*/
         guestsFieldLayout.setOnClickListener {
             showDialog1()
         }
-        guestsFieldLayout
         val intent = intent
         val startDate = intent.getStringExtra("startDate")
         val startTime = intent.getStringExtra("startTime")
@@ -399,6 +355,14 @@ title_input.setOnClickListener{
 
     }
 
+    private fun darkenColor(color: Int): Int {
+        val hsv = FloatArray(3)
+        Color.colorToHSV(color, hsv)
+        hsv[2] *= 0.8f
+        return Color.HSVToColor(hsv)
+    }
+
+
     private fun checkDates(d1: TextInputEditText, d2: TextInputEditText): Boolean {
         var status = false
         try {
@@ -423,26 +387,35 @@ title_input.setOnClickListener{
     }
 
     override fun onSupportNavigateUp(): Boolean {
-
-        AlertDialog.Builder(this)
-            .setIcon(R.drawable.ic_warning_black_24dp)
-            .setTitle("Cancel")
-            .setMessage("Discard your changes?")
-            .setPositiveButton("Yes") { dialog, which -> finish() }
-            .setNegativeButton("No", null)
-            .show()
+        if(title_input.text.toString().equals("")==false||description.text.toString().equals("")==false) {
+            AlertDialog.Builder(this)
+                .setIcon(R.drawable.ic_warning_black_24dp)
+                .setTitle("Cancel")
+                .setMessage("Discard your changes?")
+                .setPositiveButton("Yes") { dialog, which -> finish() }
+                .setNegativeButton("No", null)
+                .show()
+        }
+        else{
+          onBackPressed()
+        }
         return true
 
     }
 
     override fun onBackPressed() {
-        AlertDialog.Builder(this)
-            .setIcon(R.drawable.ic_warning_black_24dp)
-            .setTitle("Cancel")
-            .setMessage("Discard your changes?")
-            .setPositiveButton("Yes") { dialog, which -> finish() }
-            .setNegativeButton("No", null)
-            .show()
+        if(title_input.text.toString().equals("")==false||description.text.toString().equals("")==false) {
+            AlertDialog.Builder(this)
+                .setIcon(R.drawable.ic_warning_black_24dp)
+                .setTitle("Cancel")
+                .setMessage("Discard your changes?")
+                .setPositiveButton("Yes") { dialog, which -> finish() }
+                .setNegativeButton("No", null)
+                .show()
+        }
+        else{
+            super.onBackPressed()
+        }
     }
 
     private fun updateDateInView(editText: TextInputEditText) {
@@ -527,27 +500,57 @@ title_input.setOnClickListener{
         when (item.itemId) {
 
             R.id.done -> {
-                var eventId = uuid.generateUUID()
-                var title = title_input.text
-                var userId = user_name.text
-                var startDate = dsc.getDateInMillis("${start_date.text} ${start_time.text}")
-                var endDate = dsc.getDateInMillis("${end_date.text} ${end_time.text}")
-                var description = description.text
-                var event = Event(eventId, title.toString(), startDate, endDate, guestList, description.toString())
-                var addEvent = AddEvent(event, userId.toString())
-                var result: Boolean = addEvent.add(dataBaseManager)
+                if (d11Layout.error == null && e11Layout.error == null) {
 
-                if (result == true) {
-                    Toast.makeText(this, "saved", Toast.LENGTH_SHORT).show()
 
-                } else {
-                    Toast.makeText(this, "not saved", Toast.LENGTH_SHORT).show()
+                    var eventId = uuid.generateUUID()
+                    var title = title_input.text.toString()
+                    var userId = user_name.text
+                    var startDate = dsc.getDateInMillis("${start_date.text} ${start_time.text}")
+                    var endDate = dsc.getDateInMillis("${end_date.text} ${end_time.text}")
+                    var description = description.text.toString()
+
+                    var reminderType1:Int=0
+                    for ((key, value) in reminderTypeAndKey) {
+                        if(value.equals(reminderType.text)){
+                            reminderType1=key
+                        }
+                    }
+                    if (title.equals("")) {
+                        title = "No title"
+                    }
+                    if (description.equals("")) {
+                        description = "No description"
+                    }
+                    var event = Event(eventId, title, startDate, endDate, guestList, description.toString(),reminderType1)
+                    var addEvent = AddEvent(event, userId.toString())
+                    var result: Boolean = addEvent.add(dataBaseManager)
+
+                    if (result == true) {
+                        Toast.makeText(this, "saved", Toast.LENGTH_SHORT).show()
+
+                    } else {
+                        Toast.makeText(this, "not saved", Toast.LENGTH_SHORT).show()
+                    }
+                    monthPagerAdapter.notifyDataSetChanged()
+                    dayPagerAdapter.notifyDataSetChanged()
+                    weekPagerAdapter.notifyDataSetChanged()
+                    val resultIntent = Intent()
+                    var bundle = Bundle()
+                    bundle.putString("result","true")
+                    bundle.putString("eventId",eventId)
+                    resultIntent.putExtra("bundle", bundle)
+                    setResult(Activity.RESULT_OK, resultIntent)
+                    /*val mySnackbar = Snackbar.make(findViewById<RelativeLayout>(R.id.add_event_layout),
+                       "Event added successfully", Snackbar.LENGTH_LONG)
+                    mySnackbar.setAction("View", MyUndoListener(event))
+                    mySnackbar.show()*/
+                    finish()
                 }
-                monthPagerAdapter.notifyDataSetChanged()
-                dayPagerAdapter.notifyDataSetChanged()
-                weekPagerAdapter.notifyDataSetChanged()
-                //setResult(Activity.RESULT_OK)
-                finish()
+                else{
+                    Toast.makeText(this, "Start date is previous to end date", Toast.LENGTH_SHORT).show()
+                }
+
                 return true
             }
             else ->
@@ -556,40 +559,20 @@ title_input.setOnClickListener{
 
     }
 
-    private fun createBottomSheetDialog() {
-
-        if (bottomSheetDialog == null) {
-            val view = LayoutInflater.from(this).inflate(R.layout.bottom_sheet, null)
-            var listView = view.findViewById<ListView>(R.id.listView)
-            val adapter = ArrayAdapter(
-                this,
-                android.R.layout.simple_list_item_1, resources.getStringArray(R.array.UserList)
-            )
-            listView.setAdapter(adapter)
-
-            bottomSheetDialog = BottomSheetDialog(this)
-            bottomSheetDialog!!.setContentView(view)
-            listView.setOnItemClickListener(AdapterView.OnItemClickListener { parent, view, position, id ->
-
-                val itemValue = listView.getItemAtPosition(position) as String
-                user_name.setText(itemValue)
-                bottomSheetDialog!!.dismiss()
 
 
-            })
-        }
-    }
 
-
-    private fun setDimensions(view: View, width: Int, height: Int) {
-        val params = view.layoutParams
-        params.width = width
-        params.height = height
-        view.layoutParams = params
-    }
-
+    var bottomSheetFragment:BottomSheetFragment ? = null
     fun showDialog(view: View) {
-        bottomSheetDialog!!.show()
+        bottomSheetFragment = BottomSheetFragment.newInstance()
+        bottomSheetFragment!!.show(
+            supportFragmentManager,
+            "user_bottom_sheet_fragment"
+        )
+
+    }
+    fun closeBottomSheet(){
+        bottomSheetFragment?.dismiss()
     }
 
     fun showDialog1() {
@@ -639,10 +622,16 @@ title_input.setOnClickListener{
         super.onActivityResult(requestCode, resultCode, data)
         if (requestCode == 1011) {
             if (resultCode == 1) {
+                var dbm = DataBaseManager(this)
                 var bundle = data!!.getBundleExtra("bundle");
                 guestList.removeAll(guestList)
                 guest_names.removeAllViews()
-                var stockkList: ArrayList<Contacts> = bundle!!.getParcelableArrayList("arrayList");
+                var stockkList: LongArray = bundle!!.getLongArray("arrayList");
+                println(stockkList)
+                var contactSelected = ArrayList<Contacts?>()
+                for (i in 0..stockkList.size - 1) {
+                    contactSelected.add(dbm.getSingleContact(stockkList.get(i)))
+                }
                 if (stockkList.size == 0) {
 
                     var params = guests.layoutParams
@@ -652,8 +641,8 @@ title_input.setOnClickListener{
                     guests.text = "Add Guests"
                     guestLayout.visibility = View.INVISIBLE
                 }
-               // guest_names.removeAllViews()
-                if(stockkList.size!=0){
+                // guest_names.removeAllViews()
+                if (stockkList.size != 0) {
                     guests.text = ""
                     var params = guests.layoutParams
                     params.width = 1
@@ -668,14 +657,27 @@ title_input.setOnClickListener{
                     params.height = ViewGroup.LayoutParams.WRAP_CONTENT;
                     guests.layoutParams = params
                     guestLayout.visibility = View.VISIBLE*/
-                    onItemSelected(stockkList.get(i))
+                    onItemSelected(contactSelected.get(i)!!)
                 }
 
             }
-        } else if (requestCode == 2) {
+        } else if (requestCode == 999) {
 
+            if (resultCode == Activity.RESULT_OK) {
+                val bundle = intent.extras
+
+//Extract the data…
+                val choosenReminderType = bundle!!.getInt("Position")
+
+println("Choosen position: "+choosenReminderType)
+                var item=reminderTypeAndKey.get(position1)
+                reminderType.setText(item.toString())
+
+
+            }
         }
     }
+
 
     fun onItemSelected(contact: Contacts) {
 
@@ -691,20 +693,6 @@ title_input.setOnClickListener{
         var d: RoundedBitmapDrawable =
             RoundedBitmapDrawableFactory.create(getResources(), bitmap);
         d.setCircular(true);
-       //var d: Drawable = BitmapDrawable(resources,bitmap);
-
-
-        /* Bitmap bitmap = BitmapFactory.decodeFile("/path/images/image.jpg");
-   ByteArrayOutputStream blob = new ByteArrayOutputStream();
-   bitmap.compress(CompressFormat.PNG, 0 /* Ignored for PNGs */, blob);
-   byte[] bitmapdata = blob.toByteArray();
-         val options = BitmapFactory.Options()
-         var bitmap = BitmapFactory.decodeByteArray(contacts[position].picId, 0, contacts[position].picId.size, options) //Convert bytearray to bitmap
-         im!!.setImageBitmap(bitmap);
-         chip.setImage
-         val options = BitmapFactory.Options()
-         var bitmap = BitmapFactory.decodeByteArray(contact.picId, 0, contact.picId.size, options) //Convert bytearray to bitmap*/
-
         chip.setChipIcon(d)
         chip.setCloseIconVisible(true)
         chip.setCheckable(false)
@@ -741,10 +729,14 @@ title_input.setOnClickListener{
         }
     }
  override fun onTouchEvent( event:MotionEvent) :Boolean{
-        // Pass activity on touch event to the gesture detector.
+
         gestureDetectorCompat!!.onTouchEvent(event);
-        // Return true to tell android OS that event has been consumed, do not pass it to other event listeners.
         return true;
+    }
+
+    fun hideSoftKeyboard(activity: Activity) {
+        val inputMethodManager = activity.getSystemService(Activity.INPUT_METHOD_SERVICE) as InputMethodManager
+        inputMethodManager.hideSoftInputFromWindow(activity.currentFocus!!.windowToken, 0)
     }
 
 }

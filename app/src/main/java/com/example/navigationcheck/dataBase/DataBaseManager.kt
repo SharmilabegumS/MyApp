@@ -24,6 +24,7 @@ private val EVENT_TITLE = "Event_Title"
 private val EVENT_FROM_DATE = "From_Date"
 private val EVENT_TO_DATE = "To_Date"
 private val EVENT_DESCRIPTION = "Event_Description"
+private val REMINDER_TYPE ="Reminder_Type"
 
 
 private val TABLE_EVENTS_GUESTS = "Event_Guests"
@@ -42,9 +43,10 @@ class DataBaseManager(var context: Context) : SQLiteOpenHelper(context, DATABASE
 
     override fun onCreate(db: SQLiteDatabase?) {
         val createUserTable =
-            "create table if not exists " + TABLE_USERS + "( " + USER_ID + " int(11) PRIMARY KEY UNIQUE, " + PASSWORD + "  varchar(45) NOT NULL) "
+            "create table if not exists " + TABLE_USERS + "( " + USER_ID + " varchar(45) PRIMARY KEY UNIQUE, " + PASSWORD + "  varchar(45) NOT NULL) "
+
         val createEventTable =
-            "CREATE TABLE if not exists " + TABLE_EVENTS + " (" + EVENT_ID + " varchar(45) not null," + EVENT_TITLE + " varchar(45)  not null," + EVENT_FROM_DATE + " int  not null," + EVENT_TO_DATE + " int  not null, " + EVENT_GUESTS + " varchar(45) NOT NULL, " + EVENT_DESCRIPTION + " varchar(45) NOT NULL," + USER_ID + " int(11),PRIMARY KEY(" + EVENT_ID + ", " + USER_ID + " , " + EVENT_FROM_DATE + " )  ON CONFLICT REPLACE ,FOREIGN KEY (" + USER_ID + ") REFERENCES  " + TABLE_USERS + " ( " + USER_ID + " ))"
+            "CREATE TABLE if not exists " + TABLE_EVENTS + " (" + EVENT_ID + " varchar(45) not null," + EVENT_TITLE + " varchar(45)  not null," + EVENT_FROM_DATE + " int  not null," + EVENT_TO_DATE + " int  not null, " + EVENT_GUESTS + " varchar(45) NOT NULL, " + EVENT_DESCRIPTION + " varchar(45) NOT NULL," + USER_ID + " varchar(45), " + REMINDER_TYPE + " int(11) NOT NULL, PRIMARY KEY(" + EVENT_ID + ", " + USER_ID + " , " + EVENT_FROM_DATE + " )  ON CONFLICT REPLACE ,FOREIGN KEY (" + USER_ID + ") REFERENCES  " + TABLE_USERS + " ( " + USER_ID + " ))"
         val createGuestTable =
             "create table if not exists " + TABLE_EVENTS_GUESTS + "( " + EVENT_ID + " varchar(45) NOT NULL, " + EVENT_GUESTS + "  varchar(45) NOT NULL,FOREIGN KEY (" + EVENT_ID + ") REFERENCES  " + TABLE_EVENTS + " ( " + EVENT_ID + " ) ON DELETE CASCADE ON UPDATE RESTRICT)"
 
@@ -75,6 +77,7 @@ class DataBaseManager(var context: Context) : SQLiteOpenHelper(context, DATABASE
         cv.put(EVENT_GUESTS, event.guests.joinToString())
         cv.put(EVENT_DESCRIPTION, event.description)
         cv.put(USER_ID, userId)
+        cv.put(REMINDER_TYPE,event.eventReminderType)
         var result = db.insert(TABLE_EVENTS, null, cv)
         if (result == -1.toLong())
             return false
@@ -96,8 +99,9 @@ class DataBaseManager(var context: Context) : SQLiteOpenHelper(context, DATABASE
                 var endDate = result.getString(result.getColumnIndex(EVENT_TO_DATE)).toLong()
                 var description = result.getString(result.getColumnIndex(EVENT_DESCRIPTION))
                 var guests = result.getString(result.getColumnIndex(EVENT_GUESTS))
+                var reminderType=result.getInt(result.getColumnIndex(REMINDER_TYPE))
                 val parts: List<String> = guests.split(",")
-                event = Event(id, title, startDate, endDate, parts, description)
+                event = Event(id, title, startDate, endDate, parts, description,reminderType)
 
 
             } while (result.moveToNext())
@@ -129,8 +133,9 @@ class DataBaseManager(var context: Context) : SQLiteOpenHelper(context, DATABASE
                 var endDate = result.getString(result.getColumnIndex(EVENT_TO_DATE)).toLong()
                 var description = result.getString(result.getColumnIndex(EVENT_DESCRIPTION))
                 var guests = result.getString(result.getColumnIndex(EVENT_GUESTS))
+                var reminderType=result.getInt(result.getColumnIndex(REMINDER_TYPE))
                 val parts: List<String> = guests.split(",")
-                event = Event(id, title, startDate, endDate, parts, description)
+                event = Event(id, title, startDate, endDate, parts, description,reminderType)
                 eventList.add(event)
 
             } while (result.moveToNext())
@@ -181,7 +186,8 @@ class DataBaseManager(var context: Context) : SQLiteOpenHelper(context, DATABASE
                 var description = result.getString(result.getColumnIndex(EVENT_DESCRIPTION))
                 var guests = result.getString(result.getColumnIndex(EVENT_GUESTS))
                 val parts: List<String> = guests.split(",")
-                event = Event(id, title, startDate, endDate, parts, description)
+                var reminderType=result.getInt(result.getColumnIndex(REMINDER_TYPE))
+                event = Event(id, title, startDate, endDate, parts, description,reminderType)
                 eventList.add(event)
 
             } while (result.moveToNext())
@@ -216,8 +222,38 @@ class DataBaseManager(var context: Context) : SQLiteOpenHelper(context, DATABASE
                 var endDate = result.getString(result.getColumnIndex(EVENT_TO_DATE)).toLong()
                 var description = result.getString(result.getColumnIndex(EVENT_DESCRIPTION))
                 var guests = result.getString(result.getColumnIndex(EVENT_GUESTS))
+                var reminderType=result.getInt(result.getColumnIndex(REMINDER_TYPE))
                 val parts: List<String> = guests.split(",")
-                event = Event(id, title, startDate, endDate, parts, description)
+                event = Event(id, title, startDate, endDate, parts, description,reminderType)
+                eventList.add(event)
+
+            } while (result.moveToNext())
+        }
+        result.close()
+        db.close()
+        return eventList
+    }
+    fun getAllEventsOfMonth(startTimeSlot:Long,endTimeSlot:Long,userId: String): ArrayList<Event>{
+        var eventList = ArrayList<Event>()
+        val db = this.readableDatabase
+        val query = "select * from  " + TABLE_EVENTS + " where "  + EVENT_FROM_DATE + " >= \"${startTimeSlot}\" and " +  EVENT_FROM_DATE + " <= \"${endTimeSlot}\" or " +  EVENT_TO_DATE  + " >=  \"${startTimeSlot}\"  and " +  EVENT_TO_DATE  + " <=   \"${endTimeSlot}\" and " + USER_ID + " = \"$userId\""        /* ("select * from  " + TABLE_EVENTS + " where " + EVENT_FROM_DATE + " between \"${startTimeSlot}\" and \"${endTimeSlot}\" or " + EVENT_TO_DATE
+                 + " between \"${startTimeSlot}\" and \"${endTimeSlot}\"and " + USER_ID + " = \"$userId\"")*/
+        var dsc=DateStringConvertor(Calendar.getInstance(TimeZone.getTimeZone("GMT")))
+        var dt=dsc.getDateFromMillis(startTimeSlot+19800000)
+
+        var event: Event? = null
+        val result = db.rawQuery(query, null)
+        if (result.moveToFirst()) {
+            do {
+                var id = result.getString(result.getColumnIndex(EVENT_ID))
+                var title = result.getString(result.getColumnIndex(EVENT_TITLE))
+                var startDate = result.getString(result.getColumnIndex(EVENT_FROM_DATE)).toLong()
+                var endDate = result.getString(result.getColumnIndex(EVENT_TO_DATE)).toLong()
+                var description = result.getString(result.getColumnIndex(EVENT_DESCRIPTION))
+                var guests = result.getString(result.getColumnIndex(EVENT_GUESTS))
+                val parts: List<String> = guests.split(",")
+                var reminderType=result.getInt(result.getColumnIndex(REMINDER_TYPE))
+                event = Event(id, title, startDate, endDate, parts, description,reminderType)
                 eventList.add(event)
 
             } while (result.moveToNext())
@@ -284,7 +320,36 @@ class DataBaseManager(var context: Context) : SQLiteOpenHelper(context, DATABASE
         return contactList
 
     }
+fun getEventForNext30min( startTimeSlot: Long,userId: String,eventType:Int):ArrayList<Event>{
+    var eventList = ArrayList<Event>()
+    val db = this.readableDatabase
+    val query = "select * from  " + TABLE_EVENTS + " where "  + EVENT_FROM_DATE + " == \"${startTimeSlot+19800000}\"  and " + USER_ID + " = \"$userId\" and " + REMINDER_TYPE + " == \"$eventType\" "
+    println(query)
+    var dsc=DateStringConvertor(Calendar.getInstance(TimeZone.getTimeZone("GMT")))
+    var dt=dsc.getDateFromMillis(startTimeSlot+19800000)
 
+    var event: Event? = null
+    val result = db.rawQuery(query, null)
+    if (result.moveToFirst()) {
+        do {
+            var id = result.getString(result.getColumnIndex(EVENT_ID))
+            var title = result.getString(result.getColumnIndex(EVENT_TITLE))
+            var startDate = result.getString(result.getColumnIndex(EVENT_FROM_DATE)).toLong()
+            var endDate = result.getString(result.getColumnIndex(EVENT_TO_DATE)).toLong()
+            var description = result.getString(result.getColumnIndex(EVENT_DESCRIPTION))
+            var guests = result.getString(result.getColumnIndex(EVENT_GUESTS))
+            val parts: List<String> = guests.split(",")
+            var reminderType=result.getInt(result.getColumnIndex(REMINDER_TYPE))
+            event = Event(id, title, startDate, endDate, parts, description,reminderType)
+            eventList.add(event)
+
+        } while (result.moveToNext())
+    }
+    result.close()
+    db.close()
+    return eventList
+
+}
     fun getSingleContact(get: String): Contacts? {
         val db = this.readableDatabase
         val query = "Select * from " + CONTACTS + " where " + CONTACT_NAME + " = \"$get\"  ORDER BY " + CONTACT_NAME + " ASC  "
@@ -308,6 +373,30 @@ class DataBaseManager(var context: Context) : SQLiteOpenHelper(context, DATABASE
 
 
     }
+    fun getSingleContact(get: Long): Contacts? {
+        val db = this.readableDatabase
+        val query = "Select * from " + CONTACTS + " where " + CONTACT_ID + " = \"$get\"  ORDER BY " + CONTACT_NAME + " ASC  "
+        var contact: Contacts? = null
+        val result = db.rawQuery(query, null)
+        if (result.moveToFirst()) {
+            do {
+                var id = result.getLong(result.getColumnIndex(CONTACT_ID))
+                var name = result.getString(result.getColumnIndex(CONTACT_NAME))
+                var email = result.getString(result.getColumnIndex(CONTACT_EMAIL))
+                var imageArray = result.getBlob(result.getColumnIndex(CONTACT_IMAGE))
+
+                contact = Contacts(id, name, email, imageArray)
+
+
+            } while (result.moveToNext())
+        }
+        result.close()
+        db.close()
+        return contact
+
+
+    }
+
 
     fun deleteData() {
         val db = this.writableDatabase

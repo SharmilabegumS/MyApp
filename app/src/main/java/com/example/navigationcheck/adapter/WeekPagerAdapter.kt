@@ -2,20 +2,12 @@ package com.example.navigationcheck.adapter
 
 
 import android.content.Context
-import android.view.View
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentStatePagerAdapter
-import com.example.navigationcheck.MonthFragment
 import java.util.*
-import kotlin.collections.ArrayList
-import android.view.ViewGroup
 import androidx.viewpager.widget.PagerAdapter
-import android.util.SparseArray
-import com.amitshekhar.utils.Utils
 import android.os.Bundle
-import com.example.navigationcheck.DayFragment
-import com.example.navigationcheck.FragmentObserver
 import com.example.navigationcheck.WeekFragment
 
 
@@ -23,6 +15,7 @@ class WeekPagerAdapter internal constructor(fm: FragmentManager, context: Contex
     FragmentStatePagerAdapter(fm) {
     var monthList = monthList
     var fm = fm
+    var date:Date?=null
     var calendar: Calendar = Calendar.getInstance()
 
     override fun getCount(): Int {
@@ -36,6 +29,15 @@ class WeekPagerAdapter internal constructor(fm: FragmentManager, context: Contex
         val bundle = Bundle()
         bundle.putString("monthYear", monthList.get(position))
 
+        var day = Integer.parseInt(monthList.get(position).substring(0, 2))
+        var month = Integer.parseInt(monthList.get(position).substring(2, 4))
+        var year = Integer.parseInt(monthList.get(position).substring(4, 8))
+        var cal=Calendar.getInstance()
+        cal.set(Calendar.DAY_OF_MONTH,day)
+
+        cal.set(Calendar.MONTH,month )
+        cal.set(Calendar.YEAR,year)
+        date=cal.time
         val fragment = WeekFragment()
         fragment.setArguments(bundle)
 
@@ -85,6 +87,9 @@ class WeekPagerAdapter internal constructor(fm: FragmentManager, context: Contex
 
         return PagerAdapter.POSITION_NONE
 
+    }
+    fun getDateWeekAdapter():Date?{
+        return  date
     }
 
     /*

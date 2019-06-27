@@ -1,5 +1,6 @@
 package com.example.navigationcheck
 
+import android.app.Activity
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.Menu
@@ -7,10 +8,14 @@ import android.widget.*
 import com.example.navigationcheck.entity.Event
 import kotlinx.android.synthetic.main.activity_view_event.*
 import android.content.Intent
+import android.graphics.Color
 import android.view.MenuItem
+import android.view.View
 import com.example.navigationcheck.dataBase.DataBaseManager
 import com.example.navigationcheck.entity.Contacts
 import com.example.navigationcheck.adapter.CustomAdapter2
+import com.google.android.material.snackbar.Snackbar
+import java.text.SimpleDateFormat
 
 
 lateinit var imageView: ImageView
@@ -22,11 +27,14 @@ lateinit var descriptionEvent: TextView
 lateinit var guestList: ExpandableListView
 lateinit var eventID: Event
 lateinit var titleList: ArrayList<String>
-lateinit var dbm: DataBaseManager
+lateinit var id:String
+
 var contactList = ArrayList<Contacts>()
 
-class ViewEvent(var userId: String = "sharmilabegum97@gmail.com") : AppCompatActivity() {
+class ViewEvent() : AppCompatActivity() {
+
     internal var adapter: ExpandableListAdapter? = null
+    var userId:String?=null
 
     val data: HashMap<String, List<Contacts>>
         get() {
@@ -34,20 +42,24 @@ class ViewEvent(var userId: String = "sharmilabegum97@gmail.com") : AppCompatAct
             contactList.removeAll(contactList)
             for (i in 0..eventID!!.guests.size - 1) {
                 var contact = dbm.getSingleContact(eventID.guests.get(i).trim())
-                contactList.add(contact!!)
+                if(contact!=null){
+                    contactList.add(contact!!)
+                }
             }
-            listData["Guests"] = contactList
+            listData["Guests (${contactList.size})"] = contactList
             return listData
         }
 
-    constructor (eventId: Event, userId: String) : this(userId) {
-        eventID = eventId
-    }
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         dbm = DataBaseManager(this)
         super.onCreate(savedInstanceState)
         setContentView(R.layout.view_event_modified)
+        val intent = intent
+        id=intent.getStringExtra("ID")
+        println("ID is :"+id)
+        eventID=dbm.getEvent(id)!!
         setSupportActionBar(toolbar1)
         val actionBar = supportActionBar
         actionBar!!.title = "Event"
@@ -84,7 +96,7 @@ class ViewEvent(var userId: String = "sharmilabegum97@gmail.com") : AppCompatAct
             R.id.action_edit -> {
 
                 val intent = Intent(this@ViewEvent, EditEvent::class.java);
-                startActivity(intent);
+                startActivityForResult(intent,1000);
                 val resultIntent = Intent()
                 setResult(1, resultIntent)
                 finish()
@@ -109,11 +121,40 @@ class ViewEvent(var userId: String = "sharmilabegum97@gmail.com") : AppCompatAct
         }
 
     }
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+        if (requestCode == 1000) {
+            var dbm=DataBaseManager(this)
+            if (resultCode == Activity.RESULT_OK) {
+                var bundle = data!!.getBundleExtra("bundle")
 
+                var result = bundle.getString("result")
+                var eventId=bundle.getString("eventId")
+                var event=dbm.getEvent(eventId)
+                if(result.equals("true")){
+                    val mySnackbar = Snackbar.make(findViewById(R.id.framelayout),
+                        "Event added successfully", Snackbar.LENGTH_LONG)
+                    mySnackbar.setAction("View", View.OnClickListener {
+                        val i= Intent(this, ViewEvent::class.java)
+                        i.putExtra("ID", event!!.eventId)
+                        startActivity(i)
+                    })
+                    val navDefaultTextColor = Color.parseColor("#006cff")
+                    mySnackbar.setActionTextColor(navDefaultTextColor)
+                    // mySnackbar.getView().setBackgroundColor(Color.WHITE)
+                    mySnackbar.show()
+                }
+                //monthPagerAdapter = MonthPageAdapter(supportFragmentManager, this, monthList111)
+
+                // onNavigationItemSelected(nav_view.getMenu().getItem(0));
+
+            }
+        }
+    }
 
     fun fillFields(eventID: Event) {
         titleEvent.setText(eventID!!.title)
-        userMail.setText(userId)
+        userMail.setText("sharmilabegum97@gmail.com")
         var sd = dsc.getDateToStringConversion(dsc.getDateFromMillis(eventID!!.startDate))
         var ed = dsc.getDateToStringConversion(dsc.getDateFromMillis(eventID!!.endDate))
         if (sd.substring(0, 10).equals(ed.substring(0, 10))) {
@@ -127,6 +168,7 @@ class ViewEvent(var userId: String = "sharmilabegum97@gmail.com") : AppCompatAct
         }
         descriptionEvent.setText(eventID!!.description)
         if (guestList != null) {
+            if (data.isEmpty() == false){
             val listData = data
             titleList = ArrayList(listData.keys)
             adapter = CustomAdapter2(this, contactList, titleList, listData)
@@ -143,8 +185,20 @@ class ViewEvent(var userId: String = "sharmilabegum97@gmail.com") : AppCompatAct
                 false
             }*/
         }
+            else{
+             guestList.visibility=View.INVISIBLE
+            }
+        }
 
     }
+
+    override fun onNewIntent(intent: Intent?) {
+
+
+        if (intent != null) {
+           id= intent.extras!!.getString("ID")
+        }
+}
 
 
 }

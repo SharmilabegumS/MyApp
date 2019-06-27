@@ -63,11 +63,7 @@ class WeekFragment : androidx.fragment.app.Fragment() {
         var weekNumber = calendarWeek.get(Calendar.WEEK_OF_MONTH);
         calendarWeek.set(Calendar.DAY_OF_WEEK, Calendar.SUNDAY);
         var startDate = calendarWeek.getTime();
-        var bottom_date_holder: TextView = view.findViewById(R.id.bottom_date_holder)
-        var paramsAllDay1: RelativeLayout.LayoutParams = bottom_date_holder.layoutParams as RelativeLayout.LayoutParams
-        paramsAllDay1.setMargins(screenWidthCommon-350, ((screenHeightCommon/1.2)-25).toInt(),0,0)
-        bottom_date_holder.setLayoutParams(paramsAllDay1);
-
+        var bottom_date_holder: TextView =activity!!.bdh
         calendarWeek.add(Calendar.DATE, 6);
         var endDate = calendarWeek.getTime();
         var yearTv=view.findViewById<TextView>(R.id.year1)

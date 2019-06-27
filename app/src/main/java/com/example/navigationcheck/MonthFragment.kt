@@ -12,40 +12,37 @@ import android.view.ViewGroup
 import java.util.*
 import android.widget.*
 import java.text.SimpleDateFormat
-import android.widget.FrameLayout.LayoutParams
 import android.widget.TextView
 import com.example.navigationcheck.domain.GetEvent
 import android.widget.ArrayAdapter
 import com.example.navigationcheck.entity.Event
 import android.widget.AdapterView
+import com.example.navigationcheck.dataBase.DataBaseManager
 import kotlin.collections.ArrayList
 
 
-
-
 var date: Date = Date()
-var calendar: Calendar = Calendar.getInstance()
+var calendar: Calendar = Calendar.getInstance(TimeZone.getTimeZone("GMT"))
 var month: Int = calendar.get(Calendar.MONTH)
 var year: Int = calendar.get(Calendar.YEAR)
 var dateInteger = calendar.get(Calendar.DAY_OF_MONTH)
 lateinit var gridLayout: GridLayout
 lateinit var currentDateElement: TextView
-
-
 var eventlist = ArrayList<Event>()
 var itemsAdapter: ArrayAdapter<String>? = null
 var containerToBeProcessed: ViewGroup? = null
 var context1: Context? = null
-var i=1
-lateinit var view1:View
+var i = 1
+lateinit var view1: View
 var datePassed: Date? = Date()
-var eventStartTime=ArrayList<String>()
-var eventEndTime=ArrayList<String>()
-lateinit var monthStartDate:TextView
-var status:Boolean=true
+var eventStartTime = ArrayList<String>()
+var eventEndTime = ArrayList<String>()
+lateinit var monthStartDate: TextView
+var status: Boolean = true
+
 class MonthFragment : androidx.fragment.app.Fragment() {
 
-    var cal1: Calendar = Calendar.getInstance()
+    var cal1: Calendar = Calendar.getInstance(TimeZone.getTimeZone("GMT"))
     val format = SimpleDateFormat("dd/MM/yyyy")
     val format1 = SimpleDateFormat("MM/yyyy")
     var location = IntArray(2)
@@ -66,8 +63,8 @@ class MonthFragment : androidx.fragment.app.Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         val view = inflater.inflate(R.layout.fragment_month, container, false)
-        view1=view
-        status=true
+        view1 = view
+        status = true
         var bundle = arguments
         var value = bundle!!.getString("monthYear")
         calendar.set(Calendar.MONTH, Integer.parseInt(value.substring(0, 2)))
@@ -76,13 +73,34 @@ class MonthFragment : androidx.fragment.app.Fragment() {
         datePassed = calendar.time
         date = calendar.time
         val activity = activity as MainActivity
-        //activity!!.date=date
-        //dateCommon=date
         month = calendar.get(Calendar.MONTH)
         year = calendar.get(Calendar.YEAR)
         containerToBeProcessed = container
         var startDate = getFirstDateOfMonth(date, calendar)
         var endDate = getLastDateOfMonth(date, calendar)
+        var calendarStartDate = Calendar.getInstance(TimeZone.getTimeZone("GMT"))
+        calendarStartDate.time = startDate
+        calendarStartDate.set(Calendar.HOUR_OF_DAY, 0)
+
+        calendarStartDate.set(Calendar.MINUTE, 0)
+        calendarStartDate.set(Calendar.SECOND, 1)
+        startDate = calendarStartDate.time
+        var calendarEndDate = Calendar.getInstance(TimeZone.getTimeZone("GMT"))
+        calendarEndDate.time = endDate
+        calendarEndDate.set(Calendar.HOUR_OF_DAY, 23)
+        calendarEndDate.set(Calendar.MINUTE, 59)
+        calendarEndDate.set(Calendar.SECOND, 59)
+        endDate = calendarEndDate.time
+        var dbm = DataBaseManager(context!!)
+        var monthEvents = dbm.getAllEventsOfMonth(
+            dsc.getDateInMillis1(startDate),
+            dsc.getDateInMillis1(endDate),
+            "sharmilabegum97@gmail.com"
+        )
+        println("Month events: " + monthEvents)
+        var ge = GetEvent(context!!)
+        var currentDateEvents = ge.getEvent(Date(), dsc, calendar, "sharmilabegum97@gmail.com")
+
         var lastDayofMonth = calendar.getActualMaximum(Calendar.DAY_OF_MONTH)
         var firstDayofMonth = calendar.getMinimalDaysInFirstWeek()
         var noOfDays = lastDayofMonth - firstDayofMonth + 1
@@ -96,24 +114,23 @@ class MonthFragment : androidx.fragment.app.Fragment() {
 
         lateinit var events_title: TextView
         var eventListView: ListView = view.findViewById(R.id.event_list)
-        var bottom_date_holder: TextView = view.findViewById(R.id.bottom_date_holder)
+        var bottom_date_holder: TextView = activity!!.bdh
         bottom_date_holder.text = dateInteger.toString()
         bottom_date_holder.setBackgroundResource(R.drawable.circle_shape)
         setDimensions(
             bottom_date_holder,
             ((screenWidthCommon - 30) / 7.5).toInt(),
-            (screenWidthCommon - 30) / 7.5.toInt()-10
+            (screenWidthCommon - 30) / 7.5.toInt() - 10
         )
-        //var month_layout: GridLayout = view.findViewById(R.id.gridlayout)
         var month: TextView = view.findViewById(R.id.month_name)
-var year1:TextView=view.findViewById(R.id.year1)
+        var year1: TextView = view.findViewById(R.id.year1)
         month.setText("$monthName")
         year1.setText("$year")
         clearForm(view.findViewById(R.id.gridlayout), spaces, noOfDays, lastDayofMonth)
         val container1 = view.findViewById(R.id.gridlayout) as GridLayout
         events_title = view.findViewById(R.id.events_title)
 
-        var cal: Calendar = Calendar.getInstance()
+        var cal: Calendar = Calendar.getInstance(TimeZone.getTimeZone("GMT"))
         cal.setTime(Date())
         cal1.setTime(startDate)
         gridLayout = container1
@@ -127,11 +144,26 @@ var year1:TextView=view.findViewById(R.id.year1)
                 date = Integer.valueOf(element.text.toString())
                 cal1.set(Calendar.DAY_OF_MONTH, date)
                 dateIterated = cal1.time
-                var ge = GetEvent(context!!)
-                eventList = ge.getEvent(dateIterated, dsc, calendar, "sharmilabegum97@gmail.com")
 
-                if(element.text.equals("1")) {
-                  monthStartDate=element
+
+                var dateStartInMillis = dsc.getDateInMillis1(dateIterated)
+                cal.setTime(dateIterated)
+                cal.set(Calendar.HOUR_OF_DAY, 23)
+                cal.set(Calendar.MINUTE, 59)
+                cal.set(Calendar.SECOND, 59)
+
+                var dateEndInMillis = dsc.getDateInMillis1(cal.time)
+                for (i in 0..monthEvents.size - 1) {
+                    var fromDate = monthEvents.get(i).startDate
+                    var toDate = monthEvents.get(i).endDate
+                    if ((fromDate!! >= dateStartInMillis!! && fromDate <= dateEndInMillis) or (toDate!! >= dateStartInMillis!! && toDate <= dateEndInMillis)) {
+                        eventList.add(monthEvents.get(i))
+                    }
+
+                }
+                if (element.text.equals("1")) {
+                    element.isClickable=true
+                    monthStartDate = element
                 }
                 if (format.format(dateIterated).equals(format.format(Date()))) {
 
@@ -139,16 +171,13 @@ var year1:TextView=view.findViewById(R.id.year1)
                     element.setTextColor(Color.WHITE)
                     currentDateElement = element
                     bottom_date_holder.visibility = View.INVISIBLE
-                    location[0] = currentDateElement.getX().toInt()
-                    location[1] = currentDateElement.getY().toInt()
-                   var calendarObj: Calendar = Calendar.getInstance()
-                    var calobj:Calendar= Calendar.getInstance()
+                    var calendarObj: Calendar = Calendar.getInstance(TimeZone.getTimeZone("GMT"))
+                    var calobj: Calendar = Calendar.getInstance(TimeZone.getTimeZone("GMT"))
                     calobj.setTime(startDate)
-
                     activity!!.setDateCommon(Date())
-                    calendarObj.set(Calendar.DAY_OF_MONTH,calobj.get(Calendar.DAY_OF_MONTH))
-                    calendarObj.set(Calendar.MONTH,calobj.get(Calendar.MONTH))
-                    calendarObj.set(Calendar.YEAR,calobj.get(Calendar.YEAR))
+                    calendarObj.set(Calendar.DAY_OF_MONTH, calobj.get(Calendar.DAY_OF_MONTH))
+                    calendarObj.set(Calendar.MONTH, calobj.get(Calendar.MONTH))
+                    calendarObj.set(Calendar.YEAR, calobj.get(Calendar.YEAR))
                     calendarObj.set(Calendar.DAY_OF_MONTH, Integer.valueOf(element.text.toString()))
                     var dateIterated = calendarObj.time
                     calendarObj.add(Calendar.HOUR, 1)
@@ -157,19 +186,16 @@ var year1:TextView=view.findViewById(R.id.year1)
                     var date1 = dsc.getDateToStringConversion(timeEnd)
                     eventStartTime = getTimeInFormat(date, calendarObj)
                     eventEndTime = getTimeInFormat(date1, calendarObj)
-                    status=false
+                    status = false
 
                 }
 
                 if (format.format(dateIterated).equals(format.format(Date()))) {
                     if (eventList.isEmpty() == false) {
-                        //element.setCompoundDrawablePadding(3)
                         element.setCompoundDrawablesWithIntrinsicBounds(0, 0, 0, R.drawable.bullet_white)
                     }
-                }
-                else{
+                } else {
                     if (eventList.isEmpty() == false) {
-                       // element.setCompoundDrawablePadding(3)
                         element.setCompoundDrawablesWithIntrinsicBounds(0, 0, 0, R.drawable.bullet1)
                     }
                 }
@@ -185,62 +211,36 @@ var year1:TextView=view.findViewById(R.id.year1)
                     currentDateElement.setTextColor(Color.WHITE)
                     bottom_date_holder.visibility = View.INVISIBLE
                     iteration = 1
-                    var ge = GetEvent(context!!)
-                activity!!.setDateCommon(Date())
-                    eventList = ge.getEvent(Date(), dsc, calendar, "sharmilabegum97@gmail.com")
-                    //if (format1.format(dateIterated).equals(format1.format(Date()))) {
-                        if (eventList.isEmpty() == false) {
-                           // currentDateElement.setCompoundDrawablePadding(3)
-                            currentDateElement.setCompoundDrawablesWithIntrinsicBounds(0, 0, 0, R.drawable.bullet_white)
-                        }
-                   // }
-                   /* if (eventList!!.isEmpty() == false) {
-
-                        if (format.format(dateIterated).equals(format.format(Date()))) {
-                            element.setCompoundDrawablePadding(5)
-                            element.setCompoundDrawablesWithIntrinsicBounds(0, 0, 0, R.drawable.bullet_white)
-                        }
-                    }*/
+                    activity!!.setDateCommon(Date())
+                    if (currentDateEvents.isEmpty() == false) {
+                        currentDateElement.setCompoundDrawablesWithIntrinsicBounds(0, 0, 0, R.drawable.bullet_white)
+                    }
 
 
 
-
-                }
-                else {
-                    // currentDateElement.animate().translationY(400.toFloat());
-                    /* val transAnimation = TranslateAnimation(location1[0].toFloat(),location[0].toFloat(), location1[1].toFloat(),location[1].toFloat())
-                       currentDateElement.startAnimation(transAnimation)
-                       transAnimation.duration=10000*/
-                    var calendarrr=Calendar.getInstance()
-                    calendarrr.time=startDate
-                    calendarrr.set(Calendar.DAY_OF_MONTH,Integer.parseInt(element.text.toString()))
+                } else {
+                    var calendarrr = Calendar.getInstance(TimeZone.getTimeZone("GMT"))
+                    calendarrr.time = startDate
+                    calendarrr.set(Calendar.DAY_OF_MONTH, Integer.parseInt(element.text.toString()))
                     activity!!.setDateCommon(calendarrr.time)
-                    bottom_date_holder.visibility = View.VISIBLE
+
                     it.setBackgroundResource(R.drawable.colour_transparent)
-                    var ge = GetEvent(context!!)
-                    eventList = ge.getEvent(Date(), dsc, calendar, "sharmilabegum97@gmail.com")
                     if (format1.format(dateIterated).equals(format1.format(Date()))) {
 
-                        //if (eventList.isEmpty() == false) {
-                            currentDateElement.setTextColor(Color.BLUE)
-                        if (eventList.isEmpty() == false) {
-                            //currentDateElement.setCompoundDrawablePadding(3)
+                        currentDateElement.setTextColor(Color.BLUE)
+                        if (currentDateEvents.isEmpty() == false) {
                             currentDateElement.setCompoundDrawablesWithIntrinsicBounds(0, 0, 0, R.drawable.bullet1)
                         }
-                        //}
-                    }
-                    //else{
-                        //currentDateElement.setTextColor(Color.WHITE)
-                    //}
 
+                    }
                 }
                 changeInOtherViews(it, container1, eventList)
-                var calendarObj: Calendar = Calendar.getInstance()
-                var calobj:Calendar= Calendar.getInstance()
+                var calendarObj: Calendar = Calendar.getInstance(TimeZone.getTimeZone("GMT"))
+                var calobj: Calendar = Calendar.getInstance(TimeZone.getTimeZone("GMT"))
                 calobj.setTime(startDate)
-                calendarObj.set(Calendar.DAY_OF_MONTH,calobj.get(Calendar.DAY_OF_MONTH))
-                calendarObj.set(Calendar.MONTH,calobj.get(Calendar.MONTH))
-                calendarObj.set(Calendar.YEAR,calobj.get(Calendar.YEAR))
+                calendarObj.set(Calendar.DAY_OF_MONTH, calobj.get(Calendar.DAY_OF_MONTH))
+                calendarObj.set(Calendar.MONTH, calobj.get(Calendar.MONTH))
+                calendarObj.set(Calendar.YEAR, calobj.get(Calendar.YEAR))
 
                 calendarObj.set(Calendar.DAY_OF_MONTH, Integer.valueOf(element.text.toString()))
                 var dateIterated = calendarObj.time
@@ -262,14 +262,30 @@ var year1:TextView=view.findViewById(R.id.year1)
                     var date: Int = Integer.valueOf(it.text.toString())
                     cal1.set(Calendar.DAY_OF_MONTH, date)
                     var dateIterated = cal1.time
-                    var ge = GetEvent(context!!)
-                    var eventList = ge.getEvent(dateIterated, dsc, calendar, "sharmilabegum97@gmail.com")
-                    if (eventList.isEmpty() == false) {
+                    var eventsListOfDate = ArrayList<Event>()
 
-                        eventlist = eventList
-                        val names = arrayOfNulls<String>(eventList.size)
-                        for (i in 0..eventList.size - 1) {
-                            names[i] = eventList[i].title
+                    var dateStartInMillis = dsc.getDateInMillis1(dateIterated)
+
+                    cal.setTime(dateIterated)
+                    cal.set(Calendar.HOUR_OF_DAY, 23)
+                    cal.set(Calendar.MINUTE, 59)
+                    cal.set(Calendar.SECOND, 59)
+
+                    var dateEndInMillis = dsc.getDateInMillis1(cal.time)
+                    println("End date111: " + cal.time)
+                    for (i in 0..monthEvents.size - 1) {
+                        var fromDate = monthEvents.get(i).startDate
+                        var toDate = monthEvents.get(i).endDate
+                        if ((fromDate!! >= dateStartInMillis!! && fromDate <= dateEndInMillis) or (toDate!! >= dateStartInMillis!! && toDate <= dateEndInMillis)) {
+                            eventsListOfDate.add(monthEvents.get(i))
+                        }
+                    }
+                    if (eventsListOfDate.isEmpty() == false) {
+
+                        eventlist = eventsListOfDate
+                        val names = arrayOfNulls<String>(eventsListOfDate.size)
+                        for (i in 0..eventsListOfDate.size - 1) {
+                            names[i] = eventsListOfDate[i].title
                         }
 
                         events_title.visibility = View.VISIBLE
@@ -292,28 +308,27 @@ var year1:TextView=view.findViewById(R.id.year1)
 
             }
         }
-        if(status==true){
-           monthStartDate.setBackgroundResource(R.drawable.colour_transparent)
+        if (status == true) {
+            /*monthStartDate.performClick()
+            monthStartDate.setBackgroundResource(R.drawable.colour_transparent)
             monthStartDate.setTextColor(Color.BLACK)
-            monthStartDate.setClickable(true)
-           /* var calendarObj: Calendar = Calendar.getInstance()
-            calendarObj.setTime(startDate)
-            calendarObj.set(Calendar.DAY_OF_MONTH, Integer.valueOf( monthStartDate.text.toString()))
-            var dateIterated = calendarObj.time
-            calendarObj.add(Calendar.HOUR, 1)
-            var timeEnd = calendarObj.time
-            var date = dsc.getDateToStringConversion(dateIterated)
-            var date1 = dsc.getDateToStringConversion(timeEnd)
-            eventStartTime = getTimeInFormat(date, calendarObj)
-            eventEndTime = getTimeInFormat(date1, calendarObj)*/
+            monthStartDate.setClickable(true)*/
+            bottom_date_holder.visibility = View.VISIBLE
+
+
+        }
+        else{
+            //currentDateElement.performClick()
+            bottom_date_holder.visibility = View.INVISIBLE
+
 
         }
         bottom_date_holder.setOnClickListener {
             location1[0] = it.getX().toInt()
             location1[1] = it.getY().toInt()
             val activity = activity as MainActivity
-            //activity!!.date=Date()
             activity!!.setDateCommon(Date())
+            activity!!.generateMonthView(Date())
             activity!!.getCurrentMonthView()
         }
         eventListView.setOnItemClickListener(object : AdapterView.OnItemClickListener {
@@ -322,9 +337,10 @@ var year1:TextView=view.findViewById(R.id.year1)
             override fun onItemClick(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
                 for (i in 0..eventlist.size - 1) {
                     if (eventlist.get(i).title.equals(parent!!.getItemAtPosition(position))) {
-                        val i: Intent =
-                            Intent(context, ViewEvent(eventlist.get(i)!!, "sharmilabegum97@gmail.com")::class.java)
-                        startActivityForResult(i, 1);
+                        val intent=
+                            Intent(context, ViewEvent::class.java)
+                        intent.putExtra("ID",eventlist.get(i)!!.eventId)
+                        startActivityForResult(intent, 1);
                     }
                 }
             }
@@ -343,6 +359,7 @@ var year1:TextView=view.findViewById(R.id.year1)
 
     private fun getLastDateOfMonth(date: Date, cal: Calendar): Date {
         cal.time = date
+        var endDateInt = cal.getActualMaximum(Calendar.DAY_OF_MONTH)
         cal.set(Calendar.DAY_OF_MONTH, cal.getActualMaximum(Calendar.DAY_OF_MONTH))
         return cal.time
     }
@@ -394,7 +411,7 @@ var year1:TextView=view.findViewById(R.id.year1)
         while (item < count!!) {
 
             var view = group?.getChildAt(item)
-            setDimensions(view, ((screenWidthCommon - 30) / 7.5).toInt(), (screenWidthCommon - 30) / 7.5.toInt()-10)
+            setDimensions(view, ((screenWidthCommon - 30) / 7.5).toInt(), (screenWidthCommon - 30) / 7.5.toInt() - 10)
             item++
         }
     }
@@ -418,70 +435,6 @@ var year1:TextView=view.findViewById(R.id.year1)
     }
 
 
-   /* override fun onResume() {
-        super.onResume()
-       var gridLayout=view1.findViewById<GridLayout>(R.id.gridlayout)
-            val childCount = gridLayout.childCount
-            for (i in 7 until childCount) {
-                val element = gridLayout.getChildAt(i) as TextView
-                if (element.text.toString().equals("") == false) {
-                    var date: Int = Integer.valueOf(element.text.toString())
-                    cal1.set(Calendar.DAY_OF_MONTH, date)
-                    var dateIterated = cal1.time
-                    var ge = GetEvent(context!!)
-                    var eventList = ge.getEvent(dateIterated, dsc, calendar, "sharmilabegum97@gmail.com")
-                    if (eventList.isEmpty() == false) {
-
-                        if (format.format(dateIterated).equals(format.format(Date()))) {
-                            element.setCompoundDrawablePadding(5)
-                            element.setCompoundDrawablesWithIntrinsicBounds(0, 0, 0, R.drawable.bullet_white)
-                        } else
-                            element.setCompoundDrawablePadding(5)
-                        element.setCompoundDrawablesWithIntrinsicBounds(0, 0, 0, R.drawable.bullet1)
-
-                    }
-                }
-
-            }
-
-    }
-    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-        super.onActivityResult(requestCode, resultCode, data)
-        if (requestCode == 1) {
-
-            if (resultCode == 1) {
-                    monthPagerAdapter.notifyDataSetChanged()
-                val childCount = gridLayout.childCount
-                for (i in 7 until childCount) {
-                    val element = gridLayout.getChildAt(i) as TextView
-                    if (element.text.toString().equals("") == false) {
-                        var date: Int = Integer.valueOf(element.text.toString())
-                        cal1.set(Calendar.DAY_OF_MONTH, date)
-                        var dateIterated = cal1.time
-                        var ge = GetEvent(context!!)
-                        var eventList = ge.getEvent(dateIterated, dsc, calendar, "sharmilabegum97@gmail.com")
-                        if (eventList.isEmpty() == false) {
-
-                            if (format.format(dateIterated).equals(format.format(Date()))) {
-                                element.setCompoundDrawablePadding(5)
-                                element.setCompoundDrawablesWithIntrinsicBounds(0, 0, 0, R.drawable.bullet_white)
-                            } else
-                                element.setCompoundDrawablePadding(5)
-                            element.setCompoundDrawablesWithIntrinsicBounds(0, 0, 0, R.drawable.bullet1)
-
-                        } else {
-                            element.setCompoundDrawablesWithIntrinsicBounds(0, 0, 0, 0)
-
-                        }
-
-                    }
-
-
-                }
-            }
-        }
-    }*/
-
     fun getTimeInFormat(date: String, cal: Calendar): ArrayList<String> {
         var time = ArrayList<String>()
         if (date.substring(14, 16).toInt() >= 0 && date.substring(14, 16).toInt() < 30) {
@@ -497,7 +450,6 @@ var year1:TextView=view.findViewById(R.id.year1)
 
         return time
     }
-
 
 
 }
