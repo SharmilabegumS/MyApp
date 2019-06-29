@@ -60,7 +60,7 @@
                   android:layout_marginLeft="10dp"
                   android:layout_marginStart="10dp"
                   android:layout_alignParentLeft="true"
-                 >
+        >
 
         </ListView>
         <com.google.android.material.floatingactionbutton.FloatingActionButton

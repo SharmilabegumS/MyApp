@@ -6,304 +6,426 @@
                 android:layout_height="match_parent"
                 android:orientation="vertical"
                 android:textColor="#000"
-                android:fitsSystemWindows="true"
-
-
+android:fitsSystemWindows="true"
+                android:id="@+id/add_event_layout"
 >
-    <androidx.appcompat.widget.Toolbar
-            android:id="@+id/toolbar1"
+    <com.google.android.material.appbar.AppBarLayout
+            android:layout_height="wrap_content"
             android:layout_width="match_parent"
-            android:layout_height="?attr/actionBarSize"
-            android:background="@color/colorPrimary"
-    />
-    <ScrollView android:layout_width="fill_parent" android:layout_height="fill_parent">
+            android:theme="@android:color/background_light"
+            android:elevation="4dp"
+            android:id="@+id/appbar"
+    >
+        <androidx.appcompat.widget.Toolbar
+                android:id="@+id/toolbar1"
+                android:layout_width="match_parent"
+                android:layout_height="?attr/actionBarSize"
+                android:background="@color/colorPrimary"
+                android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
+
+        />
+    </com.google.android.material.appbar.AppBarLayout>
+
+    <ScrollView android:layout_width="fill_parent" android:layout_height="fill_parent"
+                android:layout_below="@id/appbar"
+                android:layout_marginTop="-6dp">
         <RelativeLayout android:layout_width="fill_parent" android:layout_height="wrap_content"
-                        android:layout_margin="16dp">
+                        android:layout_margin="16dp"
+        >
 
-
-            <com.google.android.material.textfield.TextInputLayout
-                    android:id="@+id/title_field"
-                    android:gravity="center_vertical"
-                    style="@style/MyTextInputLayout"
-                    android:layout_width="match_parent"
+            <EditText android:layout_width="match_parent"
+                      android:layout_height="wrap_content"
+                      android:textColor="@color/textColor"
+                      android:textSize="16sp"
+                      android:padding="10dp"
+                      android:hint="Enter title"
+                      android:id="@+id/title_input"
+                      android:maxLength="50"
+                      android:background="@android:color/transparent"
+                      android:layout_marginBottom="10dp"
+            />
+            <LinearLayout
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="?attr/actionBarSize"
-
-
+                    android:layout_width="wrap_content"
+                    android:layout_below="@+id/title_input"
+                    android:orientation="vertical"
+                    android:id="@+id/user"
+                    android:layout_marginBottom="10dp"
+                    android:layout_alignParentEnd="true" android:layout_alignParentRight="true"
+                    android:layout_marginRight="10dp" android:layout_marginEnd="10dp" android:layout_marginTop="10dp"
+                    android:layout_toRightOf="@+id/imageView2"
+                    android:layout_marginLeft="64dp" android:layout_marginStart="64dp"
+                    android:onClick="showDialog"
                     android:layout_alignParentStart="true"
-                    android:layout_alignParentTop="true"
-                    android:layout_alignParentLeft="true">
-
-                <com.google.android.material.textfield.TextInputEditText
-
-                        style="@style/MyTextInputEditText"
-                        android:hint="Event Title"
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:textColor="#000"
-                        android:id="@+id/title_input"
-                        android:drawableLeft="@drawable/icon_calendar"
-                        android:drawablePadding="10dp"
-
+                    android:layout_alignStart="@+id/title_input">
+                <TextView
+                        android:id="@+id/user_name_heading"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:gravity="left"
+                        android:paddingLeft="10dp"
+                        android:paddingTop="5dp"
+                        android:paddingBottom="5dp"
+                        android:paddingRight="5dp"
+                        android:text="User"
+                        android:textSize="14sp"
+                        android:textColor="@color/textColor"
                 />
-            </com.google.android.material.textfield.TextInputLayout>
-            <com.google.android.material.textfield.TextInputLayout
-                    android:id="@+id/user_name_field"
-                    android:gravity="center_vertical"
-                    style="@style/MyTextInputLayout"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="2dp"
-                    android:layout_below="@+id/title_field"
-                    android:layout_alignParentEnd="true"
-                    android:layout_alignParentRight="true"
 
-            >
-
-                <com.google.android.material.textfield.TextInputEditText
-
-                        style="@style/MyTextInputEditText"
-                        android:hint="User"
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:textColor="#000"
+                <TextView
                         android:id="@+id/user_name"
-                        android:drawableLeft="@drawable/ic_user"
-
-                        android:onClick="showDialog"
-                        android:drawablePadding="10dp"
-
-
-                />
-
-            </com.google.android.material.textfield.TextInputLayout>
-
-
-            <RelativeLayout android:layout_width="match_parent"
-                            android:layout_below="@+id/user_name_field"
-                            android:id="@+id/all_day_field"
-                            android:layout_height="wrap_content"
-                            android:background="@drawable/textview_curved_border"
-                            android:layout_marginTop="2dp"
-            >
-                <TextView
-                        android:text="All day Event"
-                        android:gravity="center_vertical"
-                        android:layout_width="227dp"
-
-                        android:textSize="18sp"
-                        android:layout_height="44dp"
-                        android:layout_marginLeft="20dp"
-                        android:id="@+id/all_day"
-                        android:layout_marginTop="4dp"
-                        android:layout_marginBottom="4dp"
-
-                        android:textColor="#208EED"
-                        android:layout_alignParentStart="true" android:layout_marginStart="4dp"
-                        android:layout_alignParentLeft="true"/>
-                <Switch
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:id="@+id/switch1"
-                        android:layout_marginBottom="4dp"
-                        android:layout_marginRight="20dp"
-                        android:layout_marginEnd="20dp"
-                        android:layout_marginTop="4dp"
-                        android:layout_alignParentEnd="true"
-                        android:layout_alignParentRight="true"/>
-            </RelativeLayout>
-
+                        android:gravity="left"
+                        android:paddingLeft="10dp"
+                        android:paddingTop="5dp"
+                        android:paddingBottom="5dp"
+                        android:paddingRight="5dp"
+                        android:text="Click to choose user"
+                        android:textColor="#7f8082"
+                        android:textSize="13sp"
+                        android:textColorHint="@android:color/holo_blue_dark"/>
+            </LinearLayout>
             <LinearLayout android:layout_width="match_parent"
-                          android:weightSum="2"
-                          android:id="@+id/start_date_field"
+                          android:layout_below="@+id/user"
                           android:layout_height="wrap_content"
-                          android:layout_below="@+id/all_day_field"
-                          android:layout_marginTop="2dp">
-
-
-                <com.google.android.material.textfield.TextInputLayout
-
-                        style="@style/MyTextInputLayout"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:hint="Start date"
-                        android:layout_weight="1"
+                          android:orientation="vertical"
+                          android:id="@+id/time_field"
+                          android:layout_marginBottom="10dp" android:layout_marginTop="10dp">
+                <RelativeLayout android:layout_width="match_parent"
+                                android:id="@+id/all_day_field"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="2dp"
+                                android:layout_marginBottom="10dp"
 
                 >
-
-                    <com.google.android.material.textfield.TextInputEditText
-                            android:id="@+id/start_date"
-                            style="@style/MyTextInputEditText"
+                    <TextView
+                            android:text="All day Event"
+                            android:gravity="center_vertical"
+                            android:layout_width="247dp"
+                            android:textSize="14sp"
+                            android:layout_height="wrap_content"
+                            android:id="@+id/all_day"
+                            android:layout_marginTop="10dp"
+                            android:layout_marginBottom="10dp"
+                            android:padding="10dp"
+                            android:textColor="@color/textColor"
+                            android:layout_toStartOf="@+id/switch1"
+                            android:layout_toLeftOf="@+id/switch1"
+                            android:layout_alignParentStart="true" android:layout_marginLeft="64dp"
+                            android:layout_marginStart="64dp" android:layout_alignParentLeft="true"/>
+                    <Switch
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:drawableRight="@drawable/icon_calendar"
-                            app:errorEnabled="true"
-                            android:layout_below="@+id/all_day"
-                            android:textColor="#000"
-                            android:inputType=""
-                            android:ems="10"
+                            android:id="@+id/switch1"
+                            android:layout_marginBottom="20dp"
+                            android:layout_marginRight="10dp"
+                            android:layout_marginEnd="10dp"
+                            android:layout_marginTop="20dp"
+                            android:layout_alignParentEnd="true"
+                            android:layout_alignParentRight="true" android:layout_alignParentTop="true"/>
+                </RelativeLayout>
+
+                <LinearLayout android:layout_width="match_parent"
+                              android:weightSum="2"
+                              android:id="@+id/start_date_field"
+                              android:layout_height="wrap_content"
+                              android:layout_below="@+id/all_day_field"
+                              android:layout_marginBottom="10dp">
 
 
-                    />
-                </com.google.android.material.textfield.TextInputLayout>
-                <com.google.android.material.textfield.TextInputLayout
-                        android:id="@+id/start_time_field"
-                        style="@style/MyTextInputLayout"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:hint="Start time"
-                        android:layout_weight="1"
-                        android:layout_marginLeft="2dp"
-                        android:layout_below="@+id/switch1"
-                        android:layout_alignParentEnd="true"
-                        android:layout_alignParentRight="true"
-                        android:layout_toEndOf="@+id/start_date_field"
-                        android:layout_toRightOf="@+id/start_date_field"
-                >
+                    <com.google.android.material.textfield.TextInputLayout
 
-                    <com.google.android.material.textfield.TextInputEditText
-                            android:id="@+id/start_time"
-                            style="@style/MyTextInputEditText"
+                            style="@style/MyTextInputLayout"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:drawableRight="@drawable/ic_clock"
+                            android:hint="Start date"
+                            android:layout_weight="1"
+                            android:layout_margin="10dp"
+                            android:id="@+id/start_date_layout"
                             app:errorEnabled="true"
+                            app:errorTextAppearance="@style/error_appearance"
+
+                    >
+
+                        <com.google.android.material.textfield.TextInputEditText
+                                android:id="@+id/start_date"
+                                style="@style/MyTextInputEditText"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:drawableRight="@drawable/icon_calendar"
+                                android:layout_below="@+id/all_day"
+                                android:textColor="@color/textColor"
+                                android:inputType="none"
+                                android:ems="10"
+                                android:textSize="14sp"
+                                android:cursorVisible="false"
+
+
+                        />
+                    </com.google.android.material.textfield.TextInputLayout>
+                    <com.google.android.material.textfield.TextInputLayout
+                            android:id="@+id/start_time_field"
+                            style="@style/MyTextInputLayout"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:hint="Start time"
+                            android:layout_weight="1"
+                            android:layout_marginLeft="2dp"
                             android:layout_below="@+id/switch1"
-                            android:textColor="#000"
-                            android:inputType="date"
-                            android:ems="10"
-                    />
+                            android:layout_alignParentEnd="true"
+                            android:layout_alignParentRight="true"
+                            android:layout_toEndOf="@+id/start_date_field"
+                            android:layout_toRightOf="@+id/start_date_field"
+                            android:layout_margin="10dp"
+                            app:errorTextAppearance="@style/error_appearance"
+                            app:errorEnabled="true"
 
-                </com.google.android.material.textfield.TextInputLayout>
+                    >
+
+                        <com.google.android.material.textfield.TextInputEditText
+                                android:id="@+id/start_time"
+                                style="@style/MyTextInputEditText"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:drawableRight="@drawable/ic_clock"
+                                android:layout_below="@+id/switch1"
+                                android:textColor="@color/textColor"
+                                android:inputType="none"
+                                android:ems="10"
+                                android:textSize="14sp"
+                                android:cursorVisible="false"
+                        />
+
+                    </com.google.android.material.textfield.TextInputLayout>
+                </LinearLayout>
+                <LinearLayout android:layout_width="match_parent"
+                              android:weightSum="2"
+                              android:id="@+id/end_date_field"
+                              android:layout_height="wrap_content"
+                              android:layout_below="@+id/start_date_field"
+                              android:layout_marginTop="2dp"
+                              android:layout_marginBottom="10dp">
+
+
+                    <com.google.android.material.textfield.TextInputLayout
+
+                            style="@style/MyTextInputLayout"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:hint="End date"
+                            android:layout_weight="1"
+                            android:layout_margin="10dp"
+                            app:errorTextAppearance="@style/error_appearance"
+                            app:errorEnabled="true"
+                            android:id="@+id/end_date_layout"
+
+                    >
+
+                        <com.google.android.material.textfield.TextInputEditText
+                                android:id="@+id/end_date"
+                                style="@style/MyTextInputEditText"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:drawableRight="@drawable/icon_calendar"
+                                android:layout_below="@+id/all_day"
+                                android:textColor="@color/textColor"
+                                android:inputType="none"
+                                android:ems="10"
+                                android:textSize="14sp"
+                                android:cursorVisible="false"
+
+
+                        />
+                    </com.google.android.material.textfield.TextInputLayout>
+                    <com.google.android.material.textfield.TextInputLayout
+                            android:id="@+id/end_time_field"
+                            style="@style/MyTextInputLayout"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:hint="End time"
+                            android:layout_weight="1"
+                            android:layout_marginLeft="2dp"
+                            android:layout_below="@+id/switch1"
+                            android:layout_alignParentEnd="true"
+                            android:layout_alignParentRight="true"
+                            android:layout_toEndOf="@+id/start_date_field"
+                            android:layout_toRightOf="@+id/start_date_field"
+                            android:layout_margin="10dp"
+                            app:errorTextAppearance="@style/error_appearance"
+                            app:errorEnabled="true"
+                    >
+
+                        <com.google.android.material.textfield.TextInputEditText
+                                android:id="@+id/end_time"
+                                style="@style/MyTextInputEditText"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:drawableRight="@drawable/ic_clock"
+                                android:layout_below="@+id/switch1"
+                                android:textColor="@color/textColor"
+                                android:inputType="none"
+                                android:ems="10"
+                                android:textSize="14sp"
+                                android:cursorVisible="false"
+                        />
+
+                    </com.google.android.material.textfield.TextInputLayout>
+                </LinearLayout>
             </LinearLayout>
-            <LinearLayout android:layout_width="match_parent"
-                          android:layout_height="wrap_content"
-                          android:weightSum="2"
-                          android:layout_below="@+id/start_date_field"
-                          android:id="@+id/end_date_field"
-                          android:layout_marginTop="2dp">
-                <com.google.android.material.textfield.TextInputLayout
-
-                        style="@style/MyTextInputLayout"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:hint="End date"
-
-                        android:textSize="15sp"
-                        android:layout_weight="1"
+            <RelativeLayout android:layout_width="match_parent" android:layout_height="wrap_content"
+                            android:id="@+id/reminder_type"
+                            android:layout_below="@+id/time_field">
+                <LinearLayout android:layout_width="fill_parent" android:layout_height="wrap_content"
+                              android:weightSum="2"
+                              android:textColor="@color/textColor"
+                              android:layout_alignParentStart="true" android:layout_marginLeft="64dp"
+                              android:layout_marginStart="64dp" android:layout_alignParentLeft="true"
 
 
                 >
-
-                    <com.google.android.material.textfield.TextInputEditText
-                            android:id="@+id/end_date"
-                            style="@style/MyTextInputEditText"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:drawableRight="@drawable/icon_calendar"
-                            app:errorEnabled="true"
-                            android:layout_below="@+id/start_date_field"
-
-                            android:textColor="#000"
-                            android:inputType="date"
-                            android:ems="10"
+                    <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
+                              android:layout_weight="1"
+                              android:layout_marginTop="10dp"
+                              android:layout_marginBottom="10dp"
+                              android:padding="10dp"
+                              android:text="Reminders"
+                              android:textSize="14sp"
                     />
-                </com.google.android.material.textfield.TextInputLayout>
-                <com.google.android.material.textfield.TextInputLayout
-                        android:id="@+id/end_time_field"
-                        style="@style/MyTextInputLayout"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:hint="End time"
-                        android:layout_marginLeft="2dp"
-                        android:layout_weight="1"
-                        android:layout_below="@+id/start_time_field"
-                        android:layout_alignParentEnd="true"
-                        android:layout_alignParentRight="true"
-                        android:layout_toEndOf="@+id/end_date_field"
-                        android:layout_toRightOf="@+id/end_date_field"
-                >
+                    <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
+                              android:layout_weight="1"
+                              android:layout_margin="10dp"
+                              android:padding="10dp"
+                              android:text="Don't remind"
+                              android:id="@+id/choose_reminder_type"
+                              android:drawablePadding="5dp"
+                              android:gravity="right"
+                              android:textSize="14sp"
+                              android:drawableRight="@drawable/arrow_right"
+                    />
+                </LinearLayout>
+                <ImageView
+                        android:layout_width="25dp"
+                        android:layout_height="25dp"
+                        android:src="@drawable/ic_alert"
+                        android:id="@+id/reminder_icon"
 
-                    <com.google.android.material.textfield.TextInputEditText
-                            android:id="@+id/end_time"
-                            style="@style/MyTextInputEditText"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:drawableRight="@drawable/ic_clock"
-                            app:errorEnabled="true"
-                            android:layout_below="@+id/start_time_field"
-                            android:textColor="#000"
+                        android:layout_alignParentStart="true"
+                        android:layout_marginLeft="10dp"
+                        android:layout_alignParentLeft="true"
+                        android:layout_marginTop="18dp"
+                        android:layout_marginBottom="15dp"
 
 
-                            android:inputType="date"
-                            android:ems="10"/>
-                </com.google.android.material.textfield.TextInputLayout>
-            </LinearLayout>
-            <RelativeLayout android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_below="@+id/end_date_field"
-
-
-                            android:id="@+id/guests_field"
-                            android:layout_marginTop="2dp"
-                            android:background="@drawable/textview_curved_border">
-                <TextView
-                        android:text="Add Guests"
-                        android:textSize="18sp"
-
-                        android:textColor="#208EED"
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:id="@+id/guests"
-
-                        android:layout_marginBottom="10dp"
-                        android:layout_marginLeft="4dp"
-                        android:layout_marginTop="10dp"
-                />
-                <ImageView android:layout_width="wrap_content" android:layout_height="wrap_content"
-                           android:src="@drawable/ic_next"
-                           android:layout_gravity="end"
-                           android:layout_alignRight="@+id/guests"
-                           android:layout_margin="10dp"
-                           android:layout_alignEnd="@+id/guests"
                 />
             </RelativeLayout>
-            <LinearLayout android:layout_width="match_parent"
-                          android:id="@+id/guestslayout"
-                          android:layout_height="wrap_content"
-                          android:layout_below="@+id/guests_field"
-                          android:background="@drawable/textview_curved_border"
-                          android:visibility="invisible"
-                          android:layout_marginTop="2dp">
-                <com.google.android.material.chip.ChipGroup
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:id="@+id/guest_names"
-                        android:visibility="gone">
-                </com.google.android.material.chip.ChipGroup>
-            </LinearLayout>
-
-
-            <com.google.android.material.textfield.TextInputLayout
-                    android:id="@+id/description_field"
-                    style="@style/MyTextInputLayout"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:hint="Description"
-                    android:layout_marginTop="2dp"
-                    android:layout_below="@+id/guests_field"
-
+            <RelativeLayout android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_below="@+id/reminder_type"
+                            android:id="@+id/guests_field_layout"
+                            android:layout_marginBottom="10dp"
+                            android:padding="10dp"
             >
+                <TextView android:layout_width="wrap_content"
+                          android:layout_height="match_parent"
+                          android:text="Add Guests"
+                          android:padding="10dp"
+                          android:id="@+id/guests"
+                          android:layout_toRightOf="@+id/imageView3"
+                          android:textSize="14sp"
+                          android:layout_alignParentStart="true" android:layout_marginTop="10dp"
+                          android:layout_marginStart="54dp" android:layout_marginEnd="10dp"
+                          android:layout_marginLeft="54dp"
+                          android:layout_marginBottom="10dp"/>
+                <LinearLayout android:layout_width="wrap_content"
+                              android:id="@+id/guestslayout"
+                              android:layout_height="match_parent"
+                              android:layout_below="@+id/guests_field"
+                              android:layout_alignParentEnd="true"
+                              android:layout_alignParentRight="true"
+                              android:visibility="visible"
+                              android:textAlignment="center"
 
-                <com.google.android.material.textfield.TextInputEditText
-                        android:id="@+id/description"
-                        style="@style/MyTextInputEditText"
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:textColor="#000"
-                        android:isScrollContainer="true"/>
+                              android:layout_toEndOf="@+id/guests" android:layout_toRightOf="@+id/guests"
+                              android:layout_margin="10dp">
+                    <com.google.android.material.chip.ChipGroup
+                            android:layout_marginTop="20dp"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:id="@+id/guest_names"
+                    >
+                    </com.google.android.material.chip.ChipGroup>
+                </LinearLayout>
+                <ImageView
+                        android:layout_width="25dp"
+                        android:layout_height="25dp"
+                        android:src="@drawable/ic_people"
+                        android:id="@+id/imageView3"
 
-            </com.google.android.material.textfield.TextInputLayout>
+                        android:layout_alignParentStart="true"
+                        android:layout_marginLeft="0dp"
+                        android:layout_alignParentLeft="true"
+                        android:layout_marginTop="18dp"
+                        android:layout_marginBottom="15dp"
+
+
+                />
+            </RelativeLayout>
+            <EditText android:layout_width="wrap_content" android:layout_height="wrap_content"
+                      android:hint="Add note"
+                      android:layout_below="@id/guests_field_layout"
+                      android:padding="10dp"
+                      android:layout_marginBottom="10dp"
+                      android:textColor="@color/textColor"
+                      android:id="@+id/description"
+                      android:isScrollContainer="true"
+                      android:layout_alignParentEnd="true"
+                      android:layout_alignParentRight="true"
+                      android:layout_marginRight="10dp"
+                      android:layout_marginEnd="10dp"
+                      android:layout_marginTop="10dp"
+                      android:layout_toRightOf="@+id/imageView4"
+                      android:layout_marginLeft="64dp"
+                      android:textSize="14sp"
+                      android:layout_marginStart="64dp"
+                      android:background="@android:color/transparent" android:layout_alignParentStart="true"/>
+            <TextView android:layout_width="match_parent" android:layout_height="100dp"
+                      android:layout_below="@id/description"/>
+            <ImageView
+                    android:layout_width="25dp"
+                    android:layout_height="25dp"
+                    android:src="@drawable/ic_person"
+                    android:id="@+id/imageView2"
+                    android:layout_alignParentStart="true"
+                    android:layout_alignParentLeft="true"
+                    android:layout_below="@+id/title_input"
+                    android:layout_marginTop="15dp"
+                    android:layout_marginBottom="15dp"
+                    android:layout_marginLeft="10dp"
+                    android:layout_above="@+id/time_field"/>
+            <ImageView
+                    android:layout_width="25dp"
+                    android:layout_height="25dp"
+                    android:src="@drawable/ic_clock"
+                    android:id="@+id/imageView1"
+                    android:layout_alignParentStart="true"
+                    android:layout_alignParentLeft="true"
+                    android:layout_marginTop="20dp"
+                    android:layout_marginLeft="10dp"
+                    android:layout_alignTop="@+id/time_field"/>
+            <ImageView
+                    android:layout_width="25dp"
+                    android:layout_height="25dp"
+                    android:src="@drawable/ic_short_text"
+                    android:id="@+id/imageView4"
+                    android:layout_below="@+id/guests_field_layout"
+                    android:layout_marginTop="20dp"
+                    android:layout_marginBottom="15dp"
+                    android:layout_marginLeft="10dp"
+                    android:layout_alignParentStart="true"
+                    android:layout_alignParentLeft="true"/>
+
+
         </RelativeLayout>
 
     </ScrollView>

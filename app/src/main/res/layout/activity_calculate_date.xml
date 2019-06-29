@@ -1,10 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-              xmlns:app="http://schemas.android.com/apk/res-auto"
-              android:layout_width="match_parent"
-              android:layout_height="match_parent"
-              android:orientation="vertical"
-              android:fitsSystemWindows="true"
+                xmlns:app="http://schemas.android.com/apk/res-auto"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical"
 >
     <androidx.appcompat.widget.Toolbar
             android:id="@+id/toolbar1"
@@ -27,18 +26,18 @@
             app:tabMode="fixed"
             app:tabTextColor="@color/white"
             android:layout_below="@id/toolbar1"
-  />
+    />
     <androidx.viewpager.widget.ViewPager android:layout_width="match_parent"
                                          android:layout_height="wrap_content"
                                          android:id="@+id/pager_calculate_date"
-    android:layout_below="@id/tabLayout"/>
+                                         android:layout_below="@id/tabLayout"/>
     <Button android:layout_width="wrap_content" android:layout_height="wrap_content"
             android:layout_gravity="bottom"
             android:text="Calculate"
             android:id="@+id/calculate_date_button"
             android:textSize="18sp"
             android:textColor="@android:color/white"
-            android:background="@drawable/mybutton"
+            android:background="@drawable/calculate_button"
             android:textAllCaps="false"
             android:textStyle="normal"
             android:layout_alignParentEnd="true" android:layout_marginEnd="100dp"

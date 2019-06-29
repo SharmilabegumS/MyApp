@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+      xmlns:tools="http://schemas.android.com/tools"
+      tools:showIn="navigation_view"
+
+>
+
+    <group android:checkableBehavior="single"
+    >
+
+
+        <item
+                android:id="@+id/user1"
+                android:icon="@drawable/profile"
+                android:title="sharmilabegum97@gmail.com"
+                android:checkable="true"
+        />
+        <item
+                android:id="@+id/user2"
+                android:icon="@drawable/profile1"
+                android:title="sharmilashona143@gmail.com"
+                android:checkable="true"/>
+        <item
+                android:id="@+id/user3"
+                android:icon="@drawable/profile2"
+                android:title="shubahmkumar2b1@live.com"
+                android:checkable="true"/>
+
+    </group>
+
+</menu>

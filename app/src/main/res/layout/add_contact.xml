@@ -1,8 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-                xmlns:app="http://schemas.android.com/apk/res-auto" android:orientation="vertical"
+                xmlns:app="http://schemas.android.com/apk/res-auto"
+                android:orientation="vertical"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
+                android:id="@+id/add_contact_layout"
 >
 
     <androidx.appcompat.widget.Toolbar
@@ -13,10 +15,10 @@
             app:popupTheme="@android:color/background_light"
             android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
     />
-  <RelativeLayout android:layout_width="match_parent" android:layout_height="wrap_content"
+    <RelativeLayout android:layout_width="match_parent" android:layout_height="wrap_content"
                     android:padding="16dp"
-    android:layout_margin="10dp"
-                  android:layout_below="@id/toolbar2">
+                    android:layout_margin="10dp"
+                    android:layout_below="@id/toolbar2">
         <de.hdodenhof.circleimageview.CircleImageView
                 android:layout_width="250dp"
                 android:layout_height="250dp"
@@ -37,89 +39,88 @@
         />
 
 
-      <com.google.android.material.textfield.TextInputLayout
-              android:layout_width="wrap_content"
-              android:layout_height="wrap_content"
-              android:hint="Name"
-              android:layout_weight="1"
-              app:errorTextAppearance="@style/error_appearance"
-              android:id="@+id/name_layout"
-
-              android:layout_alignParentEnd="true"
-              android:layout_toEndOf="@+id/imageView7"
-              android:layout_below="@+id/profile_photo"
-
-              app:errorEnabled="true"
-              android:layout_marginLeft="20dp"
-              android:layout_marginStart="10dp"
-              android:layout_marginEnd="10dp"
-              android:layout_marginRight="10dp"
-              android:layout_marginTop="40dp"
-
-
-      >
-
-
-          <com.google.android.material.textfield.TextInputEditText
-                  style="@style/MyTextInputEditText"
-                  android:textColor="@color/textColor"
-
-                  android:textSize="18sp"
-                  android:layout_width="match_parent"
-                  android:gravity="center_vertical"
-                  android:layout_height="match_parent"
-                  android:id="@+id/name"
-                  android:textColorHint="#707070"
-
-                  app:errorTextAppearance="@style/error_appearance"
-                  android:layout_alignStart="@+id/name_layout" android:layout_alignBottom="@+id/name_layout"/>
-      </com.google.android.material.textfield.TextInputLayout>
-
-
-
-      <com.google.android.material.textfield.TextInputLayout
-              android:layout_width="wrap_content"
-              android:layout_height="wrap_content"
-              android:hint="E-mail"
-              android:layout_weight="1"
-              android:layout_margin="10dp"
-              app:errorTextAppearance="@style/error_appearance"
-              android:id="@+id/email_layout"
-              android:layout_below="@+id/name_layout"
-              android:layout_marginTop="20dp"
-              android:layout_alignParentEnd="true"
-              android:layout_marginStart="20dp"
-              android:layout_marginEnd="10dp"
-              android:layout_marginBottom="10dp"
-              android:layout_toEndOf="@+id/imageView7"
-              app:errorEnabled="true"
-
-      >
-
-
-        <com.google.android.material.textfield.TextInputEditText
-                style="@style/MyTextInputEditText"
-                android:textColor="@color/textColor"
-
-                android:textSize="18sp"
-                android:layout_width="match_parent"
-                android:gravity="center_vertical"
-                android:layout_height="match_parent"
-                android:id="@+id/email"
-                android:textColorHint="#707070"
-
+        <com.google.android.material.textfield.TextInputLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:hint="Name"
+                android:layout_weight="1"
                 app:errorTextAppearance="@style/error_appearance"
-              />
-      </com.google.android.material.textfield.TextInputLayout>
+                android:id="@+id/name_layout"
+
+                android:layout_alignParentEnd="true"
+                android:layout_toEndOf="@+id/imageView7"
+                android:layout_below="@+id/profile_photo"
+
+                app:errorEnabled="true"
+                android:layout_marginLeft="20dp"
+                android:layout_marginStart="10dp"
+                android:layout_marginEnd="10dp"
+                android:layout_marginRight="10dp"
+                android:layout_marginTop="40dp"
+
+
+        >
+
+
+            <com.google.android.material.textfield.TextInputEditText
+                    style="@style/MyTextInputEditText"
+                    android:textColor="@color/textColor"
+                    android:maxLength="20"
+                    android:textSize="15sp"
+                    android:layout_width="match_parent"
+                    android:gravity="center_vertical"
+                    android:layout_height="match_parent"
+                    android:id="@+id/name"
+                    android:textColorHint="#707070"
+
+                    app:errorTextAppearance="@style/error_appearance"
+                    android:layout_alignStart="@+id/name_layout" android:layout_alignBottom="@+id/name_layout"/>
+        </com.google.android.material.textfield.TextInputLayout>
+
+
+        <com.google.android.material.textfield.TextInputLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:hint="E-mail"
+                android:layout_weight="1"
+                android:layout_margin="10dp"
+                app:errorTextAppearance="@style/error_appearance"
+                android:id="@+id/email_layout"
+                android:layout_below="@+id/name_layout"
+                android:layout_marginTop="20dp"
+                android:layout_alignParentEnd="true"
+                android:layout_marginStart="20dp"
+                android:layout_marginEnd="10dp"
+                android:layout_marginBottom="10dp"
+                android:layout_toEndOf="@+id/imageView7"
+                app:errorEnabled="true"
+
+        >
+
+
+            <com.google.android.material.textfield.TextInputEditText
+                    style="@style/MyTextInputEditText"
+                    android:textColor="@color/textColor"
+
+                    android:textSize="15sp"
+                    android:layout_width="match_parent"
+                    android:gravity="center_vertical"
+                    android:layout_height="match_parent"
+                    android:id="@+id/email"
+                    android:textColorHint="#707070"
+                    android:maxLength="40"
+                    app:errorTextAppearance="@style/error_appearance"
+            />
+        </com.google.android.material.textfield.TextInputLayout>
         <ImageView
                 android:layout_width="30dp"
                 android:layout_height="30dp" android:src="@drawable/ic_user" android:id="@+id/imageView6"
-                android:layout_below="@+id/profile_photo" android:layout_marginTop="55dp"
-                android:layout_alignParentStart="true" android:layout_marginStart="10dp"/>
+                android:layout_alignParentStart="true" android:layout_marginStart="10dp"
+                android:layout_marginBottom="19dp" android:layout_alignBottom="@+id/name_layout"/>
         <ImageView
                 android:layout_width="30dp"
-                android:layout_height="30dp" android:src="@drawable/ic_email" android:id="@+id/imageView7"
-                android:layout_marginTop="55dp"
+                android:layout_height="27dp" android:src="@drawable/ic_email" android:id="@+id/imageView7"
+                android:layout_marginTop="30dp"
                 android:layout_below="@+id/imageView6" android:layout_alignParentStart="true"
                 android:layout_marginStart="10dp"
         />

@@ -1,4 +1,4 @@
-<com.example.navigationcheck.utility.GameRootLayout
+<com.example.Calendar.utility.GameRootLayout
         xmlns:android="http://schemas.android.com/apk/res/android"
         android:id="@+id/gameRootLayout"
         android:layout_width="match_parent" android:layout_height="match_parent">
@@ -13,8 +13,6 @@
                     android:background="@android:color/white"
 
     >
-
-
         <GridLayout
                 android:id="@+id/gridlayout"
                 android:layout_width="match_parent"
@@ -453,26 +451,30 @@
         <TextView android:layout_width="wrap_content"
                   android:layout_height="wrap_content"
                   android:text="Events"
-                  android:textSize="15sp"
-                  android:textColor="#000"
+                  android:textSize="18sp"
+                  android:textColor="@color/textColor"
+        android:textStyle="bold"
                   android:id="@+id/events_title"
-                  android:layout_marginLeft="4dp"
+               android:layout_margin="10dp"
+                  android:padding="10dp"
+
                   android:layout_below="@+id/gridlayout"
                   android:visibility="invisible"/>
 
         <ListView android:layout_width="match_parent"
                   android:layout_height="wrap_content"
                   android:id="@+id/event_list"
-android:background="@android:color/transparent"
+                  android:background="@android:color/transparent"
                   android:scrollbars="vertical"
-                  android:layout_marginTop="10dp"
                   android:layout_below="@+id/events_title"
-                  android:listSelector="@color/nav_drawer">
+                  android:layout_marginLeft="10dp"
+                  android:paddingLeft="10dp"
+                 >
 
         </ListView>
 
 
     </RelativeLayout>
-</com.example.navigationcheck.utility.GameRootLayout>
+</com.example.Calendar.utility.GameRootLayout>
 
 

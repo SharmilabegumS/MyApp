@@ -6,14 +6,17 @@
                 android:layout_height="75dp"
                 android:layout_margin="4dp"
                 android:layout_gravity="center_vertical"
+                android:background="@drawable/background_selector"
                 android:id="@+id/rootView"
 >
 
-    <TextView android:layout_width="wrap_content"
+    <TextView android:layout_width="match_parent"
               android:layout_height="match_parent"
               android:gravity="center_vertical"
               android:layout_marginLeft="10dp"
               android:id="@+id/profile_name"
               android:textSize="16sp"
-             />
+              android:padding="10dp"
+              android:layout_margin="10dp"
+    />
 </RelativeLayout>

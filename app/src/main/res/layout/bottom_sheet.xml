@@ -11,14 +11,14 @@
     <TextView android:layout_width="match_parent"
               android:layout_height="wrap_content"
               android:text="Choose user"
-    android:id="@+id/bottom_sheet_title"
-    android:padding="10dp"
+              android:id="@+id/bottom_sheet_title"
+              android:padding="10dp"
               android:textColor="@color/colorPrimary"
               android:textSize="16sp"
               android:elevation="24dp"
               android:background="@drawable/textview_border"
 
-            />
+    />
 
     <ListView
             android:id="@+id/listView"

@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-          package="com.example.navigationcheck"
+          package="com.example.Calendar"
           android:hardwareAccelerated="true">
 
     <supports-screens
@@ -17,6 +17,11 @@
             android:roundIcon="@mipmap/ic_launcher_round"
             android:supportsRtl="true"
             android:theme="@style/AppTheme">
+        <activity
+                android:name=".AddEvent"
+                android:theme="@style/AppTheme.ActionBar"
+                android:windowSoftInputMode="adjustPan">
+        </activity>
         <activity android:name=".EventNotification">
         </activity>
         <activity android:name=".CalculateDateActivity">
@@ -27,50 +32,35 @@
                 android:name=".ViewEvent"
                 android:label="@string/title_activity_view_event"
                 android:screenOrientation="portrait"
-                android:theme="@style/AppTheme.NoActionBar">
+                android:theme="@style/AppTheme.ActionBar">
         </activity>
         <activity
                 android:name=".AddContact"
                 android:label="AddContact"
-                android:theme="@style/AppTheme.NoActionBar">
+                android:theme="@style/AppTheme.ActionBar">
         </activity>
         <activity
                 android:name=".InviteGuests"
                 android:label="activity_invite_guests"
-                android:theme="@style/AppTheme.NoActionBar"
-                android:windowSoftInputMode="adjustPan">
-        </activity>
-        <activity
-                android:name=".NoMatch"
-                android:label="no_match"
-                android:theme="@style/AppTheme.NoActionBar">
-        </activity>
-        <activity
-                android:name=".AddEvent"
-                android:theme="@style/AppTheme.NoActionBar"
+                android:theme="@style/AppTheme.ActionBar"
                 android:windowSoftInputMode="adjustPan">
         </activity>
         <activity
                 android:name=".EditEvent"
-                android:theme="@style/AppTheme.NoActionBar"
+                android:theme="@style/AppTheme.ActionBar"
                 android:windowSoftInputMode="adjustPan">
         </activity>
         <activity
                 android:name=".MainActivity"
                 android:hardwareAccelerated="true"
                 android:label="Calendar"
+                android:screenOrientation="portrait"
                 android:theme="@style/AppTheme.ActionBar">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
 
                 <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
-        </activity>
-        <activity android:name=".SettingActivity">
-            <meta-data
-                    android:name="android.support.PARENT_ACTIVITY"
-                    android:hardwareAccelerated="true"
-                    android:value=".MainActivity"/>
         </activity>
         <activity
                 android:name="com.theartofdev.edmodo.cropper.CropImageActivity"
