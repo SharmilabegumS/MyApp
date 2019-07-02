@@ -12,7 +12,7 @@ import com.example.Calendar.DayFragment
 
 class DayPagerAdapter internal constructor(fm: FragmentManager, context: Context, monthList: LinkedList<String>) :
     FragmentStatePagerAdapter(fm) {
-    var date:Date?=null
+    var date: Date? = null
     var monthList = monthList
     var calendar: Calendar = Calendar.getInstance()
 
@@ -25,74 +25,16 @@ class DayPagerAdapter internal constructor(fm: FragmentManager, context: Context
 
         val bundle = Bundle()
         bundle.putString("monthYear", monthList.get(position))
-
-        var day = Integer.parseInt(monthList.get(position).substring(0, 2))
-        var month = Integer.parseInt(monthList.get(position).substring(2, 4))
-        var year = Integer.parseInt(monthList.get(position).substring(4, 8))
-        var cal=Calendar.getInstance()
-        cal.set(Calendar.DAY_OF_MONTH,day)
-
-        cal.set(Calendar.MONTH,month )
-        cal.set(Calendar.YEAR,year)
-        date=cal.time
         val fragment = DayFragment()
         fragment.setArguments(bundle)
-
-
-        /*var monthYear=monthList.get(position)
-        var month=Integer.parseInt(monthYear.substring(0,2))
-        var year=Integer.parseInt(monthYear.substring(2,6))
-        calendar.set(Calendar.DAY_OF_MONTH,1)
-        calendar.set(Calendar.MONTH,month)
-        calendar.set(Calendar.YEAR,year)
-        println("The fragment: $position ${calendar.time} ")
-
-        return MonthFragment.newInstance(calendar.getTime())*/
-        // fragment.refresh()
         return fragment
     }
-    /*override fun getItemPosition(`object`: Any): Int {
-        val index = views.indexOf(`object`)
-        return if (index == -1)
-            PagerAdapter.POSITION_NONE
-        else
-            index
-    }
-*/
-    /* public override fun getItemPosition(`object`: Any): Int {
-         val index = monthList.indexOf(`object`)
 
-         return if (index == -1)
-             PagerAdapter.POSITION_NONE
-         else
-             index
-     }*/
-
-    /*override fun getItemPosition(`object`: Any): Int {
-        val dummyItem = (`object` as View).tag as String
-        val position = monthList.indexOf(dummyItem)
-        return if (position >= 0) {
-            // The current data matches the data in this active fragment, so let it be as it is.
-            position
-        } else {
-            // Returning POSITION_NONE means the current data does not matches the data this fragment is showing right now.  Returning POSITION_NONE constant will force the fragment to redraw its view layout all over again and show new data.
-            PagerAdapter.POSITION_NONE
-        }
-    }*/
     override fun getItemPosition(`object`: Any): Int {
 
 
         return PagerAdapter.POSITION_NONE
 
     }
-    fun getDateDayAdapter():Date?{
-        return  date
-    }
-    /*
-    override fun instantiateItem(container: ViewGroup, position: Int): Any {
-           val fragment = super.instantiateItem(container, position) as Fragment
-           registeredFragments.put(position, fragment)
-           return fragment
-       }*/
 
 }

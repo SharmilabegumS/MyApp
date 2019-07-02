@@ -12,7 +12,6 @@ import android.graphics.Bitmap
 import android.graphics.BitmapFactory
 import android.graphics.Color
 import android.graphics.Rect
-import android.os.Build
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.DisplayMetrics
@@ -29,7 +28,6 @@ import com.example.Calendar.utility.UUIDGenerator
 import com.google.android.material.chip.Chip
 import com.google.android.material.chip.ChipGroup
 import android.widget.Toast
-import androidx.core.content.ContextCompat
 import androidx.core.graphics.drawable.RoundedBitmapDrawable
 import androidx.core.graphics.drawable.RoundedBitmapDrawableFactory
 import androidx.core.view.GestureDetectorCompat
@@ -56,7 +54,7 @@ var dsc = DateStringConvertor(cal)
 
 @SuppressLint("NewApi")
 class AddEvent : AppCompatActivity(), View.OnClickListener {
-    var keyBoardState:Boolean=false
+    var keyBoardState: Boolean = false
     private var gestureDetectorCompat: GestureDetectorCompat? = null
 
     var calendar = Calendar.getInstance()
@@ -101,32 +99,27 @@ class AddEvent : AppCompatActivity(), View.OnClickListener {
         reminderTypeAndKey.put(6, "1 day before")
 
         actionBar!!.title = "Event"
-setupUI(findViewById(R.id.add_event_layout))
-        var layout=findViewById<RelativeLayout>(R.id.add_event_layout)
-       layout.getViewTreeObserver().addOnGlobalLayoutListener(object :ViewTreeObserver.OnGlobalLayoutListener {
-         override fun onGlobalLayout() {
-           var r = Rect()
-            layout.getWindowVisibleDisplayFrame(r);
-           var screenHeight = layout.getRootView().getHeight();
-         var keypadHeight = screenHeight - r.bottom;
-            if (keypadHeight > screenHeight * 0.15) {
-                    keyBoardState=true
-            } else {
-                    keyBoardState=false
+        setupUI(findViewById(R.id.add_event_layout))
+        val layout = findViewById<RelativeLayout>(R.id.add_event_layout)
+        layout.getViewTreeObserver().addOnGlobalLayoutListener(object : ViewTreeObserver.OnGlobalLayoutListener {
+            override fun onGlobalLayout() {
+                val r = Rect()
+                layout.getWindowVisibleDisplayFrame(r)
+                val screenHeight = layout.getRootView().getHeight()
+                val keypadHeight = screenHeight - r.bottom
+                if (keypadHeight > screenHeight * 0.15) {
+                    keyBoardState = true
+                } else {
+                    keyBoardState = false
+                }
             }
-         }
-      });
-        /*if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-            this.window.statusBarColor = darkenColor(
-                ContextCompat.getColor(this, R.color.colorPrimary)
-            )
-        }*/
+        })
 
         actionBar.elevation = 4.0F
         actionBar.setDisplayHomeAsUpEnabled(true)
 
         val navDefaultTextColor = Color.parseColor("#006cff")
-        getWindow().setStatusBarColor(navDefaultTextColor);
+        getWindow().setStatusBarColor(navDefaultTextColor)
         toolbar1.setTitleTextColor(Color.WHITE)
         user_name = findViewById(R.id.user_name)
         title_input = findViewById(R.id.title_input)
@@ -141,12 +134,11 @@ setupUI(findViewById(R.id.add_event_layout))
         reminderType = findViewById<TextView>(R.id.choose_reminder_type)
         reminderType.setOnClickListener {
             val intent = Intent(this, EventNotification::class.java)
-            if(reminderType.text.equals("Don't remind")){
-                intent.putExtra("Switch status",true)
-                intent.putExtra("Listview status",false)
-                intent.putExtra("Position",-1)
-            }
-            else{
+            if (reminderType.text.equals("Don't remind")) {
+                intent.putExtra("Switch status", true)
+                intent.putExtra("Listview status", false)
+                intent.putExtra("Position", -1)
+            } else {
 
                 var reminderType1: Int = 0
                 for ((key, value) in reminderTypeAndKey) {
@@ -154,40 +146,12 @@ setupUI(findViewById(R.id.add_event_layout))
                         reminderType1 = key
                     }
                 }
-                intent.putExtra("Switch status",false)
-                intent.putExtra("Listview status",true)
-                intent.putExtra("Position",reminderType1)
+                intent.putExtra("Switch status", false)
+                intent.putExtra("Listview status", true)
+                intent.putExtra("Position", reminderType1)
             }
             startActivityForResult(intent, 999)
         }
-        var status = false
-        var status1 = false
-
-       /* title_input.setOnFocusChangeListener(View.OnFocusChangeListener { view, b -> if(b==false){
-      hideSoftKeyboard(this)}
-        })*/
-
-
-
-        /*title_input.setOnClickListener {
-            if (status) {
-                showKeyBoard()
-                status = false
-            } else {
-                hideSoftKeyboard(this)
-                status = true
-            }
-        }
-        description.setOnClickListener {
-            if (status1) {
-                showKeyBoard()
-                status1 = false
-            } else {
-
-                hideSoftKeyboard(this)
-                status = true
-            }
-        }*/
         if (resources.configuration.orientation == Configuration.ORIENTATION_LANDSCAPE) {
             val start_date: TextView = findViewById(R.id.start_date)
             val paramsStartDate: ViewGroup.LayoutParams = start_date.layoutParams
@@ -326,7 +290,7 @@ setupUI(findViewById(R.id.add_event_layout))
         })
         val allday = findViewById<TextView>(R.id.all_day)
         allday.setOnClickListener {
-            sw.isChecked = ! sw.isChecked
+            sw.isChecked = !sw.isChecked
         }
         guestsFieldLayout.setOnClickListener {
             showDialog1()
@@ -365,12 +329,13 @@ setupUI(findViewById(R.id.add_event_layout))
         }
 
     }
+
     override fun onSupportNavigateUp(): Boolean {
         if (title_input.text.toString().equals("") == false || description.text.toString().equals("") == false) {
             AlertDialog.Builder(this)
-                .setMessage("Discard your changes?")
-                .setPositiveButton("Discard") { _, _ -> finish() }
-                .setNegativeButton("Keep editing", null)
+                .setMessage(getString(R.string.WarningMessage))
+                .setPositiveButton(getString(R.string.Discard)) { _, _ -> finish() }
+                .setNegativeButton(getString(R.string.KeepEditing), null)
                 .show()
         } else {
             onBackPressed()
@@ -382,9 +347,9 @@ setupUI(findViewById(R.id.add_event_layout))
     override fun onBackPressed() {
         if (title_input.text.toString().equals("") == false || description.text.toString().equals("") == false) {
             AlertDialog.Builder(this)
-                .setMessage("Discard your changes?")
-                .setPositiveButton("Discard") { _, _ -> finish() }
-                .setNegativeButton("Keep editing", null)
+                .setMessage(getString(R.string.WarningMessage))
+                .setPositiveButton(getString(R.string.Discard)) { _, _ -> finish() }
+                .setNegativeButton(getString(R.string.KeepEditing), null)
                 .show()
         } else {
             super.onBackPressed()
@@ -416,7 +381,7 @@ setupUI(findViewById(R.id.add_event_layout))
                 }
                 hour = h
                 minute = m
-                var timeSet:String
+                val timeSet: String
                 if (hour > 12) {
                     hour -= 12
                     timeSet = "pm"
@@ -428,12 +393,12 @@ setupUI(findViewById(R.id.add_event_layout))
                 } else {
                     timeSet = "am"
                 }
-                var hours :String
+                val hours: String
                 if (hour < 10)
                     hours = "0$hour"
                 else
                     hours = hour.toString()
-                var min :String
+                val min: String
                 if (minute < 10)
                     min = "0$minute"
                 else
@@ -494,6 +459,7 @@ setupUI(findViewById(R.id.add_event_layout))
                     }
                     val event =
                         Event(eventId, title, startDate, endDate, guestList, description.toString(), reminderType1)
+
                     val addEvent = AddEvent(event, userId.toString())
                     val result: Boolean = addEvent.add(dataBaseManager)
 
@@ -541,7 +507,7 @@ setupUI(findViewById(R.id.add_event_layout))
     }
 
     fun showDialog1() {
-        val b= Bundle()
+        val b = Bundle()
         b.putStringArrayList("nameList", guestList)
         val intent = Intent(this, InviteGuests::class.java)
         intent.putExtras(b)
@@ -634,14 +600,10 @@ setupUI(findViewById(R.id.add_event_layout))
 
 
     fun onItemSelected(contact: Contacts) {
-
-
         setTheme(R.style.Theme_MaterialComponents_Light_DarkActionBar)
         val chip = Chip(this@AddEvent)
         chip.text = contact.name
         val options = BitmapFactory.Options()
-
-
         val bitmap =
             BitmapFactory.decodeByteArray(contact.picId, 0, contact.picId.size, options) //Convert bytearray to bitmap
         Bitmap.createScaledBitmap(bitmap, 60, 40, true)
@@ -668,47 +630,36 @@ setupUI(findViewById(R.id.add_event_layout))
 
         guest_names.visibility = View.VISIBLE
     }
-
-    private fun showKeyBoard() {
-        val view = this.currentFocus
-        if (view != null) {
-            val imm: InputMethodManager = getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
-            imm.showSoftInput(view, 0)
-        }
-    }
-
     private fun hideSoftKeyboard(activity: Activity) {
-        if(keyBoardState==true) {
+        if (keyBoardState == true) {
             val inputMethodManager = activity.getSystemService(Activity.INPUT_METHOD_SERVICE) as InputMethodManager
             inputMethodManager.hideSoftInputFromWindow(activity.currentFocus!!.windowToken, 0)
         }
     }
 
     override fun onTouchEvent(event: MotionEvent): Boolean {
-
         gestureDetectorCompat!!.onTouchEvent(event)
         return true
     }
-   fun setupUI( view:View) {
 
-    // Set up touch listener for non-text box views to hide keyboard.
-    if (!(view is EditText)) {
-        view.setOnTouchListener(object :View.OnTouchListener {
-         override fun onTouch(v:View , event: MotionEvent):Boolean {
-                hideSoftKeyboard(this@AddEvent);
-                return false;
+    fun setupUI(view: View) {
+        // Set up touch listener for non-text box views to hide keyboard.
+        if (!(view is EditText)) {
+            view.setOnTouchListener(object : View.OnTouchListener {
+                override fun onTouch(v: View, event: MotionEvent): Boolean {
+                    hideSoftKeyboard(this@AddEvent)
+                    return false
+                }
+            })
+        }
+        //If a layout container, iterate over children and seed recursion.
+        if (view is ViewGroup) {
+            for (i in 0..(view as ViewGroup).getChildCount() - 1) {
+                val innerView = (view as ViewGroup).getChildAt(i)
+                setupUI(innerView)
             }
-        });
-    }
-
-    //If a layout container, iterate over children and seed recursion.
-    if (view is ViewGroup) {
-        for ( i in 0..(view as ViewGroup).getChildCount()-1) {
-           var innerView = ( view as ViewGroup).getChildAt(i);
-            setupUI(innerView);
         }
     }
-}
 
 }
 

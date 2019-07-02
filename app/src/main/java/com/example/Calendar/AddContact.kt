@@ -38,36 +38,30 @@ class AddContact : AppCompatActivity(), View.OnClickListener {
     private var nameLayout: TextInputLayout? = null
     private lateinit var dbHelper: DataBaseManager
 
-    var keyBoardState:Boolean=false
+    var keyBoardState: Boolean = false
 
     override fun onSupportNavigateUp(): Boolean {
-        if(name!!.text.toString().equals("")&&email!!.text.toString().equals("")){
-finish()
-        }
-        else {
-        AlertDialog.Builder(this)
-            .setIcon(R.drawable.ic_warning_black_24dp)
-            .setTitle("Cancel")
-            .setMessage("Discard your changes?")
-            .setPositiveButton("Yes") { dialog, which -> finish() }
-            .setNegativeButton("No", null)
-            .show()
+        if (name!!.text.toString().equals("") && email!!.text.toString().equals("")) {
+            finish()
+        } else {
+            AlertDialog.Builder(this)
+                .setMessage(getString(R.string.WarningMessage))
+                .setPositiveButton(getString(R.string.Discard)) { dialog, which -> finish() }
+                .setNegativeButton(getString(R.string.KeepEditing), null)
+                .show()
         }
         return true
 
     }
 
     override fun onBackPressed() {
-        if(name!!.text.toString().equals("")&&email!!.text.toString().equals("")){
+        if (name!!.text.toString().equals("") && email!!.text.toString().equals("")) {
             finish()
-        }
-        else {
+        } else {
             AlertDialog.Builder(this)
-                .setIcon(R.drawable.ic_warning_black_24dp)
-                .setTitle("Cancel")
-                .setMessage("Discard your changes?")
-                .setPositiveButton("Yes") { dialog, which -> finish() }
-                .setNegativeButton("No", null)
+                .setMessage(getString(R.string.WarningMessage))
+                .setPositiveButton(getString(R.string.Discard)) { dialog, which -> finish() }
+                .setNegativeButton(getString(R.string.KeepEditing), null)
                 .show()
         }
     }
@@ -75,20 +69,18 @@ finish()
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.add_contact)
-var status=true
-var status1=true
         setupUI(findViewById(R.id.add_contact_layout))
-        var layout=findViewById<RelativeLayout>(R.id.add_contact_layout)
-        layout.getViewTreeObserver().addOnGlobalLayoutListener(object :ViewTreeObserver.OnGlobalLayoutListener {
+        val layout = findViewById<RelativeLayout>(R.id.add_contact_layout)
+        layout.getViewTreeObserver().addOnGlobalLayoutListener(object : ViewTreeObserver.OnGlobalLayoutListener {
             override fun onGlobalLayout() {
-                var r = Rect()
-                layout.getWindowVisibleDisplayFrame(r);
-                var screenHeight = layout.getRootView().getHeight();
-                var keypadHeight = screenHeight - r.bottom;
+                val r = Rect()
+                layout.getWindowVisibleDisplayFrame(r)
+                val screenHeight = layout.getRootView().getHeight()
+                val keypadHeight = screenHeight - r.bottom
                 if (keypadHeight > screenHeight * 0.15) {
-                    keyBoardState=true
+                    keyBoardState = true
                 } else {
-                    keyBoardState=false
+                    keyBoardState = false
                 }
             }
         });
@@ -126,24 +118,6 @@ var status1=true
         }
 
         dbHelper = DataBaseManager(this)
-       /*name!!.setOnClickListener{
-           status = if(status){
-               showKeyBoard()
-               false
-           } else {
-               hideSoftKeyboard(this)
-               true
-           }
-        }
-        email!!.setOnClickListener{
-            status1 = if(status1){
-                showKeyBoard()
-                false
-            } else {
-                hideSoftKeyboard(this)
-                true
-            }
-        }*/
 
 
     }
@@ -205,9 +179,9 @@ var status1=true
                     val matcherObj = Pattern.compile(emailPattern).matcher(email?.text)
                     if (matcherObj.matches()) {
                         emailLayout!!.error = null
-                        var bitmap: Bitmap?
+                        val bitmap: Bitmap?
                         if (profileImageView!!.drawable.constantState.equals
-                                (ContextCompat.getDrawable(this,R.drawable.default_profile)?.constantState)
+                                (ContextCompat.getDrawable(this, R.drawable.default_profile)?.constantState)
                         ) {
 
                             bitmap = writeOnDrawable(name!!.text.substring(0, 1).toUpperCase()).bitmap
@@ -217,7 +191,7 @@ var status1=true
                         val baos = ByteArrayOutputStream()
                         bitmap!!.compress(Bitmap.CompressFormat.JPEG, 100, baos)
                         val data = baos.toByteArray()
-
+println("photo: "+data)
 
                         dbHelper.addContact(name?.text.toString(), email?.text.toString(), data)
                         Toast.makeText(this, "contact saved successfully", Toast.LENGTH_SHORT).show()
@@ -240,7 +214,7 @@ var status1=true
 
         //var bm = BitmapFactory.decodeResource(getResources(), drawableId).copy(Bitmap.Config.ARGB_8888, true);
         val b: Bitmap = Bitmap.createBitmap(100, 100, Bitmap.Config.ARGB_8888)
-        val paint= Paint()
+        val paint = Paint()
         paint.style = Paint.Style.FILL
         paint.color = Color.WHITE
         paint.textSize = 40F
@@ -265,35 +239,31 @@ var status1=true
 
         return d
     }
-    private fun showKeyBoard(){
-        val view:View?=this.currentFocus
-        if(view!=null){
-            val imm: InputMethodManager =getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
-            imm.showSoftInput(view,0)
+
+    private fun hideSoftKeyboard(activity: Activity) {
+        if (keyBoardState == true) {
+            val inputMethodManager = activity.getSystemService(Activity.INPUT_METHOD_SERVICE) as InputMethodManager
+            inputMethodManager.hideSoftInputFromWindow(activity.currentFocus!!.windowToken, 0)
         }
     }
-    private fun hideSoftKeyboard(activity: Activity) {
-        val inputMethodManager = activity.getSystemService(Activity.INPUT_METHOD_SERVICE) as InputMethodManager
-        inputMethodManager.hideSoftInputFromWindow(activity.currentFocus!!.windowToken, 0)
-    }
 
-    fun setupUI( view:View) {
+    fun setupUI(view: View) {
 
         // Set up touch listener for non-text box views to hide keyboard.
         if (!(view is EditText)) {
-            view.setOnTouchListener(object :View.OnTouchListener {
-                override fun onTouch(v:View , event: MotionEvent):Boolean {
-                    hideSoftKeyboard(this@AddContact);
-                    return false;
+            view.setOnTouchListener(object : View.OnTouchListener {
+                override fun onTouch(v: View, event: MotionEvent): Boolean {
+                    hideSoftKeyboard(this@AddContact)
+                    return false
                 }
-            });
+            })
         }
 
         //If a layout container, iterate over children and seed recursion.
         if (view is ViewGroup) {
-            for ( i in 0..(view as ViewGroup).getChildCount()-1) {
-                var innerView = ( view as ViewGroup).getChildAt(i);
-                setupUI(innerView);
+            for (i in 0..(view as ViewGroup).getChildCount() - 1) {
+                val innerView = (view as ViewGroup).getChildAt(i)
+                setupUI(innerView)
             }
         }
     }

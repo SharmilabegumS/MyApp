@@ -22,14 +22,9 @@ import java.util.stream.Collectors
 import kotlin.collections.ArrayList
 
 
-class InviteGuests() : AppCompatActivity(), View.OnClickListener, Parcelable {
+class InviteGuests() : AppCompatActivity() {
     lateinit var dbm: DataBaseManager
     lateinit var customAdapter: CustomAdapter
-
-
-    override fun onClick(v: View?) {
-        //To change body of created functions use File | Settings | File Templates.
-    }
 
     lateinit var listView: ListView
     lateinit var list: LongSparseArray<Boolean>
@@ -38,35 +33,21 @@ class InviteGuests() : AppCompatActivity(), View.OnClickListener, Parcelable {
     lateinit var no_search: ImageView
     lateinit var no_search_text: TextView
 
-    constructor(parcel: Parcel) : this() {
-
-
-    }
-
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_invite_guests)
         setSupportActionBar(toolbar_invite_guests)
-
-        // Now get the support action bar
         val actionBar = supportActionBar
-        // Set toolbar title/app title
-
         actionBar!!.title = "Contacts"
-
-        // Set action bar/toolbar sub title
-
         toolbar_invite_guests.setTitleTextColor(Color.WHITE);
-        // Set action bar elevation
         actionBar.elevation = 4.0F
         actionBar.setDisplayHomeAsUpEnabled(true)
         actionBar.setHomeAsUpIndicator(R.drawable.ic_close);
         toolbar_invite_guests.setTitleTextColor(Color.WHITE);
 
         dbm = DataBaseManager(this)
-        var bundle = intent.extras
-        var value = bundle!!.getStringArrayList("nameList")
+        val bundle = intent.extras
+        val value = bundle!!.getStringArrayList("nameList")
         customAdapter = CustomAdapter(this, getContacts())
         listView = findViewById(R.id.listView)
         listView.setDivider(null);
@@ -75,8 +56,8 @@ class InviteGuests() : AppCompatActivity(), View.OnClickListener, Parcelable {
         ok = findViewById(R.id.ok)
 
         listView.adapter = customAdapter
-        var boolArray = customAdapter.getCheckedContacts()
-        var boolArrayList = ArrayList<Boolean>()
+        val boolArray = customAdapter.getCheckedContacts()
+        val boolArrayList = ArrayList<Boolean>()
         for (i in 0..boolArray.size()) {
             if (boolArray.get(i.toLong()) == true) {
                 boolArrayList.add(true)
@@ -89,14 +70,14 @@ class InviteGuests() : AppCompatActivity(), View.OnClickListener, Parcelable {
         }
         for (i in 0..value.size - 1) {
 
-            var id = dbm.getContactId(value.get(i))
+            val id = dbm.getContactId(value.get(i))
             customAdapter.toggle(id)
         }
 
         listView.setOnItemClickListener { adapterView, view, position, l ->
             customAdapter.toggle(l)
-            var boolArray = customAdapter.getCheckedContacts()
-            var boolArrayList = ArrayList<Boolean>()
+            val boolArray = customAdapter.getCheckedContacts()
+            val boolArrayList = ArrayList<Boolean>()
             for (i in 0..boolArray.size()) {
                 if (boolArray.get(i.toLong()) == true) {
                     boolArrayList.add(true)
@@ -113,34 +94,27 @@ class InviteGuests() : AppCompatActivity(), View.OnClickListener, Parcelable {
 
 
         ok.setOnClickListener {
-            var intent = Intent(this, AddContact::class.java)
+            val intent = Intent(this, AddContact::class.java)
             startActivity(intent)
         }
 
-
-        //var dbm = DataBaseManager(this)
     }
-
-   /* override fun processFinish(output: String) {
-        //Here you will receive the result fired from async class
-        //of onPostExecute(result) method.
-    }*/
 
     fun getContacts(): MutableList<Contacts> {
 
-        var ist = dbm.getContacts()
+        val ist = dbm.getContacts()
 
         return ist
     }
 
     fun putGuestList() {
         list = customAdapter.getCheckedContacts()
-        var contactList = getContacts()
+        val contactList = getContacts()
         for (i in 0..list.size() - 1) {
 
 
         }
-        var contactPos = ArrayList<Int>()
+        val contactPos = ArrayList<Int>()
         for (i in 0..list.size() - 1) {
             val key = list.keyAt(i)
             if (list.get(key) == true) {
@@ -160,25 +134,6 @@ class InviteGuests() : AppCompatActivity(), View.OnClickListener, Parcelable {
         }
     }
 
-    override fun describeContents(): Int {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
-    }
-
-    override fun writeToParcel(dest: Parcel?, flags: Int) {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
-    }
-
-    companion object CREATOR : Parcelable.Creator<InviteGuests> {
-        override fun createFromParcel(parcel: Parcel): InviteGuests {
-            return InviteGuests(parcel)
-        }
-
-        override fun newArray(size: Int): Array<InviteGuests?> {
-            return arrayOfNulls(size)
-        }
-
-    }
-
     public override fun onResume() {
         super.onResume()
         customAdapter.updateList(getContacts() as ArrayList<Contacts>)
@@ -194,7 +149,7 @@ class InviteGuests() : AppCompatActivity(), View.OnClickListener, Parcelable {
         val myActionMenuItem = menu.findItem(R.id.action_search)
         val searchView = myActionMenuItem.actionView as androidx.appcompat.widget.SearchView
 
-        searchView?.setOnQueryTextListener(object : androidx.appcompat.widget.SearchView.OnQueryTextListener {
+        searchView.setOnQueryTextListener(object : androidx.appcompat.widget.SearchView.OnQueryTextListener {
             override fun onQueryTextSubmit(query: String?): Boolean {
 
                 return false
@@ -203,9 +158,6 @@ class InviteGuests() : AppCompatActivity(), View.OnClickListener, Parcelable {
             override fun onQueryTextChange(newText: String?): Boolean {
 
                 val text = newText
-                /*Call filter Method Created in Custom Adapter
-                    This Method Filter ListView According to Search Keyword
-                 */
                 customAdapter.filter(text)
                 if (customAdapter.filter(text).isEmpty() != true) {
                     no_search.visibility = View.INVISIBLE
@@ -238,7 +190,7 @@ class InviteGuests() : AppCompatActivity(), View.OnClickListener, Parcelable {
 
             R.id.save -> {
                 putGuestList()
-                var contactList = ArrayList<Contacts>()
+                val contactList = ArrayList<Contacts>()
 
                 contactList.addAll(
                     selectedContacts.stream()
@@ -246,12 +198,11 @@ class InviteGuests() : AppCompatActivity(), View.OnClickListener, Parcelable {
                         .collect(Collectors.toList()) as Collection<Contacts>
                 )
 
-
-                var conp: ContactParcel =
+                val conp: ContactParcel =
                     ContactParcel(contactList)
 
                 val resultIntent = Intent()
-                var bundle = Bundle()
+                val bundle = Bundle()
                 bundle.putLongArray("arrayList", conp.getContactIds().toLongArray())
                 resultIntent.putExtra("bundle", bundle)
                 setResult(1, resultIntent)

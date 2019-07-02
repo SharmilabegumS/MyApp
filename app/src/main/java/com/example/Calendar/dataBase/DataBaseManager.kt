@@ -10,6 +10,7 @@ import com.example.Calendar.entity.Contacts
 
 import com.example.Calendar.entity.Event
 import com.example.Calendar.utility.DateStringConvertor
+import java.io.*
 import java.util.*
 import kotlin.collections.ArrayList
 
@@ -17,7 +18,7 @@ import kotlin.collections.ArrayList
 private val TABLE_USERS = "Users"
 private val USER_ID = "User_Id"
 private val PASSWORD = "Password"
-private val DATABASE_NAME = "Calendar"
+private val DATABASE_NAME = "Calendar.db"
 private val TABLE_EVENTS = "Events"
 private val EVENT_ID = "Event_Id"
 private val EVENT_TITLE = "Event_Title"
@@ -33,14 +34,56 @@ lateinit var eventCommon: String
 
 
 class DataBaseManager(var context: Context) : SQLiteOpenHelper(context, DATABASE_NAME, null, 1) {
-    companion object {
+
+
+    init{
+        //println( "Something: "+context.applicationContext.packageName)
+        //context!!.deleteDatabase(DATABASE_NAME)
+        checkExists()
+
+    }
+
+    //var DB_PATH = "/data/data/" + context.applicationContext.packageName + "/databases/" + DATABASE_NAME
+    //var DB_PATH = "/data/data/com.example.calendar/databases/Calendar.db"
+
+    var ASSET_PATH="Calendar.db"
+        companion object {
         val CONTACTS = "Contacts"
         val CONTACT_ID = "Id"
         val CONTACT_NAME = "Name"
         val CONTACT_EMAIL = "Email"
         val CONTACT_IMAGE = "Photo"
+
+    }
+    @Throws(IOException::class)
+    private fun checkExists() {
+        //var DB_PATH = "/data/data/" + context.applicationContext.packageName + "/databases/" + DATABASE_NAME
+        //var DB_PATH = "/data/data/com.example.calendar/databases/" + DATABASE_NAME
+        var DB_PATH = "/data/data/com.example.calendar/databases/Calendar.db"
+
+        val dbFile = File(DB_PATH)
+
+        if (!dbFile.exists()) {
+
+
+            dbFile.parentFile.mkdirs()
+            copyStream(context!!.assets.open("Calendar.db"), FileOutputStream(dbFile))
+        }
     }
 
+    @Throws(IOException::class)
+    private fun copyStream(`is`: InputStream, os: OutputStream) {
+        val buf = ByteArray(1024)
+        var c = 0
+        while (true) {
+            c = `is`.read(buf)
+            if (c == -1)
+                break
+            os.write(buf, 0, c)
+        }
+        `is`.close()
+        os.close()
+    }
     override fun onCreate(db: SQLiteDatabase?) {
         val createUserTable =
             "create table if not exists " + TABLE_USERS + "( " + USER_ID + " varchar(45) PRIMARY KEY UNIQUE, " + PASSWORD + "  varchar(45) NOT NULL) "

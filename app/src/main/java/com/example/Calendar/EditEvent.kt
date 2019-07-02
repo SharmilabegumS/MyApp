@@ -80,56 +80,56 @@ class EditEvent : AppCompatActivity(), View.OnClickListener {
         actionBar.elevation = 4.0F
         actionBar.setDisplayHomeAsUpEnabled(true)
         setupUI(findViewById(R.id.add_event_layout))
-        var layout=findViewById<RelativeLayout>(R.id.add_event_layout)
+        val layout=findViewById<RelativeLayout>(R.id.add_event_layout)
         layout.getViewTreeObserver().addOnGlobalLayoutListener(object :ViewTreeObserver.OnGlobalLayoutListener {
             override fun onGlobalLayout() {
-                var r = Rect()
-                layout.getWindowVisibleDisplayFrame(r);
-                var screenHeight = layout.getRootView().getHeight();
-                var keypadHeight = screenHeight - r.bottom;
+                val r = Rect()
+                layout.getWindowVisibleDisplayFrame(r)
+                val screenHeight = layout.getRootView().getHeight()
+                val keypadHeight = screenHeight - r.bottom
                 if (keypadHeight > screenHeight * 0.15) {
                     keyBoardState=true
                 } else {
                     keyBoardState=false
                 }
             }
-        });
+        })
         guestLayout = findViewById(R.id.guestslayout)
         val paramsGuestLayout: RelativeLayout.LayoutParams =
             guestLayout.getLayoutParams() as RelativeLayout.LayoutParams
 
-        paramsGuestLayout.setMargins(0, 2, 0, 0);
-        guestLayout.setLayoutParams(paramsGuestLayout);
+        paramsGuestLayout.setMargins(0, 2, 0, 0)
+        guestLayout.setLayoutParams(paramsGuestLayout)
         val start_date: TextView = findViewById(R.id.start_date)
         val end_date: TextView = findViewById(R.id.end_date)
         val end_time: TextView = findViewById(R.id.end_time)
         val start_time: TextView = findViewById(R.id.start_time)
-        guest_names = findViewById<ChipGroup>(R.id.guest_names)
-        if (getResources().getConfiguration().orientation == Configuration.ORIENTATION_LANDSCAPE) {
+        guest_names = findViewById(R.id.guest_names)
+        if (resources.configuration.orientation == Configuration.ORIENTATION_LANDSCAPE) {
+            val start_date: TextView = findViewById(R.id.start_date)
+            val paramsStartDate: ViewGroup.LayoutParams = start_date.layoutParams
+            paramsStartDate.height = ViewGroup.LayoutParams.WRAP_CONTENT
+            paramsStartDate.width = (screenWidth / 2.5).toInt()
+            start_date.layoutParams = paramsStartDate
 
-            val paramsStartDate: ViewGroup.LayoutParams = start_date.getLayoutParams()
-            paramsStartDate.height = ViewGroup.LayoutParams.WRAP_CONTENT;
-            paramsStartDate.width = (screenWidth - 120) / 2
-            start_date.setLayoutParams(paramsStartDate)
+            val end_date: TextView = findViewById(R.id.end_date)
+            val paramsEndDate: ViewGroup.LayoutParams = end_date.layoutParams
+            paramsEndDate.height = ViewGroup.LayoutParams.WRAP_CONTENT
+            paramsEndDate.width = (screenWidth / 2.5).toInt()
+            end_date.layoutParams = paramsEndDate
+
+            val start_time: TextView = findViewById(R.id.start_time)
+            val paramsStartTime: ViewGroup.LayoutParams = start_time.layoutParams
+            paramsStartTime.height = ViewGroup.LayoutParams.WRAP_CONTENT
+            paramsStartTime.width = (screenWidth / 2.5).toInt()
+            start_time.layoutParams = paramsStartTime
 
 
-            val paramsEndDate: ViewGroup.LayoutParams = end_date.getLayoutParams()
-            paramsEndDate.height = ViewGroup.LayoutParams.WRAP_CONTENT;
-            paramsEndDate.width = (screenWidth - 120) / 2
-            end_date.setLayoutParams(paramsEndDate);
-
-
-            val paramsStartTime: ViewGroup.LayoutParams = start_time.getLayoutParams()
-            paramsStartTime.height = ViewGroup.LayoutParams.WRAP_CONTENT;
-            paramsStartTime.width = (screenWidth - 120) / 2
-            start_time.setLayoutParams(paramsStartTime);
-
-
-            val paramsEndTime: ViewGroup.LayoutParams = end_time.getLayoutParams()
-            paramsEndTime.height = ViewGroup.LayoutParams.WRAP_CONTENT;
-            paramsEndTime.width = (screenWidth - 120) / 2
-            end_time.setLayoutParams(paramsEndTime);
-
+            val end_time: TextView = findViewById(R.id.end_time)
+            val paramsEndTime: ViewGroup.LayoutParams = end_time.layoutParams
+            paramsEndTime.height = ViewGroup.LayoutParams.WRAP_CONTENT
+            paramsEndTime.width = (screenWidth / 2.5).toInt()
+            end_time.layoutParams = paramsEndTime
         }
         reminderType = findViewById<TextView>(R.id.choose_reminder_type)
         reminderType.setOnClickListener {
@@ -150,8 +150,7 @@ class EditEvent : AppCompatActivity(), View.OnClickListener {
                 intent.putExtra("Listview status",true)
                 intent.putExtra("Position",reminderType1)
             }
-
-            startActivityForResult(intent, 999);
+            startActivityForResult(intent, 999)
         }
         val e1: TextInputEditText = findViewById(R.id.start_time)
         val e2: TextInputEditText = findViewById(R.id.end_time)
@@ -311,9 +310,9 @@ class EditEvent : AppCompatActivity(), View.OnClickListener {
     override fun onSupportNavigateUp(): Boolean {
         if (title_input.text.toString().equals("") == false || description.text.toString().equals("") == false) {
             AlertDialog.Builder(this)
-                .setMessage("Discard your changes?")
-                .setPositiveButton("Discard") { dialog, which -> finish() }
-                .setNegativeButton("Keep editing", null)
+                .setMessage(getString(R.string.WarningMessage))
+                .setPositiveButton(getString(R.string.Discard)) { dialog, which -> finish() }
+                .setNegativeButton(getString(R.string.KeepEditing), null)
                 .show()
         } else {
             onBackPressed()
@@ -325,9 +324,9 @@ class EditEvent : AppCompatActivity(), View.OnClickListener {
     override fun onBackPressed() {
         if (title_input.text.toString().equals("") == false || description.text.toString().equals("") == false) {
             AlertDialog.Builder(this)
-                .setMessage("Discard your changes?")
-                .setPositiveButton("Discard") { dialog, which -> finish() }
-                .setNegativeButton("Keep editing", null)
+                .setMessage(getString(R.string.WarningMessage))
+                .setPositiveButton(getString(R.string.Discard)) { dialog, which -> finish() }
+                .setNegativeButton(getString(R.string.KeepEditing), null)
                 .show()
         } else {
             super.onBackPressed()
@@ -352,9 +351,9 @@ class EditEvent : AppCompatActivity(), View.OnClickListener {
         val tpd = TimePickerDialog(
             this, R.style.MyDialogTheme1, TimePickerDialog.OnTimeSetListener(function = { view, h, m ->
                 if (h < 12) {
-                    amOrPm = "AM";
+                    amOrPm = "AM"
                 } else {
-                    amOrPm = "PM";
+                    amOrPm = "PM"
                 }
                 hour = h
                 minute = m
@@ -472,26 +471,26 @@ class EditEvent : AppCompatActivity(), View.OnClickListener {
 
 
     fun showDialog1() {
-        val b: Bundle = Bundle();
-        b.putStringArrayList("nameList", guestList);
+        val b: Bundle = Bundle()
+        b.putStringArrayList("nameList", guestList)
         val intent = Intent(this, InviteGuests::class.java)
-        intent.putExtras(b);
-        startActivityForResult(intent, 1011);
+        intent.putExtras(b)
+        startActivityForResult(intent, 1011)
 
     }
 
 
     fun getScreenWidthInDPs(context: Context): Int {
-        val dm = DisplayMetrics();
-        val windowManager: WindowManager = context.getSystemService(Context.WINDOW_SERVICE) as WindowManager;
-        windowManager.getDefaultDisplay().getMetrics(dm);
+        val dm = DisplayMetrics()
+        val windowManager: WindowManager = context.getSystemService(Context.WINDOW_SERVICE) as WindowManager
+        windowManager.getDefaultDisplay().getMetrics(dm)
         return dm.widthPixels
     }
 
     fun getScreenHeightInDPs(context: Context): Int {
         val dm = DisplayMetrics()
         val windowManager: WindowManager = context.getSystemService(Context.WINDOW_SERVICE) as WindowManager
-        windowManager.getDefaultDisplay().getMetrics(dm);
+        windowManager.getDefaultDisplay().getMetrics(dm)
         return dm.heightPixels
     }
 
@@ -518,10 +517,10 @@ class EditEvent : AppCompatActivity(), View.OnClickListener {
 
             if (resultCode == 1) {
                 val dbm = DataBaseManager(this)
-                val bundle = data!!.getBundleExtra("bundle");
+                val bundle = data!!.getBundleExtra("bundle")
                 guestList.removeAll(guestList)
                 guest_names.removeAllViews()
-                val stockkList: LongArray? = bundle!!.getLongArray("arrayList");
+                val stockkList: LongArray? = bundle!!.getLongArray("arrayList")
                 val contactSelected = ArrayList<Contacts?>()
                 for (i in 0..stockkList!!.size - 1) {
                     contactSelected.add(dbm.getSingleContact(stockkList.get(i)))
@@ -530,7 +529,7 @@ class EditEvent : AppCompatActivity(), View.OnClickListener {
 
                     val params = guests.layoutParams
                     params.width = 500
-                    params.height = ViewGroup.LayoutParams.WRAP_CONTENT;
+                    params.height = ViewGroup.LayoutParams.WRAP_CONTENT
                     guests.layoutParams = params
                     guests.text = "Add Guests"
                     guestLayout.visibility = View.INVISIBLE
@@ -539,7 +538,7 @@ class EditEvent : AppCompatActivity(), View.OnClickListener {
                     guests.text = ""
                     val params = guests.layoutParams
                     params.width = 1
-                    params.height = ViewGroup.LayoutParams.WRAP_CONTENT;
+                    params.height = ViewGroup.LayoutParams.WRAP_CONTENT
                     guests.layoutParams = params
                     guestLayout.visibility = View.VISIBLE
                 }
@@ -561,8 +560,6 @@ class EditEvent : AppCompatActivity(), View.OnClickListener {
     }
 
     fun onItemSelected(contact: Contacts) {
-
-
         setTheme(R.style.Theme_MaterialComponents_Light_DarkActionBar)
         val chip = Chip(this@EditEvent)
         chip.setText(contact.name)
@@ -572,8 +569,8 @@ class EditEvent : AppCompatActivity(), View.OnClickListener {
         val bitmap =
             BitmapFactory.decodeByteArray(contact.picId, 0, contact.picId.size, options) //Convert bytearray to bitmap
         val d: RoundedBitmapDrawable =
-            RoundedBitmapDrawableFactory.create(getResources(), bitmap);
-        d.setCircular(true);
+            RoundedBitmapDrawableFactory.create(getResources(), bitmap)
+        d.setCircular(true)
         chip.setChipIcon(d)
         chip.setCloseIconVisible(true)
         chip.setCheckable(false)
@@ -600,8 +597,6 @@ class EditEvent : AppCompatActivity(), View.OnClickListener {
         e1: TextInputEditText,
         e2: TextInputEditText
     ): Boolean {
-
-        var status = false
         try {
             val formatter1 = SimpleDateFormat("dd/MM/yyyy hh:mm a")
             val date = formatter1.parse(d1.text.toString() + " " + e1.text.toString())
@@ -631,17 +626,16 @@ class EditEvent : AppCompatActivity(), View.OnClickListener {
         if (!(view is EditText)) {
             view.setOnTouchListener(object :View.OnTouchListener {
                 override fun onTouch(v:View , event: MotionEvent):Boolean {
-                    hideSoftKeyboard(this@EditEvent);
-                    return false;
+                    hideSoftKeyboard(this@EditEvent)
+                    return false
                 }
-            });
+            })
         }
-
         //If a layout container, iterate over children and seed recursion.
         if (view is ViewGroup) {
             for ( i in 0..(view as ViewGroup).getChildCount()-1) {
-                var innerView = ( view as ViewGroup).getChildAt(i);
-                setupUI(innerView);
+                val innerView = ( view as ViewGroup).getChildAt(i)
+                setupUI(innerView)
             }
         }
     }

@@ -44,5 +44,5 @@ val activity=activity as AddEvent
             return BottomSheetFragment()
         }
     }
-}// Required empty public constructor
+}
 

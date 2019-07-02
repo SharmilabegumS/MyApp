@@ -15,10 +15,13 @@
             app:popupTheme="@android:color/background_light"
             android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
     />
+    <ScrollView android:layout_width="fill_parent" android:layout_height="fill_parent"
+                android:layout_below="@id/toolbar2"
+                android:layout_marginTop="-6dp">
     <RelativeLayout android:layout_width="match_parent" android:layout_height="wrap_content"
                     android:padding="16dp"
                     android:layout_margin="10dp"
-                    android:layout_below="@id/toolbar2">
+    >
         <de.hdodenhof.circleimageview.CircleImageView
                 android:layout_width="250dp"
                 android:layout_height="250dp"
@@ -126,5 +129,5 @@
         />
     </RelativeLayout>
 
-
+    </ScrollView>
 </RelativeLayout>

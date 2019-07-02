@@ -49,14 +49,9 @@ class CustomAdapter2(
         val options = BitmapFactory.Options()
         var bitmap =
             BitmapFactory.decodeByteArray(contacts[childPosition].picId, 0, contacts[childPosition].picId.size, options)
-        expandedListTextView.setImageBitmap(bitmap);
+        expandedListTextView.setImageBitmap(bitmap)
 
         mail.setText(contacts[childPosition].email)
-
-
-        return convertView
-
-
         return convertView
     }
 

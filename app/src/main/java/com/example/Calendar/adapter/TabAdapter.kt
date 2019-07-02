@@ -10,11 +10,12 @@ class TabAdapter internal constructor(fm: FragmentManager) : FragmentStatePagerA
     private val mFragmentList = ArrayList<Fragment>()
     private val mFragmentTitleList = ArrayList<String>()
     override fun getCount(): Int {
-        return mFragmentList.size   }
+        return mFragmentList.size
+    }
 
 
     override fun getItem(position: Int): Fragment {
-        var fragment=mFragmentList[position]
+        var fragment = mFragmentList[position]
         return fragment
     }
 

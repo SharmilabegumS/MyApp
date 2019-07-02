@@ -9,32 +9,33 @@ import android.view.ViewGroup;
 import androidx.recyclerview.widget.RecyclerView
 import com.example.Calendar.R
 
-class RecyclerViewAdapter :RecyclerView.Adapter<RecyclerViewHolders>{
+class RecyclerViewAdapter : RecyclerView.Adapter<RecyclerViewHolders> {
 
-    private var itemList =ArrayList<String>()
+    private var itemList = ArrayList<String>()
     private var context: Context
-    var selectedItem:SparseBooleanArray?=null
+    var selectedItem: SparseBooleanArray? = null
 
-    constructor(context:Context , itemList:ArrayList<String> ) {
+    constructor(context: Context, itemList: ArrayList<String>) {
         this.itemList = itemList;
         this.context = context;
     }
 
-   override fun onCreateViewHolder(parent:ViewGroup , viewType:Int):RecyclerViewHolders  {
-        var layoutView:View  = LayoutInflater.from(parent.getContext()).inflate(R.layout.reminder_list, null);
-     var rcv =  RecyclerViewHolders(layoutView);
-      selectedItem=rcv.selectedItems
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerViewHolders {
+        var layoutView: View = LayoutInflater.from(parent.getContext()).inflate(R.layout.reminder_list, null);
+        var rcv = RecyclerViewHolders(layoutView);
+        selectedItem = rcv.selectedItems
         return rcv;
     }
 
-   override fun onBindViewHolder( holder:RecyclerViewHolders, position:Int) {
+    override fun onBindViewHolder(holder: RecyclerViewHolders, position: Int) {
         holder.songTitle!!.setText(itemList.get(position))
-   }
+    }
 
-   override fun getItemCount():Int {
+    override fun getItemCount(): Int {
         return this.itemList.size;
     }
-    fun setChecked(pos:Int){
+
+    fun setChecked(pos: Int) {
 
     }
 }

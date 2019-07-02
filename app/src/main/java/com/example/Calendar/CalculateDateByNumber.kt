@@ -15,73 +15,55 @@ import java.text.SimpleDateFormat
 import java.util.*
 import kotlin.collections.ArrayList
 
-
-// TODO: Rename parameter arguments, choose names that match
-// the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-private const val ARG_PARAM1 = "param1"
-private const val ARG_PARAM2 = "param2"
-
-/**
- * A simple [Fragment] subclass.
- *
- */
-
 class CalculateDateByNumber : Fragment() {
-    var keyBoardState:Boolean=false
-    companion object {
-        fun newInstance(date: Date) {
-
-        }
-    }
-
+    var keyBoardState: Boolean = false
     var activity1: CalculateDateActivity? = null
     lateinit var date: Date
     lateinit var endDate: Date
     lateinit var startDate: TextView
     lateinit var numberOfDays: TextView
     lateinit var forwardOrBackward: TextView
-    lateinit var lv:ListView
+    lateinit var lv: ListView
     @SuppressLint("NewApi")
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
 
-        var selectMovement:Boolean=false
-        var view = inflater.inflate(R.layout.fragment_calculate_date_by_number, container, false)
-        startDate = view.findViewById<TextView>(R.id.start_date)
-        numberOfDays = view.findViewById<TextView>(R.id.number_of_days)
-        forwardOrBackward = view.findViewById<TextView>(R.id.forward_or_backward)
+        var selectMovement = false
+        val view = inflater.inflate(R.layout.fragment_calculate_date_by_number, container, false)
+        startDate = view.findViewById(R.id.start_date)
+        numberOfDays = view.findViewById(R.id.number_of_days)
+        forwardOrBackward = view.findViewById(R.id.forward_or_backward)
 
         setupUI(view.findViewById(R.id.rl))
-        var layout=view.findViewById<RelativeLayout>(R.id.rl)
-        layout.getViewTreeObserver().addOnGlobalLayoutListener(object :ViewTreeObserver.OnGlobalLayoutListener {
+        val layout = view.findViewById<RelativeLayout>(R.id.rl)
+        layout.getViewTreeObserver().addOnGlobalLayoutListener(object : ViewTreeObserver.OnGlobalLayoutListener {
             override fun onGlobalLayout() {
-                var r = Rect()
+                val r = Rect()
                 layout.getWindowVisibleDisplayFrame(r);
-                var screenHeight = layout.getRootView().getHeight();
-                var keypadHeight = screenHeight - r.bottom;
+                val screenHeight = layout.getRootView().getHeight();
+                val keypadHeight = screenHeight - r.bottom;
                 if (keypadHeight > screenHeight * 0.15) {
-                    keyBoardState=true
+                    keyBoardState = true
                 } else {
-                    keyBoardState=false
+                    keyBoardState = false
                 }
             }
-        });
-        //activity!!.date=Date()
-        lv=view.findViewById(R.id.lv)
+        })
+        lv = view.findViewById(R.id.lv)
         activity1 = activity as CalculateDateActivity
         date = activity1!!.date!!
         // Inflate the layout for this fragment
-        numberOfDays!!.setShowSoftInputOnFocus(false)
+        numberOfDays.setShowSoftInputOnFocus(false)
 
-        numberOfDays.setOnClickListener{
-activity1!!.showKeyBoard()
+        numberOfDays.setOnClickListener {
+            activity1!!.showKeyBoard()
         }
         val myFormat = "EEEE, dd MMMM, yyyy" // mention the format you need
         val sdf = SimpleDateFormat(myFormat, Locale.US)
         calendar.time = date
-        startDate!!.setText(sdf.format(calendar.getTime()))
+        startDate.setText(sdf.format(calendar.getTime()))
         val dateSetListener = object : DatePickerDialog.OnDateSetListener {
             override fun onDateSet(
                 view: DatePicker, year: Int, monthOfYear: Int,
@@ -96,37 +78,31 @@ activity1!!.showKeyBoard()
         }
         startDate.setOnClickListener {
             DatePickerDialog(
-                context, R.style.MyDialogTheme,
+                context!!, R.style.MyDialogTheme,
                 dateSetListener,
                 mYear, mMonth, mDay
             ).show()
         }
         forwardOrBackward.setOnClickListener {
-if(selectMovement==false){
-    lv.visibility=View.VISIBLE
-    val img = context!!.resources.getDrawable(R.drawable.ic_arrow_up,null)
-    img.setBounds( 0, 0, 80, 80 );
-    forwardOrBackward.setCompoundDrawables(null,null,img,null)
-    selectMovement=true
+            if (selectMovement == false) {
+                lv.visibility = View.VISIBLE
+                val img = context!!.resources.getDrawable(R.drawable.ic_arrow_up, null)
+                img.setBounds(0, 0, 80, 80);
+                forwardOrBackward.setCompoundDrawables(null, null, img, null)
+                selectMovement = true
 
-}
-            else{
-    lv.visibility=View.INVISIBLE
-    val img = context!!.resources.getDrawable(R.drawable.arrow_down,null)
-    img.setBounds( 0, 0, 80, 80 );
-    forwardOrBackward.setCompoundDrawables(null,null,img,null)
-    selectMovement=false
+            } else {
+                lv.visibility = View.INVISIBLE
+                val img = context!!.resources.getDrawable(R.drawable.arrow_down, null)
+                img.setBounds(0, 0, 80, 80);
+                forwardOrBackward.setCompoundDrawables(null, null, img, null)
+                selectMovement = false
             }
-              /*if (forwardOrBackward.text.equals("Forward")) {
-                forwardOrBackward.setText("Backward")
-            } else if (forwardOrBackward.text.equals("Backward")) {
-                forwardOrBackward.setText("Forward")
-            }*/
         }
-var values=ArrayList<String>()
+        val values = ArrayList<String>()
         values.add("Forward")
         values.add("Backward")
-        val adapter = ArrayAdapter<String>(context, R.layout.list_time_interval,R.id.tv, values)
+        val adapter = ArrayAdapter<String>(context!!, R.layout.list_time_interval, R.id.tv, values)
         adapter.notifyDataSetChanged()
         lv.adapter = adapter
 
@@ -139,10 +115,10 @@ var values=ArrayList<String>()
                 id: Long
             ) {
                 forwardOrBackward.setText(values.get(position))
-                val img = context!!.resources.getDrawable(R.drawable.arrow_down,null)
-                img.setBounds( 0, 0, 80, 80 );
-                forwardOrBackward.setCompoundDrawables(null,null,img,null)
-                lv.visibility=View.INVISIBLE
+                val img = context!!.resources.getDrawable(R.drawable.arrow_down, null)
+                img.setBounds(0, 0, 80, 80);
+                forwardOrBackward.setCompoundDrawables(null, null, img, null)
+                lv.visibility = View.INVISIBLE
 
 
             }
@@ -152,14 +128,12 @@ var values=ArrayList<String>()
 
     fun getEndDate1() {
         if (numberOfDays.text.toString().equals("")) {
-            var toast=Toast.makeText(context, "Enter the number of days", Toast.LENGTH_SHORT)
+            val toast = Toast.makeText(context, "Enter the number of days", Toast.LENGTH_SHORT)
             toast.setGravity(Gravity.CENTER, 0, 0);
             toast.show()
             activity1!!.endDate = null
-        }
-        else
-         {
-            var cal = Calendar.getInstance()
+        } else {
+            val cal = Calendar.getInstance()
             cal.time = date
 
             if (forwardOrBackward.text.equals("Forward")) {
@@ -187,7 +161,7 @@ var values=ArrayList<String>()
         calendar.set(Calendar.YEAR, year)
         calendar.set(Calendar.DAY_OF_MONTH, mDay)
         calendar.set(Calendar.MONTH, mMonth)
-        tv!!.setText(sdf.format(calendar.getTime()))
+        tv.setText(sdf.format(calendar.getTime()))
 
     }
 
@@ -203,30 +177,30 @@ var values=ArrayList<String>()
             activity1!!.numberOfDays = null
         }
     }
-    private fun hideSoftKeyboard(){
-        if(keyBoardState==true) {
-            val inputMethodManager = getActivity()!!.getSystemService(Activity.INPUT_METHOD_SERVICE) as InputMethodManager
+
+    private fun hideSoftKeyboard() {
+        if (keyBoardState == true) {
+            val inputMethodManager =
+                getActivity()!!.getSystemService(Activity.INPUT_METHOD_SERVICE) as InputMethodManager
             inputMethodManager.hideSoftInputFromWindow(activity!!.currentFocus!!.windowToken, 0)
         }
     }
 
 
-    fun setupUI( view:View) {
-
+    fun setupUI(view: View) {
         // Set up touch listener for non-text box views to hide keyboard.
         if (!(view is EditText)) {
-            view.setOnTouchListener(object :View.OnTouchListener {
-                override fun onTouch(v:View , event: MotionEvent):Boolean {
+            view.setOnTouchListener(object : View.OnTouchListener {
+                override fun onTouch(v: View, event: MotionEvent): Boolean {
                     hideSoftKeyboard();
                     return false;
                 }
             });
         }
-
         //If a layout container, iterate over children and seed recursion.
         if (view is ViewGroup) {
-            for ( i in 0..(view as ViewGroup).getChildCount()-1) {
-                var innerView = ( view as ViewGroup).getChildAt(i);
+            for (i in 0..(view as ViewGroup).getChildCount() - 1) {
+                val innerView = (view as ViewGroup).getChildAt(i);
                 setupUI(innerView);
             }
         }

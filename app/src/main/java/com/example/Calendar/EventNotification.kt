@@ -25,25 +25,23 @@ class EventNotification : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_event_notification)
-        var toolbar1 = findViewById<androidx.appcompat.widget.Toolbar>(R.id.toolbar1)
+        val toolbar1 = findViewById<androidx.appcompat.widget.Toolbar>(R.id.toolbar1)
         setSupportActionBar(toolbar1)
 
         val actionBar = supportActionBar
-        var sw = findViewById<Switch>(R.id.switch1)
-        var listView = findViewById<ListView>(R.id.listView)
-//actionBar!!.setBackgroundDrawable(ColorDrawable(Color.RED));
+        val sw = findViewById<Switch>(R.id.switch1)
+        val listView = findViewById<ListView>(R.id.listView)
         val intent = intent
-        var status = intent.extras
-        listView.isEnabled = status.getBoolean("Listview status")
+        val status = intent.extras
+        listView.isEnabled = status!!.getBoolean("Listview status")
         sw.isChecked = status.getBoolean("Switch status")
-        var position = status.getInt("Position")
+        val position = status.getInt("Position")
         if (sw.isChecked == true) {
             position1 = -1
-            listView.setAlpha(0.5F);
+            listView.alpha = 0.5F
         }
         actionBar!!.title = "Reminders"
-        toolbar1.setTitleTextColor(Color.WHITE);
-        //actionBar.setHomeAsUpIndicator(R.drawable.ic_close)
+        toolbar1.setTitleTextColor(Color.WHITE)
         actionBar.elevation = 4.0F
         actionBar.setDisplayHomeAsUpEnabled(true)
 
@@ -52,16 +50,16 @@ class EventNotification : AppCompatActivity() {
 
                 listView.isEnabled = false
                 position1 = -1
-                listView.setAlpha(0.5F);
+                listView.setAlpha(0.5F)
 
             } else {
 
                 listView.isEnabled = true
-                listView.setAlpha(1F);
+                listView.setAlpha(1F)
             }
         })
 
-        var values = ArrayList<String>()
+        val values = ArrayList<String>()
         values.add("Before the event")
         values.add("5 min before")
         values.add("10 min before")
@@ -73,8 +71,8 @@ class EventNotification : AppCompatActivity() {
         val adapter = ArrayAdapter<String>(this, android.R.layout.simple_list_item_single_choice, values)
         adapter.notifyDataSetChanged()
         listView.adapter = adapter
-        listView.setChoiceMode(ListView.CHOICE_MODE_SINGLE);
-        listView.setItemChecked(position, true);
+        listView.choiceMode = ListView.CHOICE_MODE_SINGLE
+        listView.setItemChecked(position, true)
         listView.setOnItemClickListener(object : OnItemClickListener {
             override fun onItemClick(
                 parent: AdapterView<*>,
@@ -82,22 +80,14 @@ class EventNotification : AppCompatActivity() {
                 position: Int,
                 id: Long
             ) {
-                var resultIntent = Intent()
-
+                val resultIntent = Intent()
                 val bundle = Bundle()
-
                 bundle.putInt("Position", position)
-
                 resultIntent.putExtras(bundle)
-
                 position1 = position
-
                 setResult(Activity.RESULT_OK, resultIntent)
-
             }
         })
-
-
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {

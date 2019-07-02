@@ -43,5 +43,5 @@ class BottomSheetFragment1 : BottomSheetDialogFragment() {
             return BottomSheetFragment1()
         }
     }
-}// Required empty public constructor
+}
 

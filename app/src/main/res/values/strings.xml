@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Calendar</string>
+    <string name="app_name">Zoho Calendar</string>
 
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
@@ -28,5 +28,24 @@
     <string name="channel_description">This is a test channel at level a high level, where lights, sound, and vibration
         are active.
     </string>
+    <string name="StartDate">startDate</string>
+    <string name="StartTime">startTime</string>
+    <string name="EndDate">endDate</string>
+    <string name="EndTime">endTime</string>
+    <string name="Month">month</string>
+    <string name="Day">day</string>
+    <string name="Week">week</string>
+    <string name="User2">Shubham kumar</string>
+    <string name="User2Mail">shubhamkumar2b1@live.com</string>
+    <string name="User1">Sharmila Begum</string>
+    <string name="User1Mail">sharmilabegum97@gmail.com</string>
+    <string name="User3">Hanifa Bee</string>
+    <string name="User3Mail">hanifabanu96@gmail.com</string>
+    <string name="EventID">ID</string>
+    <string name="ActionView">View</string>
+    <string name="EventAddedMessage">Event added successfully</string>
+    <string name="WarningMessage">Discard your changes?</string>
+    <string name="Discard">Discard</string>
+    <string name="KeepEditing">Keep editing</string>
 
 </resources>
